@@ -140,11 +140,7 @@
     aspect-ratio: 1;
     object-fit: auto;
     object-position: center;
-    box-shadow: -72.528px 89.131px 32.332px 0 rgba(0, 0, 0, 0),
-      -46.313px 57.673px 29.71px 0 rgba(0, 0, 0, 0.01),
-      -26.215px 32.332px 24.467px 0 rgba(0, 0, 0, 0.05),
-      -11.36px 13.981px 18.351px 0 rgba(0, 0, 0, 0.09),
-      -2.622px 3.495px 10.486px 0 rgba(0, 0, 0, 0.1);
+
     align-self: end;
     margin-top: 87px;
   }
@@ -161,11 +157,7 @@
     object-fit: auto;
     object-position: center;
     border-radius: 145.768px 145.768px 145.768px 0;
-    box-shadow: -56.799px 96.122px 31.458px 0 rgba(0, 0, 0, 0),
-      -36.701px 61.168px 28.837px 0 rgba(0, 0, 0, 0.01),
-      -20.098px 34.953px 24.467px 0 rgba(0, 0, 0, 0.05),
-      -8.738px 15.729px 17.477px 0 rgba(0, 0, 0, 0.09),
-      -2.622px 3.495px 9.612px 0 rgba(0, 0, 0, 0.1);
+
     align-self: start;
   }
 
@@ -178,4 +170,324 @@
   .highlight {
     background-color: rgb(245, 166, 35);
     color: rgb(74, 144, 226);
+  }
+
+  .team-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .team-intro {
+    width: 100%;
+  }
+
+  @media (max-width: 991px) {
+    .team-intro {
+      max-width: 100%;
+    }
+  }
+
+  .team-intro-content {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+  @media (max-width: 991px) {
+    .team-intro-content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+  }
+
+  .team-intro-text {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 80%;
+    margin-left: 0;
+  }
+
+  @media (max-width: 991px) {
+    .team-intro-text {
+      width: 100%;
+    }
+  }
+
+  .team-intro-text-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 57px;
+    padding: 0 20px;
+  }
+
+  @media (max-width: 991px) {
+    .team-intro-text-content {
+      max-width: 100%;
+      margin-top: 40px;
+    }
+  }
+
+  .team-intro-heading {
+    color: #d5b98e;
+    font: 900 2.8rem PT Serif, sans-serif;
+  }
+
+  .team-intro-heading span {
+  
+    font: 900 3.2rem PT Serif, sans-serif;
+  }
+  @media (max-width: 991px) {
+    .team-intro-heading {
+      max-width: 100%;
+    }
+  }
+
+  .team-intro-description {
+    color: #f5f4f4;
+    margin-top: 56px;
+    font: 400 20px Noto Sans, sans-serif;
+  }
+
+  @media (max-width: 991px) {
+    .team-intro-description {
+      max-width: 100%;
+      margin-top: 40px;
+    }
+  }
+
+  .team-intro-image {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 25%;
+    margin-left: 20px;
+  }
+
+  @media (max-width: 991px) {
+    .team-intro-image {
+      width: 100%;
+    }
+  }
+
+  .team-intro-img {
+    aspect-ratio: 1.12;
+    object-fit: auto;
+    object-position: center;
+    width: 100%;
+
+    flex-grow: 1;
+  }
+
+  @media (max-width: 991px) {
+    .team-intro-img {
+      margin-top: 40px;
+    }
+  }
+
+  .team-photos {
+    align-self: center;
+    margin-top: 6px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .team-photos-content {
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  @media (max-width: 991px) {
+    .team-photos-content {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+  }
+
+  .team-photo-left {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 25%;
+    margin-left: 0;
+  }
+
+  @media (max-width: 991px) {
+    .team-photo-left {
+      width: 100%;
+    }
+  }
+
+  .team-photo-left-img {
+    
+    object-fit: auto;
+    object-position: center;
+    width: 100%;
+
+    margin-top: 87px;
+  }
+
+  @media (max-width: 991px) {
+    .team-photo-left-img {
+      margin-top: 40px;
+    }
+  }
+
+  .team-photo-center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 25%;
+    margin-left: 0;
+  }
+
+  @media (max-width: 991px) { 
+    .team-photo-center {
+      width: 200%;
+    }
+  }
+
+  .team-photo-center-img {
+    aspect-ratio: 1;
+    object-fit: auto;
+    object-position: center;
+    width: 100%;
+
+   
+  }
+
+  @media (max-width: 991px) {
+    .team-photo-center-img {
+      margin-top: 40px;
+    }
+  }
+
+
+  .infoEquipe {
+
+    background-image: url("../../images/fundoEquipe.png");
+    text-align: center;
+    border-radius: 10px;
+    padding: 15px;
+    width: 250px;
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 20px;
+    
+  }
+  
+
+
+.div {
+    display: flex;
+    max-width: 134px;
+    flex-direction: column;
+    color: #f2efea;
+    text-align: center;
+  }
+  .div-2 {
+    color: white;
+    width: 100%;
+    font: 700 18px Noto Sans, sans-serif;
+  }
+  .div-3 {
+    color: white;
+    margin-top: 19px;
+    width: 100%;
+    font: 400 14px Noto Sans, sans-serif;
+  }
+  .img {
+    aspect-ratio: 4.17;
+    object-fit: auto;
+    object-position: center;
+    width: 50%;
+    fill: #c49c83;
+    margin-top: 24px;
+  }
+
+
+  .team-photo-right:hover .infoEquipe {
+display: block;
+ 
+  }
+
+  .team-photo-center:hover .infoEquipe {
+    display: block;
+     
+      }
+
+      .team-photo-left:hover .infoEquipe {
+        display: block;
+         
+          }
+
+
+  .team-photo-right:hover .team-photo-right-img {
+
+
+    filter: blur(5px); /* Aplicar desfoque à imagem quando o mouse passar por cima */
+}
+
+.team-photo-left:hover .team-photo-left-img {
+
+
+  filter: blur(5px); /* Aplicar desfoque à imagem quando o mouse passar por cima */
+}
+
+.team-photo-center:hover .team-photo-center-img {
+
+
+  filter: blur(5px); /* Aplicar desfoque à imagem quando o mouse passar por cima */
+}
+
+
+
+  .team-photo-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 25%;
+    margin-left: 20px;
+    margin-top: 87px
+  }
+
+  @media (max-width: 991px) {
+    .team-photo-right {
+      width: 100%;
+    }
+  }
+
+  .team-photo-right-img {
+    aspect-ratio: 1;
+    object-fit: auto;
+    object-position: center;
+    width: 100%;
+
+  }
+
+  @media (max-width: 991px) {
+    .team-photo-right-img {
+      margin-top: 40px;
+    }
+  }
+
+
+  .span{
+
+    color:blue;
+  }
+  .bg-highlight{
+    background-color: #D5B98E;
+    color: #1A4165;
   }
