@@ -1,0 +1,214 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #cacaca;
+}
+
+.container {
+  display: flex;
+  position: relative;
+  width: 80%;
+  height: 80vh;
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.5);
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+
+.left-section, .right-section {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px 20px 20px 20px ;
+}
+
+.left-section {
+  background-color: #ffffff;
+}
+
+.right-section {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 80px;
+  position:absolute;
+  padding: 20px;
+  top: 0;
+  left: 0;
+}
+
+.left-section h1 {
+  margin-bottom: 1rem;
+  color: white;
+  font-size: x-large;
+  background-color: #9F7435;
+  width: 109%;
+  text-align: left; /* Alinha o texto à esquerda */
+  margin-left: 0; /* Remove qualquer margem à esquerda */
+  padding-left: 0; /* Remove qualquer padding à esquerda */
+  padding: 10px;
+  position:static;
+  right: 500px;
+}
+
+.left-section p {
+  margin-bottom: 1rem;
+}
+
+.left-section a {
+  color: #d4a24c;
+  text-decoration: none;
+}
+
+.left-section a:hover {
+  text-decoration: underline;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+form input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.forgot-password {
+  align-self: flex-end;
+  margin-bottom: 1rem;
+  color: #555;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+button {
+  align-content: center;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #003366;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 70%;
+  border-radius: 50px;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #002244;
+}
+
+.right-section img {
+  width: 110%;
+  height: 110%;
+
+}
+
+.right-section h2 {
+  margin: 0;
+  color: #003366;
+}
+
+.right-section p {
+  color: #555;
+}
+
+.texturaB {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: auto; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+.texturaC {
+  position: fixed;
+  top: 0;
+  right:  0;
+  width: auto; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+.group {
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  position: relative;
+  
+}
+
+.input {
+  width: 80%;
+  height: 40px;
+  line-height: 30px;
+  padding: 0 5rem;
+  padding-left: 3rem;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  background-color: #f8fafc;
+  color: #0d0c22;
+  transition: .5s ease;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.input:focus, input:hover {
+  outline: none;
+  border-color: rgba(129, 140, 248);
+  background-color: #fff;
+  box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
+}
+
+.input {
+
+border-bottom-color: rgba(129, 140, 248);
+
+
+}
+.icon {
+  position: absolute;
+  left: 1rem;
+  fill: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+
+
+.cor {
+  position: relative;
+  align-content: flex-end;
+}
+
+.nm {
+  font-size: small;
+  color: gray;
+}
