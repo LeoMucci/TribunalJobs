@@ -1,0 +1,10 @@
+.image-container {
+    width: 100%;
+  }
+  
+  .responsive-image {
+    aspect-ratio: 2.86;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+  }
