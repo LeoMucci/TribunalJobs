@@ -5,7 +5,6 @@ from sqlalchemy.exc import SQLAlchemyError
 app = Flask(__name__)
 app.secret_key = 'tribunaljobs'
 
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:081314@localhost/tribunaljobs'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -16,6 +15,14 @@ class Login(db.Model):
     IdUser = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), nullable=False)
     senha = db.Column(db.String(255), nullable=False)
+
+class Empresa(db.Model):
+    __tablename__ = 'Empresa'
+    IdEmpresa = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nomeEmpresa = db.Column(db.String(255), nullable=False)
+    cnpj = db.Column(db.String(18), nullable=False)  # Atualizado para VARCHAR(18)
+    contato = db.Column(db.String(255), nullable=True)
+    cpfADM = db.Column(db.String(11), nullable=False, unique=True)
 
 @app.route('/')
 def index():
@@ -54,9 +61,23 @@ def home():
         return f'Logged in as {session["email"]}'
     return redirect(url_for('login'))
 
-@app.route('/cadastro')
+@app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
-    return render_template('cadastro.html')
+    msg = ''
+    if request.method == 'POST' and all(key in request.form for key in ['nomeEmpresa', 'cnpj', 'contato', 'cpfADM']):
+        nomeEmpresa = request.form['nomeEmpresa']
+        cnpj = request.form['cnpj']
+        contato = request.form['contato']
+        cpfADM = request.form['cpfADM']
+        try:
+            nova_empresa = Empresa(nomeEmpresa=nomeEmpresa, cnpj=cnpj, contato=contato, cpfADM=cpfADM)
+            db.session.add(nova_empresa)
+            db.session.commit()
+            msg = 'Empresa cadastrada com sucesso!'
+            return redirect(url_for('home'))
+        except SQLAlchemyError as e:
+            msg = str(e)
+    return render_template('cadastro.html', msg=msg)
 
 if __name__ == '__main__':
     db.create_all()

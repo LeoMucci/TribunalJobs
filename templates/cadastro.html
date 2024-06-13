@@ -11,20 +11,18 @@
     <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
     <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
 
-
     <div class="container">
         <div class="left-section">
-            <form>
+            <form action="{{ url_for('cadastro') }}" method="post">
               
-                <h2 class="header" >Cadastre sua empresa aqui</h2>
-                <p>Já tem uma conta? <a href="#">Faça seu login aqui.</a></p>
+                <h2 class="header">Cadastre sua empresa aqui</h2>
+                <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça seu login aqui.</a></p>
           
-                
                 <div class="group">
                     <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                         <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                     </svg>
-                    <input class="input" type="text" placeholder="Nome da Empresa" required>
+                    <input class="input" type="text" name="nomeEmpresa" placeholder="Nome da Empresa" required>
                 </div>
                 
                 <div class="inline-fields">
@@ -32,13 +30,13 @@
                         <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                             <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                         </svg>
-                        <input class="input" type="text" placeholder="CNPJ" required>
+                        <input class="input" type="text" name="cnpj" placeholder="CNPJ" required>
                     </div>
                     <div class="group field">
                         <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                             <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                         </svg>
-                        <input class="input" type="text" placeholder="CPF do Adm" required>
+                        <input class="input" type="text" name="cpfADM" placeholder="CPF do Adm" required>
                     </div>
                 </div>
                 
@@ -46,7 +44,7 @@
                     <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                         <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                     </svg>
-                    <input class="input" type="email" placeholder="Contato" required>
+                    <input class="input" type="text" name="contato" placeholder="Contato" required>
                 </div>
 
                 <button class="cta">
@@ -62,14 +60,15 @@
                     </span> 
                 </button>
                 
+                {% if msg %}
+                    <p>{{ msg }}</p>
+                {% endif %}
 
             </form>
-            
-              
         </div>
 
         <div class="right-section">
-          <img src="{{ url_for('static', filename='images/Imagem box.png') }}">
+            <img src="{{ url_for('static', filename='images/Imagem box.png') }}">
         </div>
     </div>
 </body>
