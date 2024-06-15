@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esqueceu sua senha?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styleVerificacao.css">
+</head>
+<body>
+    <img src="Bolinha listras superior.png" class="texturaC">
+    <img src="Bolinha listras dir.png" class="texturaBD">
+    <img src="Bolinha listras esq.png" class="texturaBE">
+
+    <div class="container">
+        <div class="content">
+            <h1>Verificação</h1>
+            <p>Escreva os 4 dígitos que foram enviados para [EMAIL DO USUARIO].</p>
+            <form class="form">
+              
+                  <div class="input-fields">
+                  <input placeholder="" type="tel" maxlength="1">
+                  <input placeholder="" type="tel" maxlength="1">
+                  <input placeholder="" type="tel" maxlength="1">
+                  <input placeholder="" type="tel" maxlength="1">
+                </div>
+
+                <div class="timer-container">
+                    <div id="timer">00:30</div>
+                </div>
+              
+                <button type="submit">Continuar</button>
+
+
+              
+              </form>
+
+              <p>Não recebeu o código? <a href="#" style="color: #F2451C;">Reenviar</a></p> 
+
+        </div>
+    </div>
+
+    <script>
+        // Função para iniciar o temporizador
+        function startTimer(duration, display) {
+          var timer = duration, minutes, seconds;
+          var interval = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+      
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+      
+            display.textContent = minutes + ":" + seconds;
+      
+            if (--timer < 0) {
+              clearInterval(interval);
+              display.textContent = "00:00";
+              // Adicione qualquer ação adicional quando o tempo acabar, se necessário
+            }
+          }, 1000);
+        }
+      
+        window.onload = function () {
+          var threeMinutes = 60 / 2,
+            display = document.querySelector('#timer');
+          startTimer(threeMinutes, display);
+        };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const inputs = document.querySelectorAll('.input-fields input');
+        
+            inputs.forEach((input, index) => {
+              input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < inputs.length - 1) {
+                  inputs[index + 1].focus();
+                }
+              });
+        
+              input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && index > 0 && input.value.length === 0) {
+                  inputs[index - 1].focus();
+                }
+              });
+            });
+          });
+      </script>
+
+</body>
+</html>
