@@ -1,0 +1,339 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #D6D6D6;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+  min-height: 30vh;
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 0 70px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 50px;
+  color: #153060;
+  margin-bottom: 10px;
+}
+
+span {
+  color: #666666;
+  font-size: 1.1rem;
+  font-style: bold;
+}
+
+.texturaBD {
+  position: fixed;
+  top: 0;
+  right:  0;
+  width: 30%; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+}
+
+.info {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.form-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.image-column {
+  display: flex;
+  padding-right: 30px;
+  padding-left: 30px;
+  align-items: center;
+}
+
+.profile-pic-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 3px solid #153060; /* Borda ao redor da imagem */
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  /* background-color: white; */
+  /* border-radius: 50%; */
+  padding: 5px;
+  width: 30px;
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+}
+
+.edit-icon label {
+  cursor: pointer;
+}
+
+#upload-input {
+  display: none;
+}
+
+.profile-pic-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 3px solid #153060; /* Borda ao redor da imagem */
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 20px;
+  cursor: pointer; /* Adicione esta linha */
+}
+
+.profile-pic-container:hover {
+  cursor: pointer; /* Adicione esta linha para garantir que o cursor mude ao passar o mouse */
+}
+
+.main-form {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 220px); /* Ajusta a largura para caber ao lado da imagem */
+}
+
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.group {
+  width: calc(50% - 50px);
+  margin-bottom: 20px;
+}
+
+.group-cpf, .group-phone, .group-oab {
+  width: calc(33% - 10px);
+}
+
+.input {
+  width: 100%;
+  height: 45px;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  border-bottom-color: #153060;
+  font-size: 17px;
+  font-family: 'Noto Sans', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ao redor dos inputs */
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.input:focus, .input:hover {
+  outline: none;
+  border-color: #153060;
+  background-color: #fff;
+  box-shadow: 0 0 0 5px rgb(129 140 248 / 30%);
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input .icon-eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.input-div {
+  position: relative;
+  width: 200px; /* Ajuste o tamanho conforme necessário */
+  height: 200px; /* Ajuste o tamanho conforme necessário */
+  border: 3px solid #153060;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.icon {
+  color: #153060; /* Ajuste a cor conforme necessário */
+  font-size: 2rem;
+  cursor: pointer;
+  animation: iconflicker 2s linear infinite;
+}
+.profile-pic {
+  display: none; /* Inicialmente escondido */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inputa {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer !important;
+}
+
+@keyframes iconflicker {
+  0% {
+    opacity: 1;
+  }
+  5% {
+    opacity: 0.2;
+  }
+  10% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.2;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+button {
+  width: 10em;
+  position: relative;
+  height: 3.5em;
+  border: 3px ridge #153060;
+  outline: none;
+  background-color: transparent;
+  color:#153060;
+  transition: 1s;
+  border-radius: 0.3em;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1em;
+  
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 3%;
+  width: 95%;
+  height: 40%;
+  background-color: #ffffff;
+  transition: 0.5s;
+  transform-origin: center;
+}
+
+button::before {
+  content: "";
+  transform-origin: center;
+  position: absolute;
+  top: 80%;
+  left: 3%;
+  width: 95%;
+  height: 40%;
+  background-color: #ffffff;
+  transition: 0.5s;
+}
+
+button:hover::before, button:hover::after {
+  transform: scale(0)
+}
+
+button:hover {
+  background-color: #153060;
+  color: white;
+}
+
+/* .button {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  background-color: #153060;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.button:hover {
+  background-color: #0f439e;
+} */
+
+@media (max-width: 768px) {
+  .form-fields .group {
+    width: 100%;
+  }
+
+  .profile-pic-container {
+    width: 150px;
+    height: 150px;
+    margin-right: 0;
+  }
+
+  .container {
+    width: 90%;
+  }
+
+  .main-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+  }
+
+  .profile-pic-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .input {
+    font-size: 12px;
+  }
+
+  .button {
+    font-size: 1em;
+  }
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Advogado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styleCadAdm.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.7-beta.19/jquery.inputmask.min.js"></script>
+</head>
+<body>
+    <img src="Textura inferiorr.png" class="texturaBD">
+    <h1>Cadastro de advogados</h1>
+    <section class="container">
+
+        <div class="form-wrapper">
+            <aside class="image-column">
+                <div class="input-div" onclick="triggerUpload()">
+                    <input class="input" id="upload-input" type="file" accept="image/*" onchange="loadFile(event)">
+                    <img src="profile-pic.jpg" alt="" class="profile-pic" id="profile-pic">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon" id="upload-icon">
+                        <polyline points="16 16 12 12 8 16"></polyline>
+                        <line y2="21" x2="12" y1="12" x1="12"></line>
+                        <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                        <polyline points="16 16 12 12 8 16"></polyline>
+                    </svg>
+                </div>
+            </aside>
+
+            <form class="main-form">
+                
+                <div class="form-fields">
+                    <div class="group">
+                        <span>Nome</span>
+                        <input class="input" type="text" placeholder="Nome" required>
+                    </div>
+                    
+                    <div class="group group-cpf">
+                        <span>CPF</span>
+                        <input class="input cpf-input" type="text" placeholder="CPF" required>
+                    </div>
+                    <div class="group group-phone">
+                        <span>Telefone</span>
+                        <input class="input phone-input" type="text" placeholder="Telefone" required>
+                    </div>
+                    <div class="group group-oab">
+                        <span>OAB</span>
+                        <input class="input oab-input" type="text" placeholder="OAB" required>
+                    </div>
+                    <div class="group">
+                        <span>E-Mail</span>
+                        <input class="input" type="email" placeholder="E-mail" required>
+                    </div>
+                    <div class="group">
+                        <span>Senha</span>
+                        <div class="password-input">
+                            <input class="input" type="password" placeholder="Senha" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        function triggerUpload() {
+            document.getElementById('upload-input').click();
+        }
+        
+        var loadFile = function(event) {
+            var image = document.getElementById('profile-pic');
+            var icon = document.getElementById('upload-icon');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block'; // Mostrar a imagem
+            icon.style.display = 'none'; // Esconder o ícone
+            image.onload = function() {
+                URL.revokeObjectURL(image.src); // free memory
+            }
+        };
+        $(document).ready(function(){
+            if (typeof $.fn.inputmask !== 'undefined') {
+                $('.cpf-input').inputmask('999.999.999-99');
+                $('.phone-input').inputmask('(99) 99999-9999');
+                $('.oab-input').inputmask('OAB-999999');
+            } else {
+                console.error("Inputmask is not loaded.");
+            }
+        });
+    </script>
+</body>
+</html>
