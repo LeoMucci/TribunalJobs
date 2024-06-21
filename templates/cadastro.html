@@ -13,11 +13,10 @@
 
     <div class="container">
         <div class="left-section">
-            <form action="{{ url_for('cadastro') }}" method="post">
-              
+            <form method="POST" action="{{ url_for('cadastro') }}">
                 <h2 class="header">Cadastre sua empresa aqui</h2>
                 <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça seu login aqui.</a></p>
-          
+                
                 <div class="group">
                     <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                         <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
@@ -47,7 +46,7 @@
                     <input class="input" type="text" name="contato" placeholder="Contato" required>
                 </div>
 
-                <button class="cta">
+                <button class="cta" type="submit">
                     <span class="span">Cadastre-se</span>
                     <span class="second">
                       <svg width="50px" height="20px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -63,12 +62,11 @@
                 {% if msg %}
                     <p>{{ msg }}</p>
                 {% endif %}
-
             </form>
         </div>
 
         <div class="right-section">
-            <img src="{{ url_for('static', filename='images/Imagem box.png') }}">
+          <img src="{{ url_for('static', filename='images/Imagem box.png') }}">
         </div>
     </div>
 </body>

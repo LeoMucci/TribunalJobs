@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, DataError, IntegrityError
 
 app = Flask(__name__)
 app.secret_key = 'tribunaljobs'
@@ -18,9 +18,8 @@ class Login(db.Model):
 
 class Empresa(db.Model):
     __tablename__ = 'Empresa'
-    IdEmpresa = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cnpj = db.Column(db.String(18), primary_key=True)
     nomeEmpresa = db.Column(db.String(255), nullable=False)
-    cnpj = db.Column(db.String(18), nullable=False)  # Atualizado para VARCHAR(18)
     contato = db.Column(db.String(255), nullable=True)
     cpfADM = db.Column(db.String(11), nullable=False, unique=True)
 
@@ -75,10 +74,18 @@ def cadastro():
             db.session.commit()
             msg = 'Empresa cadastrada com sucesso!'
             return redirect(url_for('home'))
+        except IntegrityError:
+            db.session.rollback()
+            msg = 'CNPJ ou CPF do Administrador já está registrado!'
+        except DataError:
+            db.session.rollback()
+            msg = 'Erro nos dados fornecidos. Verifique os campos e tente novamente.'
         except SQLAlchemyError as e:
+            db.session.rollback()
             msg = str(e)
     return render_template('cadastro.html', msg=msg)
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
