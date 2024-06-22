@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esqueceu sua senha?</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style_esqueci.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_esqueci.css') }}">
 </head>
 <body>
-    <img src="Bolinha listras superior.png" class="texturaC">
-    <img src="Bolinha listras dir.png" class="texturaBD">
-    <img src="Bolinha listras esq.png" class="texturaBE">
+    <img src="{{ url_for('static', filename='images/Bolinha listras superior.png') }}" class="texturaC">
+    <img src="{{ url_for('static', filename='images/Bolinha listras dir.png') }}" class="texturaBD">
+    <img src="{{ url_for('static', filename='images/Bolinha listras esq.png') }}" class="texturaBE">
 
     <div class="container">
         <div class="content">
             <h1>Esqueceu sua senha?</h1>
             <p>Informe seu CPF para que possamos enviar um código de validação em seu e-mail cadastrado.</p>
-            <form>
+            <form method="POST" action="{{ url_for('EsqueciSenha') }}">
                 <div class="group">
                     <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                         <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                     </svg>
-                    <input class="input" type="text" placeholder="Insira o CPF" required>
+                    <input class="input" type="text" name="cpf" placeholder="Insira o CPF" required>
                 </div>
                 <center><button type="submit">Enviar código para e-mail</button></center>
             </form>

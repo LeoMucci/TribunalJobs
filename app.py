@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError, DataError, IntegrityError
-import re, os 
+from flask_mail import Mail, Message
+import re, os
 from werkzeug.utils import secure_filename
 import uuid
+import random
 
 app = Flask(__name__)
 app.secret_key = 'tribunaljobs'
@@ -12,6 +14,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:081314@loca
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'  # Diretório para armazenar as imagens
 app.config['MAX_CONTENT_PATH'] = 1024 * 1024  # Limite de tamanho do arquivo (1MB)
+
+# Configurações do Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'tribunaljobs@gmail.com'
+app.config['MAIL_PASSWORD'] = "rkpy dxuj niwp rqrc"
+app.config['MAIL_DEFAULT_SENDER'] = 'tribunaljobs@gmail.com'
+
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 
@@ -156,11 +168,6 @@ def cadastroADM():
                 db.session.rollback()
                 msg = str(e)
     return render_template('cadastroADM.html', msg=msg, cnpj=cnpj, cpfADM=cpfADM)
-
-
-@app.route('/EsqueciSenha')
-def EsqueciSenha():
-    return render_template()
 
 
 
