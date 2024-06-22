@@ -179,7 +179,7 @@ body {
   opacity: 1;
   width: 70%;
   transition-duration: 0.3s;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 .Btn:active {
