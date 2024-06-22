@@ -9,25 +9,23 @@ CREATE TABLE Login (
 );
 
 CREATE TABLE Empresa (
-    IdEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+    cnpj VARCHAR(14) PRIMARY KEY,
     nomeEmpresa VARCHAR(255) NOT NULL,
-    cnpj VARCHAR(14) NOT NULL,
     contato VARCHAR(255),
-    cpfADM VARCHAR(11) NOT NULL,
-    UNIQUE (cpfADM) -- Garante que cpfADM é único
+    cpfADM VARCHAR(11) NOT NULL UNIQUE
 );
 
 CREATE TABLE ADM (
     IdADM INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(255) NOT NULL,
-    cpf VARCHAR(11) NOT NULL,
     fone VARCHAR(20),
     oab VARCHAR(20),
     email VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    IdEmpresa INT,
-    FOREIGN KEY (IdEmpresa) REFERENCES Empresa(IdEmpresa),
-    FOREIGN KEY (cpf) REFERENCES Empresa(cpfADM)
+    cnpj VARCHAR(14),
+    cpfADM VARCHAR(11),
+    FOREIGN KEY (cnpj) REFERENCES Empresa(cnpj),
+    FOREIGN KEY (cpfADM) REFERENCES Empresa(cpfADM)
 );
 
 
@@ -70,3 +68,6 @@ CREATE TABLE TJ (
     IdCliente INT,
     FOREIGN KEY (IdCliente) REFERENCES Cliente(IdCliente)
 );
+
+
+ALTER TABLE ADM ADD imagem VARCHAR(255);
