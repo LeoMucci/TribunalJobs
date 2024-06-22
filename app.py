@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import SQLAlchemyError, DataError, IntegrityError
-import re, os 
+from flask_mail import Mail, Message
+import re, os
 from werkzeug.utils import secure_filename
 import uuid
+import random
 
 app = Flask(__name__)
 app.secret_key = 'tribunaljobs'
@@ -12,6 +14,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:081314@loca
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'  # Diretório para armazenar as imagens
 app.config['MAX_CONTENT_PATH'] = 1024 * 1024  # Limite de tamanho do arquivo (1MB)
+
+# Configurações do Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'tribunaljobs@gmail.com'
+app.config['MAIL_PASSWORD'] = "rkpy dxuj niwp rqrc"
+app.config['MAIL_DEFAULT_SENDER'] = 'tribunaljobs@gmail.com'
+
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 
@@ -157,9 +169,106 @@ def cadastroADM():
                 msg = str(e)
     return render_template('cadastroADM.html', msg=msg, cnpj=cnpj, cpfADM=cpfADM)
 
-@app.route('/EsqueciSenha')
+# Nova rota para EsqueciSenha
+@app.route('/EsqueciSenha', methods=['GET', 'POST'])
 def EsqueciSenha():
-    return render_template('EsqueciSenha.html')
+    msg = ''
+    if request.method == 'POST' and 'cpf' in request.form:
+        cpf = request.form['cpf']
+        print(f"CPF recebido: {cpf}")  # Debug: imprimir o CPF recebido
+        adm = ADM.query.filter_by(cpfADM=cpf).first()
+        print(f"ADM encontrado: {adm}")  # Debug: imprimir se encontrou um ADM
+
+        if adm:
+            email = adm.email
+            session['email'] = email  # Armazenar o email na sessão
+            print(f"E-mail do ADM: {email}")  # Debug: imprimir o e-mail encontrado
+        else:
+            msg = 'CPF não encontrado.'
+            print(msg)  # Debug: imprimir mensagem de erro
+            return render_template('EsqueciSenha.html', msg=msg)
+
+        # Gerar código de verificação
+        codigo_verificacao = ''.join(random.choices('0123456789', k=4))
+        print(f"Código de verificação gerado: {codigo_verificacao}")  # Debug: imprimir o código gerado
+
+        # Enviar e-mail com código de verificação
+        try:
+            msg_email = Message('Código de Verificação - Tribunal Jobs', recipients=[email])
+            msg_email.body = f'Seu código de verificação é: {codigo_verificacao}'
+            mail.send(msg_email)
+            session['codigo_verificacao'] = codigo_verificacao
+            session['cpf'] = cpf
+            return redirect(url_for('EsqueciSenhaVerificacao'))
+        except Exception as e:
+            msg = f'Erro ao enviar o e-mail: {str(e)}'
+            print(msg)  # Debug: imprimir mensagem de erro de envio de e-mail
+    return render_template('EsqueciSenha.html', msg=msg)
+
+@app.route('/EsqueciSenhaVerificacao', methods=['GET', 'POST'])
+def EsqueciSenhaVerificacao():
+    msg = ''
+    email = session.get('email')
+    if request.method == 'POST':
+        codigo_digitado = ''.join([request.form.get(f'code{i}') for i in range(1, 5)])
+        if codigo_digitado == session.get('codigo_verificacao'):
+            return redirect(url_for('EsqueciSenhaNovaSenha'))
+        else:
+            msg = 'Código de verificação incorreto.'
+    return render_template('EsqueciSenhaVerificacao.html', msg=msg, email=email)
+
+@app.route('/reenviar_codigo', methods=['POST'])
+def reenviar_codigo():
+    email = session.get('email')
+    if email:
+        # Gerar novo código de verificação
+        codigo_verificacao = ''.join(random.choices('0123456789', k=4))
+        session['codigo_verificacao'] = codigo_verificacao
+        try:
+            msg_email = Message('Novo Código de Verificação - Tribunal Jobs', recipients=[email])
+            msg_email.body = f'Seu novo código de verificação é: {codigo_verificacao}'
+            mail.send(msg_email)
+            return jsonify({'msg': 'Novo código enviado para o seu e-mail.'})
+        except Exception as e:
+            return jsonify({'msg': f'Erro ao enviar o e-mail: {str(e)}'})
+    else:
+        return jsonify({'msg': 'E-mail não encontrado na sessão.'})
+
+@app.route('/EsqueciSenhaNovaSenha', methods=['GET', 'POST'])
+def EsqueciSenhaNovaSenha():
+    msg = ''
+    if request.method == 'POST':
+        nova_senha = request.form.get('nova_senha')
+        confirmacao_senha = request.form.get('confirmacao_senha')
+        
+        if nova_senha and confirmacao_senha:
+            if nova_senha == confirmacao_senha:
+                cpf = session.get('cpf')
+                if cpf:
+                    adm = ADM.query.filter_by(cpfADM=cpf).first()
+                    if adm:
+                        login = Login.query.filter_by(email=adm.email).first()
+                        if login:
+                            login.senha = nova_senha
+                            adm.senha = nova_senha
+                            db.session.commit()
+                            msg = 'Senha atualizada com sucesso!'
+                            return redirect(url_for('EsqueciSenhaConcluido'))
+                        else:
+                            msg = 'Erro ao encontrar o login associado.'
+                    else:
+                        msg = 'Erro ao encontrar o administrador associado.'
+                else:
+                    msg = 'CPF não encontrado na sessão.'
+            else:
+                msg = 'As senhas não coincidem.'
+        else:
+            msg = 'Preencha todos os campos.'
+    return render_template('EsqueciSenhaNovaSenha.html', msg=msg)
+
+@app.route('/EsqueciSenhaConcluido')
+def EsqueciSenhaConcluido():
+    return render_template('EsqueciSenhaConcluido.html')
 
 if __name__ == '__main__':
     with app.app_context():
