@@ -157,9 +157,16 @@ def cadastroADM():
                 msg = str(e)
     return render_template('cadastroADM.html', msg=msg, cnpj=cnpj, cpfADM=cpfADM)
 
+
+@app.route('/Home')
+def Home():
+    return render_template('Home.html')
+
 @app.route('/EsqueciSenha')
 def EsqueciSenha():
-    return render_template('EsqueciSenha.html')
+    return render_template()
+
+
 
 if __name__ == '__main__':
     with app.app_context():
