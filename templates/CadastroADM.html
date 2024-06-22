@@ -14,7 +14,7 @@
     <h1>Cadastro de advogados</h1>
     <section class="container">
 
-        <!-- <div class="form-wrapper">
+        <div class="form-wrapper">
             <aside class="image-column">
                 <div class="input-div" onclick="triggerUpload()">
                     <input class="input" id="upload-input" type="file" name="imagem" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
@@ -26,9 +26,12 @@
                         <polyline points="16 16 12 12 8 16"></polyline>
                     </svg>
                 </div>
-            </aside> -->
+            </aside>
 
             <form class="main-form" method="POST" action="{{ url_for('cadastroADM', cnpj=cnpj, cpfADM=cpfADM) }}" enctype="multipart/form-data">
+                
+
+                
                 <div class="form-fields">
                     <div class="group">
                         <span>Nome</span>
@@ -61,10 +64,7 @@
                             <input class="input" type="password" name="senha" placeholder="Senha" required>
                         </div>
                     </div>
-                    <div class="group">
-                        <span>Foto de Perfil</span>
-                        <input class="input" type="file" name="imagem" accept=".jpg, .jpeg, .png" required>
-                    </div>
+
                 </div>
                 <button type="submit">Cadastrar</button>
                 {% if msg %}
