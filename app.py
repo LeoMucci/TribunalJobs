@@ -157,7 +157,7 @@ def cadastroADM():
                 db.session.add(novo_login)
                 db.session.commit()
                 msg = 'Administrador cadastrado com sucesso!'
-                return redirect(url_for('home'))
+                return redirect(url_for('login'))
             except IntegrityError:
                 db.session.rollback()
                 msg = 'Erro ao registrar o administrador. Verifique os dados e tente novamente.'
