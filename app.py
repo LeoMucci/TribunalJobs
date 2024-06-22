@@ -74,7 +74,7 @@ def login():
                 session['id'] = account.IdUser
                 session['email'] = account.email
                 msg = 'Logged in successfully!'
-                return redirect(url_for('home'))
+                return redirect(url_for('Home'))
             else:
                 msg = 'Email ou Senha não autenticados!'
         except SQLAlchemyError as e:

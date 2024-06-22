@@ -47,24 +47,21 @@
                     </a>
                 </li>
             </ul>
-            <button class="Btn">
+            <a href="{{ url_for('logout') }}" class="Btn">
                 <div class="sign">
                     <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
                 </div>
                 <div class="text">Logout</div>
-            </button>
+            </a>
         </nav>
         <main>
-            <div class="main-content">
-                <img src="{{ url_for('static', filename='images/Vector 5.png') }}" alt="Background Image" class="vetor-image">
-                <img src="{{ url_for('static', filename='images/justiceHome.png') }}" alt="Justice Image" class="justice-image">
-<section class="image-container">
-    <img src="{{ url_for('static', filename='images/Rectangle 353.png') }}" alt="" class="background-image" />
-  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/54d994925932207a02dfea57f901ebd29f6882ca70cbe15b3275835cdfb2b722?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Foreground image 1" class="foreground-image" />
-  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ed802e69a67764db61806536f8dfd0f73083776b00c87d1d1f6f93c7d9725470?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Icon" class="icon-image" />
-  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a376e46439b09686675255301e0a0aefb89cd395d064a9e019aa2550f8c9124f?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Foreground image 2" class="foreground-image" />
-</section>
-            </div>
+                <img src="{{ url_for('static', filename='images/Home ADM.png') }}" alt="Background Image" class="background-image">
+                <div class="main-content">
+                    <img src="{{ url_for('static', filename='images/Vector 5.png') }}" alt="Background Image" class="vetor-image">
+                    <img src="{{ url_for('static', filename='images/justiceHome.png') }}" alt="Justice Image" class="justice-image">
+    
+                </div>
+
         </main>
     </body>
     </html>
