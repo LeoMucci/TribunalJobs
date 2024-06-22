@@ -18,7 +18,7 @@
         <div class="left-section" style="margin: 3%;">
             <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo">
             <div class="cor"><h1>Bem-vindo de volta!</h1></div>
-            <p>Ainda não tem uma conta? <br> <a href="../Cadastro/index.html">Cadastre sua empresa aqui.</a></p>
+            <p>Ainda não tem uma conta? <br> <a href="../cadastro">Cadastre sua empresa aqui.</a></p>
             <form action="{{ url_for('login') }}" method="post" style="margin-top: 10px;">
                 <label for="email">E-mail</label>
                 <div class="group">
@@ -36,7 +36,7 @@
                     <input class="input" type="password" name="senha" placeholder="Insira sua senha" required>
                 </div>
                 
-                <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+                <a href="../EsqueciSenha" class="forgot-password">Esqueceu sua senha?</a>
                 
                 <center><button type="submit">Login</button></center>
                 {% if msg %}

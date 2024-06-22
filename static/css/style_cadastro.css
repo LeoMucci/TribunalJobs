@@ -24,8 +24,8 @@ body {
   background-color: #9F7435; /* Cor de fundo do header */
   width: 118%;
   padding: 10px;
-  border-radius: 20px 0 0 20px;
   box-sizing: border-box;
+  color: white  ;
 }
 
 
