@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Clientes</title>
+    <link rel="stylesheet" href="../static/css/styleCadCliente.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de clientes</h1>
+        <div class="form-container">
+            <div class="profile-pic">
+               
+                <aside class="image-column">
+                    <div class="input-div" onclick="triggerUpload()">
+                        <input class="input" id="upload-input" type="file" name="imagem" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
+                        <img src="{{ url_for('static', filename='images/profile-pic.jpg') }}" alt="" class="profile-pic" id="profile-pic">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon" id="upload-icon">
+                            <polyline points="16 16 12 12 8 16"></polyline>
+                            <line y2="21" x2="12" y1="12" x1="12"></line>
+                            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                            <polyline points="16 16 12 12 8 16"></polyline>
+                        </svg>
+                    </div>
+                </aside>
+               
+            </div>
+            <form>
+                <div class="inputGroup large-width">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome completo" required autocomplete="off">
+                </div>
+                <div class="inputGroup small-width">
+                    <label for="cpf">CPF</label>
+                    <input type="text" id="cpf" placeholder="123.456.789-10" required autocomplete="off">
+                </div>
+                <div class="inputGroup large-width">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Digite seu e-mail" required autocomplete="off">
+                </div>
+                <div class="inputGroup small-width">
+                    <label for="oab">OAB</label>
+                    <input type="text" id="oab" placeholder="OAB-12345" required autocomplete="off">
+                </div>
+                <div class="inputGroup large-width">
+                    <label for="descricao">Descrição de causa</label>
+                    <input type="text" id="descricao" placeholder="No mínimo 8 dígitos" required minlength="8" autocomplete="off">
+                </div>
+                <div class="inputGroup small-width">
+                    <label for="data-nascimento">Data de nascimento</label>
+                    <input type="date" id="data-nascimento" required>
+                </div>
+                <button type="submit" class="save-button">Salvar</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function triggerUpload() {
+            document.getElementById('upload-input').click();
+        }
+
+        $(document).ready(function(){
+            if (typeof $.fn.inputmask !== 'undefined') {
+                $('.cpf-input').inputmask('999.999.999-99');
+                $('.phone-input').inputmask('(99) 99999-9999');
+                $('.oab-input').inputmask('OAB-999999');
+            } else {
+                console.error("Inputmask is not loaded.");
+            }
+        });
+
+        var loadFile = function(event) {
+            var image = document.getElementById('profile-pic');
+            var icon = document.getElementById('upload-icon');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block'; // Mostrar a imagem
+            icon.style.display = 'none'; // Esconder o ícone
+            image.onload = function() {
+                URL.revokeObjectURL(image.src); // free memory
+            }
+        };
+    </script>
+</body>
+</html>

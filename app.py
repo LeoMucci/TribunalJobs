@@ -275,6 +275,14 @@ def EsqueciSenhaConcluido():
 def Home():
     return render_template('Home.html')
 
+@app.route('/CadastroCliente')
+def CadastroCliente():
+    return render_template('CadastroCliente.html')
+
+@app.route('/CadCliente')
+def CadCliente():
+    return render_template('CadCliente.html')
+
 
 if __name__ == '__main__':
     with app.app_context():

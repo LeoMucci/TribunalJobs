@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidebar de Navegação</title>
+  <link rel="stylesheet" href="../static/css/styleTJHome.css">
+</head>
+<body>
+
+  <section class="patient-search">
+    <div class="content-wrapper">
+      <form class="form">
+        <label for="search">
+            <input required="" autocomplete="off" placeholder="Procure clientes" id="search" type="text">
+            <div class="icon">
+                <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="swap-on">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+                <svg stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="swap-off">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+            </div>
+            <button type="reset" class="close-btn">
+                <svg viewBox="0 0 20 20" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+                </svg>
+            </button>
+        </label>
+    </form>
+  
+      <div class="patient-grid">
+        <!-- Exemplo de cartão de paciente (replicável) -->
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+        <!-- Adicione outros cartões de paciente seguindo o exemplo acima -->
+
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        
+        <article class="patient-card">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Foto de Marcos Souza" class="patient-image">
+          <div class="patient-info">
+            <h2 class="patient-name">Marcos Souza</h2>
+            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+            <p class="patient-details">CPF: 123.456.789-10</p>
+            <p class="case-type">Despejo por falta de aluguel</p>
+          </div>
+        </article>
+
+        
+
+        
+      </div>
+  
+      <div class="action-buttons">
+        <button class="register-button">Cadastrar clientes</button>
+        <button class="help-button">
+          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/1844febeb1e542a015fbe36f1c4f479643bfb9558e4e8a1cf1ddee5d247a0371?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+               alt="Ícone de ajuda" class="help-icon">
+          <span>TJ para dúvidas</span>
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  </body>
+  </html>
