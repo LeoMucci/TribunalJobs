@@ -285,3 +285,136 @@ body {
   transform: scale(1);
   transition: 0s;
 }
+
+/* Estilos gerais */
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #efefef;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 20px; /* Adiciona um espaço no topo */
+}
+
+/* Estilos da seção de busca */
+.patient-search {
+  background-color: #efefef;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  width: 100%;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1131px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Campo de busca centralizado no topo */
+.form {
+  --input-bg: #fff;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px; /* Espaço abaixo do campo de busca */
+  padding-inline-end: 1em;
+  background: var(--input-bg);
+  position: relative;
+  border-radius: 4px;
+}
+
+/* Grid de pacientes */
+.patient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Estilo do link de cada cartão de paciente */
+.patient-card-link {
+  text-decoration: none; /* Remove a decoração de link */
+  color: inherit; /* Mantém a cor do texto do cartão */
+}
+
+/* Estilo do cartão de paciente */
+.patient-card {
+  background-color: #e0e0e0;
+  border-radius: 30px;
+  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  display: flex;
+  padding: 20px;
+  gap: 15px;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.patient-card:hover {
+  transform: scale(1.05); /* Aumenta o cartão quando hover */
+  box-shadow: 20px 20px 40px #bebebe, -20px -20px 40px #ffffff;
+}
+
+.texturaB {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: auto; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+.texturaC {
+  position: fixed;
+  top: 0;
+  right:  0;
+  width: auto; /* Ajuste o tamanho conforme necessário */
+  height: auto; /* Mantém a proporção da imagem */
+  z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+/* Barra no topo para o botão de Voltar */
+.top-bar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000; /* Garantir que fique acima do conteúdo */
+}
+
+/* Estilos do botão de Voltar */
+button {
+ display: flex;
+ height: 3em;
+ width: 100px;
+ align-items: center;
+ justify-content: center;
+ background-color: #eeeeee4b;
+ border-radius: 3px;
+ letter-spacing: 1px;
+ transition: all 0.2s linear;
+ cursor: pointer;
+ border: none;
+ background: #fff;
+}
+
+button > svg {
+ margin-right: 5px;
+ margin-left: 5px;
+ font-size: 20px;
+ transition: all 0.4s ease-in;
+}
+
+button:hover > svg {
+ font-size: 1.2em;
+ transform: translateX(-5px);
+}
+
+button:hover {
+ box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+ transform: translateY(-2px);
+}

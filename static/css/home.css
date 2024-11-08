@@ -386,3 +386,159 @@
       margin-top: 40px;
     }
   }
+
+  .home-admin {
+    background-color: #e4e3e3;
+    display: flex;
+    padding: 21px 26px 55px 80px;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: flex-end;
+}
+
+.logo {
+    aspect-ratio: 1.94;
+    object-fit: contain;
+    width: 101px;
+    align-self: flex-end;
+    max-width: 100%;
+}
+
+.main-content {
+    margin-top: 31px;
+    width: 100%;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+}
+
+.left-column {
+    width: 60%;
+}
+
+.image-grid {
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+.grid-row {
+    display: flex;
+    gap: 20px;
+}
+
+.grid-image {
+    aspect-ratio: 0.9;
+    object-fit: contain;
+    width: 188px;
+    border-radius: 9px;
+    max-width: 100%;
+    flex-grow: 1;
+}
+
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    aspect-ratio: 0.536;
+    flex-grow: 1;
+    align-items: flex-start;
+    gap: 4px;
+    color: #000;
+    padding: 13px;
+    font: 600 14px Noto Sans, sans-serif;
+}
+
+.feature-icon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    width: 26px;
+}
+
+.feature-title {
+    position: relative;
+    flex-grow: 1;
+    width: 138px;
+}
+
+.bottom-section {
+    z-index: 10;
+    width: 100%;
+    max-width: 1299px;
+    margin: -248px 29px 0 0;
+}
+
+.bottom-content {
+    display: flex;
+    gap: 20px;
+}
+
+.large-image-container {
+    width: 64%;
+    position: relative;
+    min-height: 618px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 80px;
+}
+
+.large-image-icon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    width: 24px;
+}
+
+.sidebar {
+    width: 36%;
+}
+
+.sidebar-content {
+    border-radius: 20px;
+    background-color: #efefef;
+    margin-top: 223px;
+    width: 100%;
+    padding: 25px 28px 16px;
+}
+
+.user-list {
+    display: flex;
+    gap: 20px;
+}
+
+.user-avatars {
+    width: 17%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 42px;
+}
+
+.user-avatar {
+    aspect-ratio: 1;
+    object-fit: contain;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.user-details {
+    width: 83%;
+    font: 500 15px Noto Sans, sans-serif;
+}
+
+.view-all {
+    color: #2f80ed;
+    align-self: flex-end;
+}
+
+.user-name {
+    color: #000;
+    margin-top: 29px;
+}
+
+.user-description {
+    color: #828282;
+    margin-top: 6px;
+}

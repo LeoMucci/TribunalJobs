@@ -279,10 +279,17 @@ def Home():
 def CadastroCliente():
     return render_template('CadastroCliente.html')
 
-@app.route('/CadCliente')
-def CadCliente():
-    return render_template('CadCliente.html')
+@app.route('/CadastroAdvogado')
+def CadastroAdvogado():
+    return render_template('CadastroAdvogado.html')
 
+@app.route('/TJDuvidas')
+def TJDuvidas():
+    return render_template('TJDuvidas.html')
+
+@app.route('/TJHome')
+def TJHome():
+    return render_template('TJHome.html')
 
 if __name__ == '__main__':
     with app.app_context():

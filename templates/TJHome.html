@@ -7,9 +7,25 @@
   <link rel="stylesheet" href="../static/css/styleTJHome.css">
 </head>
 <body>
+          
+  <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
+  <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
 
+  <div class="top-bar">
+    <a href="/Home"> <!-- Link para a página inicial -->
+      <button>
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+          <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+        </svg>
+        <span>Voltar</span>
+      </button>
+    </a>
+  </div>
+  
   <section class="patient-search">
     <div class="content-wrapper">
+
+      <!-- Campo de busca no topo e centralizado -->
       <form class="form">
         <label for="search">
             <input required="" autocomplete="off" placeholder="Procure clientes" id="search" type="text">
@@ -27,116 +43,127 @@
                 </svg>
             </button>
         </label>
-    </form>
+      </form>
   
+      <!-- Grid de pacientes com links para tornar os cartões clicáveis -->
       <div class="patient-grid">
         <!-- Exemplo de cartão de paciente (replicável) -->
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+        <a href="#" class="patient-card-link">
+          <article class="patient-card">
+            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
+                 alt="Foto de Marcos Souza" class="patient-image">
+            <div class="patient-info">
+              <h2 class="patient-name">Marcos Souza</h2>
+              <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
+              <p class="patient-details">CPF: 123.456.789-10</p>
+              <p class="case-type">Despejo por falta de aluguel</p>
+            </div>
+          </article>
+        </a>
+
         <!-- Adicione outros cartões de paciente seguindo o exemplo acima -->
-
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        
-        <article class="patient-card">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/beec003cb523f1d0b2842acf14639b86054e58b84a274551b92a29397fe881b5?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Foto de Marcos Souza" class="patient-image">
-          <div class="patient-info">
-            <h2 class="patient-name">Marcos Souza</h2>
-            <p class="patient-details">Data de nascimento: dd/mm/yyyy</p>
-            <p class="patient-details">CPF: 123.456.789-10</p>
-            <p class="case-type">Despejo por falta de aluguel</p>
-          </div>
-        </article>
-
-        
-
-        
       </div>
   
       <div class="action-buttons">

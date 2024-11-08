@@ -17,31 +17,31 @@
             </section>
             <ul class="nav-list">
                 <li class="nav-item active">
-                    <a href="#" class="nav-link">
+                    <a href="/Home" class="nav-link">
                         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/947e818bbd7d3172fdcb33b91acf0924d8972caabaf15a72f82cccb9ea840bd2?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                         <span class="nav-text">Home</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/CadastroAdvogado" class="nav-link">
                         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a029aaf80babb69667b5c7121d25929da1e115a7ea30ca07227da4f377e0da37?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                         <span class="nav-text">Cadastrar advogados</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/CadastroCliente" class="nav-link">
                         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cc6f667946bdb2513a1c753f41657bd3a4ea803204f0230fa4c72ffa83ae771?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                         <span class="nav-text">Cadastrar clientes</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/TJHome" class="nav-link">
                         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/427518cf73675b8be74ce61d6e429be5ed44d054aaa5e124681e454754e014f1?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                         <span class="nav-text">Converse com TJ</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/TJDuvidas" class="nav-link">
                         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/0884257241e3b1574843327c16f5e9f08fa07f44942f09efdbcacd72202ad44e?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                         <span class="nav-text">TJ para dúvidas</span>
                     </a>
@@ -55,12 +55,66 @@
             </a>
         </nav>
         <main>
-                <img src="{{ url_for('static', filename='images/Home ADM.png') }}" alt="Background Image" class="background-image">
+            <section class="home-admin">
+                <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/7738ab80943825d0c6978a10b7d979f948c20d8b9f6fc543367ee360a4a9e350?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Company logo" class="logo" />
+                
                 <div class="main-content">
-                    <img src="{{ url_for('static', filename='images/Vector 5.png') }}" alt="Background Image" class="vetor-image">
-                    <img src="{{ url_for('static', filename='images/justiceHome.png') }}" alt="Justice Image" class="justice-image">
-    
+                  <div class="content-wrapper">
+                    <div class="left-column">
+                      <div class="image-grid">
+                        <div class="grid-row">
+                          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/54d994925932207a02dfea57f901ebd29f6882ca70cbe15b3275835cdfb2b722?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Grid image 1" class="grid-image" />
+                          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a376e46439b09686675255301e0a0aefb89cd395d064a9e019aa2550f8c9124f?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Grid image 2" class="grid-image" />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a46ca879fced7e8d7be2c93bbbb381ab4e165784bb734d1d5997d25492109b31?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Legal documents icon" class="feature-icon" />
+                      <h3 class="feature-title">Peças Jurídicas com TJ</h3>
+                    </div>
+                    
+                    <div class="feature-card">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/14e477663c62c5b3ad9cef17a05f11c56fd5395844bf56506bb7aeadd69e7ed6?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Question mark icon" class="feature-icon" />
+                      <h3 class="feature-title">Dúvidas com o TJ</h3>
+                    </div>
+                  </div>
                 </div>
+                
+                <div class="bottom-section">
+                  <div class="bottom-content">
+                    <div class="large-image-container">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/0cea8acfdefe8592055400659b07f871a67fcd3dda2e2326985ce2be2603a798?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Large central icon" class="large-image-icon" />
+                    </div>
+                    
+                    <aside class="sidebar">
+                      <div class="sidebar-content">
+                        <div class="user-list">
+                          <div class="user-avatars">
+                            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/730cfec436c8c8fd865e02ff4cd0d33872be617a9abd9c9e7678f884b54b71f3?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="User avatar 1" class="user-avatar" />
+                            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/2676f7e60a2c497838ec570dca8fc6f1cc6830046a6f913fa1af4879c96e6814?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="User avatar 2" class="user-avatar" />
+                            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/5b595598d6ef922e0302be6264e007597f540c677af2f02850ba2efeada37e0f?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="User avatar 3" class="user-avatar" />
+                            <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/350e11fc73643d04137235802e9b10f953c21961b9eec1f536e88833690d866a?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="User avatar 4" class="user-avatar" />
+                          </div>
+                          
+                          <div class="user-details">
+                            <a href="#" class="view-all">Ver tudo</a>
+                            <h4 class="user-name">Marcos Souza</h4>
+                            <p class="user-description">Despejo por falta de aluguel</p>
+                            <h4 class="user-name">Juliana Araujo</h4>
+                            <p class="user-description">Danos Morais</p>
+                            <h4 class="user-name">Isabel Silva Studio</h4>
+                            <p class="user-description">Indênização no trânsito</p>
+                            <h4 class="user-name">Roberto Júlio</h4>
+                            <p class="user-description">Divórcio por mútuo consentimento</p>
+                          </div>
+                        </div>
+                      </div>
+                    </aside>
+                  </div>
+                </div>
+              </section>
+            
 
         </main>
     </body>
