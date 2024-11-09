@@ -59,12 +59,18 @@
     
     <main class="main-content">
         <h1 class="main-title">Cadastro de Advogado</h1>
+
+        {% if msg %}
+          <div class="message {{ msg_type }}">
+            {{ msg }}
+          </div>
+        {% endif %}
         
         <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
         <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
         
         <section class="lawyer-registration">
-          <form class="registration-form">
+          <form class="registration-form" method="POST" action="{{ url_for('cadastro_advogado') }}" enctype="multipart/form-data">
             <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
             <div class="input-div" onclick="triggerUpload()">
               <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
@@ -76,52 +82,46 @@
                 <polyline points="16 16 12 12 8 16"></polyline>
               </svg>
             </div>
-            
+            <input type="hidden" name="IdADM" value="{{ IdADM }}">
+            <input type="hidden" name="IdEmpresa" value="{{ IdEmpresa }}">
             <!-- Campos do Formulário -->
             <div class="form-column">
               <div class="form-field">
                 <label for="name">Nome</label>
-                <input type="text" id="name" class="form-input" placeholder="Digite seu nome completo" required>
+                <input type="text" id="name" name="nome" class="form-input" placeholder="Digite seu nome completo" required>
               </div>
               
               <div class="form-field">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" class="form-input" placeholder="Digite seu e-mail" required>
+                <input type="email" id="email" name="email" class="form-input" placeholder="Digite seu e-mail" required>
               </div>
               
               <div class="form-field">
                 <label for="password">Senha</label>
-                <div class="password-input form-input">
-                  <input type="password" id="password" placeholder="No mínimo 8 dígitos" required>
-                  <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/da00e5ac0e51b2733793730dccddd40cf2fc37a43ec98e24357ca41487d6f128?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="" class="password-toggle" width="14" height="14">
-                </div>
+                <input type="password" id="password" name="senha" class="form-input" placeholder="No mínimo 8 dígitos" required>
               </div>
             </div>
             
-            <!-- Mais Campos do Formulário -->
             <div class="form-column">
               <div class="form-field">
                 <label for="cpf">CPF</label>
-                <input type="text" id="cpf" class="form-input" placeholder="123.456.789-10" required>
+                <input type="text" id="cpf" name="cpf" class="form-input" placeholder="123.456.789-10" required>
               </div>
               
               <div class="form-field">
                 <label for="oab">OAB</label>
-                <input type="text" id="oab" class="form-input" placeholder="OAB-12345" required>
+                <input type="text" id="oab" name="oab" class="form-input" placeholder="OAB-12345" required>
               </div>
               
               <div class="form-field">
                 <label for="phone">Telefone</label>
-                <div class="phone-input form-input">
-                  <span class="country-code">+11</span>
-                  <span class="phone-separator"></span>
-                  <input type="tel" id="phone" placeholder="3456-7890" required>
-                </div>
+                <input type="tel" id="phone" name="fone" class="form-input" placeholder="3456-7890" required>
               </div>
             </div>
+            </div>
+            <button type="submit" class="submit-button">Salvar</button>
           </form>
           
-          <button type="submit" class="submit-button">Salvar</button>
         </section>
     </main>
     

@@ -12,8 +12,8 @@ app.secret_key = 'tribunaljobs'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:081314@localhost/tribunaljobs'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'static/uploads'  # Diretório para armazenar as imagens
-app.config['MAX_CONTENT_PATH'] = 1024 * 1024  # Limite de tamanho do arquivo (1MB)
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['MAX_CONTENT_PATH'] = 1024 * 1024
 
 # Configurações do Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -24,7 +24,6 @@ app.config['MAIL_PASSWORD'] = "rkpy dxuj niwp rqrc"
 app.config['MAIL_DEFAULT_SENDER'] = 'tribunaljobs@gmail.com'
 
 mail = Mail(app)
-
 db = SQLAlchemy(app)
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -55,7 +54,23 @@ class ADM(db.Model):
     senha = db.Column(db.String(255), nullable=False)
     cnpj = db.Column(db.String(14), db.ForeignKey('Empresa.cnpj'))
     cpfADM = db.Column(db.String(11), db.ForeignKey('Empresa.cpfADM'))
-    imagem = db.Column(db.String(255))  # Campo para o caminho da imagem
+    imagem = db.Column(db.String(255))
+
+class Advogados(db.Model):
+    __tablename__ = 'advogados'
+    IdAdv = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(255), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False, unique=True)
+    fone = db.Column(db.String(20))
+    oab = db.Column(db.String(20))
+    email = db.Column(db.String(255), nullable=False, unique=True)
+    senha = db.Column(db.String(255), nullable=False)
+    IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'))
+    IdEmpresa = db.Column(db.String(14), db.ForeignKey('Empresa.cnpj'))
+
+    adm = db.relationship('ADM', backref='advogados')
+    empresa = db.relationship('Empresa', backref='advogados')
+
 
 @app.route('/')
 def index():
@@ -88,10 +103,20 @@ def logout():
     session.pop('email', None)
     return redirect(url_for('login'))
 
-@app.route('/home')
-def home():
+@app.route('/Home')
+def Home():
     if 'loggedin' in session:
-        return f'Logged in as {session["email"]}'
+        adm = ADM.query.filter_by(email=session['email']).first()
+        if adm:
+            role = "Administrador"
+            return render_template('home.html', user=adm, role=role)
+
+        advogado = Advogados.query.filter_by(email=session['email']).first()
+        if advogado:
+            role = "Advogado"
+            return render_template('home.html', user=advogado, role=role)
+
+        return "Erro: Usuário não encontrado."
     return redirect(url_for('login'))
 
 @app.route('/cadastro', methods=['GET', 'POST'])
@@ -103,7 +128,6 @@ def cadastro():
         contato = request.form['contato']
         cpfADM = request.form['cpfADM']
 
-        # Validação dos campos CNPJ e CPF
         if not re.match(r'^\d{14}$', cnpj):
             msg = 'CNPJ inválido. Deve conter 14 dígitos numéricos.'
         elif not re.match(r'^\d{11}$', cpfADM):
@@ -138,7 +162,6 @@ def cadastroADM():
         senha = request.form['senha']
         imagem = request.files.get('imagem')
 
-        # Verificação se o email já está registrado
         if Login.query.filter_by(email=email).first():
             msg = 'Email já registrado!'
         else:
@@ -146,7 +169,7 @@ def cadastroADM():
                 filename = secure_filename(imagem.filename)
                 unique_filename = str(uuid.uuid4()) + os.path.splitext(filename)[1]
                 imagem.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
-                imagem_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+                imagem_path = os.path.join('static/uploads', unique_filename)
             else:
                 imagem_path = None
 
@@ -169,127 +192,57 @@ def cadastroADM():
                 msg = str(e)
     return render_template('cadastroADM.html', msg=msg, cnpj=cnpj, cpfADM=cpfADM)
 
-# Nova rota para EsqueciSenha
-@app.route('/EsqueciSenha', methods=['GET', 'POST'])
-def EsqueciSenha():
+@app.route('/CadastroAdvogado', methods=['GET', 'POST'])
+def cadastro_advogado():
     msg = ''
-    if request.method == 'POST' and 'cpf' in request.form:
+    msg_type = ''
+    IdADM = session.get('id')
+    adm = ADM.query.filter_by(IdADM=IdADM).first()
+    IdEmpresa = None
+    if adm:
+        empresa = Empresa.query.filter_by(cpfADM=adm.cpfADM).first()
+        if empresa:
+            IdEmpresa = empresa.cnpj
+    
+    if request.method == 'POST' and all(key in request.form for key in ['nome', 'cpf', 'fone', 'oab', 'email', 'senha']):
+        nome = request.form['nome']
         cpf = request.form['cpf']
-        print(f"CPF recebido: {cpf}")  # Debug: imprimir o CPF recebido
-        adm = ADM.query.filter_by(cpfADM=cpf).first()
-        print(f"ADM encontrado: {adm}")  # Debug: imprimir se encontrou um ADM
+        fone = request.form['fone']
+        oab = request.form['oab']
+        email = request.form['email']
+        senha = request.form['senha']
 
-        if adm:
-            email = adm.email
-            session['email'] = email  # Armazenar o email na sessão
-            print(f"E-mail do ADM: {email}")  # Debug: imprimir o e-mail encontrado
+        # Verificar se o email ou CPF já existe na tabela Advogados ou Login
+        if Advogados.query.filter((Advogados.email == email) | (Advogados.cpf == cpf)).first() or Login.query.filter_by(email=email).first():
+            msg = 'Email ou CPF já registrado!'
+            msg_type = "error"
         else:
-            msg = 'CPF não encontrado.'
-            print(msg)  # Debug: imprimir mensagem de erro
-            return render_template('EsqueciSenha.html', msg=msg)
-
-        # Gerar código de verificação
-        codigo_verificacao = ''.join(random.choices('0123456789', k=4))
-        print(f"Código de verificação gerado: {codigo_verificacao}")  # Debug: imprimir o código gerado
-
-        # Enviar e-mail com código de verificação
-        try:
-            msg_email = Message('Código de Verificação - Tribunal Jobs', recipients=[email])
-            msg_email.body = f'Seu código de verificação é: {codigo_verificacao}'
-            mail.send(msg_email)
-            session['codigo_verificacao'] = codigo_verificacao
-            session['cpf'] = cpf
-            return redirect(url_for('EsqueciSenhaVerificacao'))
-        except Exception as e:
-            msg = f'Erro ao enviar o e-mail: {str(e)}'
-            print(msg)  # Debug: imprimir mensagem de erro de envio de e-mail
-    return render_template('EsqueciSenha.html', msg=msg)
-
-@app.route('/EsqueciSenhaVerificacao', methods=['GET', 'POST'])
-def EsqueciSenhaVerificacao():
-    msg = ''
-    email = session.get('email')
-    if request.method == 'POST':
-        codigo_digitado = ''.join([request.form.get(f'code{i}') for i in range(1, 5)])
-        if codigo_digitado == session.get('codigo_verificacao'):
-            return redirect(url_for('EsqueciSenhaNovaSenha'))
-        else:
-            msg = 'Código de verificação incorreto.'
-    return render_template('EsqueciSenhaVerificacao.html', msg=msg, email=email)
-
-@app.route('/reenviar_codigo', methods=['POST'])
-def reenviar_codigo():
-    email = session.get('email')
-    if email:
-        # Gerar novo código de verificação
-        codigo_verificacao = ''.join(random.choices('0123456789', k=4))
-        session['codigo_verificacao'] = codigo_verificacao
-        try:
-            msg_email = Message('Novo Código de Verificação - Tribunal Jobs', recipients=[email])
-            msg_email.body = f'Seu novo código de verificação é: {codigo_verificacao}'
-            mail.send(msg_email)
-            return jsonify({'msg': 'Novo código enviado para o seu e-mail.'})
-        except Exception as e:
-            return jsonify({'msg': f'Erro ao enviar o e-mail: {str(e)}'})
-    else:
-        return jsonify({'msg': 'E-mail não encontrado na sessão.'})
-
-@app.route('/EsqueciSenhaNovaSenha', methods=['GET', 'POST'])
-def EsqueciSenhaNovaSenha():
-    msg = ''
-    if request.method == 'POST':
-        nova_senha = request.form.get('nova_senha')
-        confirmacao_senha = request.form.get('confirmacao_senha')
-        
-        if nova_senha and confirmacao_senha:
-            if nova_senha == confirmacao_senha:
-                cpf = session.get('cpf')
-                if cpf:
-                    adm = ADM.query.filter_by(cpfADM=cpf).first()
-                    if adm:
-                        login = Login.query.filter_by(email=adm.email).first()
-                        if login:
-                            login.senha = nova_senha
-                            adm.senha = nova_senha
-                            db.session.commit()
-                            msg = 'Senha atualizada com sucesso!'
-                            return redirect(url_for('EsqueciSenhaConcluido'))
-                        else:
-                            msg = 'Erro ao encontrar o login associado.'
-                    else:
-                        msg = 'Erro ao encontrar o administrador associado.'
-                else:
-                    msg = 'CPF não encontrado na sessão.'
-            else:
-                msg = 'As senhas não coincidem.'
-        else:
-            msg = 'Preencha todos os campos.'
-    return render_template('EsqueciSenhaNovaSenha.html', msg=msg)
-
-@app.route('/EsqueciSenhaConcluido')
-def EsqueciSenhaConcluido():
-    return render_template('EsqueciSenhaConcluido.html')
-
-
-@app.route('/Home')
-def Home():
-    return render_template('Home.html')
-
-@app.route('/CadastroCliente')
-def CadastroCliente():
-    return render_template('CadastroCliente.html')
-
-@app.route('/CadastroAdvogado')
-def CadastroAdvogado():
-    return render_template('CadastroAdvogado.html')
-
-@app.route('/TJDuvidas')
-def TJDuvidas():
-    return render_template('TJDuvidas.html')
-
-@app.route('/TJHome')
-def TJHome():
-    return render_template('TJHome.html')
+            try:
+                # Cadastrar novo advogado
+                novo_advogado = Advogados(nome=nome, cpf=cpf, fone=fone, oab=oab, email=email, senha=senha, IdADM=IdADM, IdEmpresa=IdEmpresa)
+                
+                # Cadastrar email e senha na tabela Login
+                novo_login = Login(email=email, senha=senha)
+                
+                db.session.add(novo_advogado)
+                db.session.add(novo_login)
+                db.session.commit()
+                
+                msg = 'Advogado cadastrado com sucesso!'
+                msg_type = "success"
+            except IntegrityError:
+                db.session.rollback()
+                msg = 'Erro ao registrar o advogado. Verifique os dados e tente novamente.'
+                msg_type = "error"
+            except DataError:
+                db.session.rollback()
+                msg = 'Erro nos dados fornecidos. Verifique os campos e tente novamente.'
+                msg_type = "error"
+            except SQLAlchemyError as e:
+                db.session.rollback()
+                msg = str(e)
+                msg_type = "error"
+    return render_template('CadastroAdvogado.html', msg=msg, msg_type=msg_type, IdADM=IdADM, IdEmpresa=IdEmpresa)
 
 if __name__ == '__main__':
     with app.app_context():

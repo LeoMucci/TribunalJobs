@@ -71,3 +71,26 @@ CREATE TABLE TJ (
 
 
 ALTER TABLE ADM ADD imagem VARCHAR(255);
+
+select * from adm;
+
+select * from login;
+
+select * from empresa;
+
+select email, senha, cpf from adm where email  ="velosorodrigo994@gmail.com";
+DELETE FROM empresa WHERE cnpj IN ('00000000000111', '00000000003333', '11111111111111', '44444444444444', '77777777777777' );
+
+DELETE FROM login WHERE IdUser = 1;
+
+login
+
+
+
+
+
+
+
+
+
+
