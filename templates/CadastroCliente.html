@@ -71,13 +71,17 @@
     
     <main class="main-content">
         <h1 class="main-title">Cadastro de Cliente</h1>
-        
+        {% if msg %}
+          <div class="message {{ msg_type }}">
+        {{ msg }}
+          </div>
+        {% endif %}
+                
         <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
         <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
         
         <section class="lawyer-registration">
-          <form class="registration-form">
-            <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
+          <form class="registration-form" method="POST" action="{{ url_for('CadastroCliente') }}" enctype="multipart/form-data">            <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
             <div class="input-div" onclick="triggerUpload()">
               <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
               <img src="https://via.placeholder.com/100" alt="Imagem de perfil" class="profile-pic" id="profile-pic" hidden>
@@ -92,45 +96,46 @@
             <!-- Campos do Formulário -->
             <div class="form-column">
               <div class="form-field">
-                <label for="name">Nome</label>
-                <input type="text" id="name" class="form-input" placeholder="Digite seu nome completo" required>
+                  <label for="name">Nome</label>
+                  <input type="text" id="name" name="nome" class="form-input" placeholder="Digite seu nome completo" required>
               </div>
-              
+      
               <div class="form-field">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" class="form-input" placeholder="Digite seu e-mail" required>
+                  <label for="email">E-mail</label>
+                  <input type="email" id="email" name="email" class="form-input" placeholder="Digite seu e-mail" required>
               </div>
-              
+      
               <div class="form-field">
-                <label for="password">Data de nascimento</label>
-                  <input type="date" id="password" class="form-input" placeholder="No mínimo 8 dígitos" required>
+                  <label for="dtNascimento">Data de nascimento</label>
+                  <input type="date" id="dtNascimento" name="dtNascimento" class="form-input" required>
               </div>
-            </div>
-            
-            <!-- Mais Campos do Formulário -->
-            <div class="form-column">
+          </div>
+      
+          <div class="form-column">
               <div class="form-field">
-                <label for="cpf">CPF</label>
-                <input type="text" id="cpf" class="form-input" placeholder="123.456.789-10" required>
+                  <label for="cpf">CPF</label>
+                  <input type="text" id="cpf" name="cpf" class="form-input" placeholder="123.456.789-10" required>
               </div>
-              
+      
               <div class="form-field">
-                <label for="oab">Descrição da causa</label>
-                <input type="text" id="Descrição" class="form-input" placeholder="...." required>
+                  <label for="causa">Descrição da causa</label>
+                  <textarea id="causa" name="causa" class="form-input" placeholder="Descrição..." required></textarea>
               </div>
-              
+      
               <div class="form-field">
-                <label for="phone">Telefone</label>
-                <div class="phone-input form-input">
-                  <span class="country-code">+11</span>
-                  <span class="phone-separator"></span>
-                  <input type="tel" id="phone" placeholder="3456-7890" required>
-                </div>
+                  <label for="IdAdv">ID Advogado</label>
+                  <input type="hidden" id="IdAdv" name="IdAdv" class="form-input" placeholder="ID do Advogado" required>
               </div>
-            </div>
-          </form>
-          
+      
+              <div class="form-field">
+                  <label for="fone">Telefone</label>
+                  <input type="tel" id="fone" name="fone" class="form-input" placeholder="3456-7890" required>
+              </div>
+          </div>   
           <button type="submit" class="submit-button">Salvar</button>
+      </form>
+          
+        
         </section>
     </main>
     
