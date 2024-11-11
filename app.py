@@ -4,8 +4,10 @@ from sqlalchemy.exc import SQLAlchemyError, DataError, IntegrityError
 from flask_mail import Mail, Message
 import re, os
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
 import uuid
 import random
+import openai
 
 app = Flask(__name__)
 app.secret_key = 'tribunaljobs'
@@ -84,6 +86,7 @@ class Cliente(db.Model):
     IdAdvogado = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'), nullable=True)  # FK para Advogado
     IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)  # FK para ADM
     imagem = db.Column(db.String(255))
+
 
 @app.route('/')
 def index():
@@ -344,33 +347,68 @@ def CadastroCliente():
 
     return render_template('CadastroCliente.html', msg=msg, msg_type=msg_type, cpfAdv=cpfAdv, cpf_editable=cpf_editable)
 
-
-
-@app.route('/TJHome')
+@app.route('/TJHome', methods=['GET', 'POST'])
 def TJHome():
     email_usuario = session.get('email')
     clientes = []
 
     if email_usuario:
         advogado = Advogados.query.filter_by(email=email_usuario).first()
-        if advogado:
-            clientes = Cliente.query.filter_by(IdAdvogado=advogado.IdAdv).all()
-            print(f"Advogado encontrado: {advogado.nome}, total de clientes encontrados: {len(clientes)}")
-        else:
-            adm = ADM.query.filter_by(email=email_usuario).first()
-            if adm:
-                clientes = Cliente.query.filter_by(IdADM=adm.IdADM).all()
-                print(f"ADM encontrado: {adm.nome}, total de clientes encontrados: {len(clientes)}")
-            else:
-                print("Nenhum advogado ou ADM encontrado com o email:", email_usuario)
-    else:
-        print("Email do usuário não encontrado na sessão.")
+        adm = ADM.query.filter_by(email=email_usuario).first()
 
+        # Obter o termo de busca
+        search_query = request.args.get('search', '')
+
+        # Se o termo de busca está vazio, retorna todos os clientes
+        if advogado:
+            if search_query:
+                clientes = Cliente.query.filter(
+                    Cliente.IdAdvogado == advogado.IdAdv,
+                    (Cliente.nome.ilike(f'%{search_query}%') | Cliente.cpf.ilike(f'%{search_query}%'))
+                ).all()
+            else:
+                clientes = Cliente.query.filter_by(IdAdvogado=advogado.IdAdv).all()
+        elif adm:
+            if search_query:
+                clientes = Cliente.query.filter(
+                    Cliente.IdADM == adm.IdADM,
+                    (Cliente.nome.ilike(f'%{search_query}%') | Cliente.cpf.ilike(f'%{search_query}%'))
+                ).all()
+            else:
+                clientes = Cliente.query.filter_by(IdADM=adm.IdADM).all()
+    
     return render_template('TJHome.html', clientes=clientes)
 
-@app.route('/TTESTE')
-def TJTESTE():
-    return render_template('TJTESTE.html')
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+@app.route('/TJDuvidas')
+def TJDuvidas():
+    return render_template('TJDuvidas.html')
+
+@app.route('/api/chat', methods=['POST'])
+def chat_api():
+    data = request.get_json()
+    user_message = data.get('message')
+
+    if not user_message:
+        return jsonify({"error": "Mensagem vazia"}), 400
+
+    try:
+        response = openai.ChatCompletion.create(  # Certifique-se de que a função esteja correta conforme a nova documentação
+            model="gpt-3.5-turbo",  # Use o modelo correto disponível na sua conta (ex.: gpt-4-turbo, se tiver acesso)
+            messages=[
+                {"role": "system", "content": "Você é um assistente útil para dúvidas jurídicas."},
+                {"role": "user", "content": user_message}
+            ]
+        )
+        ai_response = response['choices'][0]['message']['content']
+        return jsonify({"response": ai_response})
+    except Exception as e:
+        print(f"Erro ao chamar a API do OpenAI: {e}")
+        return jsonify({"error": "Desculpe, ocorreu um erro ao tentar obter uma resposta."}), 500
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
