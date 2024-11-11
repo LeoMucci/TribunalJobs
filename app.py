@@ -85,6 +85,7 @@ class Cliente(db.Model):
     IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)  # FK para ADM
     imagem = db.Column(db.String(255))
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -343,9 +344,6 @@ def CadastroCliente():
                 msg_type = 'error'
 
     return render_template('CadastroCliente.html', msg=msg, msg_type=msg_type, cpfAdv=cpfAdv, cpf_editable=cpf_editable)
-
-
-
 @app.route('/TJHome')
 def TJHome():
     email_usuario = session.get('email')
