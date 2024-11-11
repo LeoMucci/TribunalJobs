@@ -11,7 +11,7 @@
   <aside class="sidebar-doubts">
       <header class="header">
         <a href="/Home" class="back-icon">
-          <--
+          <-- Voltar
         </a>
         <h2>Nova dúvida</h2>
         <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a49e93cb35406b7d1300e3e1564cbcb88deb1ffe25fec24ed1647be82be7b544?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Adicionar dúvida" class="icon" />
@@ -20,13 +20,13 @@
         <h3>Dúvidas anteriores</h3>
         <div class="doubts-list">
           <li class="doubt-item">Redação de Contestação: Melhores Práticas e Dicas</li>
-      <li class="doubt-item">Maximizando sua Pesquisa Jurídica: Uso Eficaz de Ferramentas</li>
-      <li class="doubt-item">Recurso Especial perante o STJ: Critérios e Requisitos</li>
-      <li class="doubt-item">Irregularidades Processuais: Identificação e Correção</li>
-      <li class="doubt-item">Elaboração de Habeas Corpus: Pontos Chave</li>
-      <li class="doubt-item">Peça Inicial em Responsabilidade Civil: Abordagem</li>
-      <li class="doubt-item">Ação Rescisória: Critérios de Admissibilidade</li>
-      <li class="doubt-item">Interpretando o Novo CPC: Aplicação Prática</li>
+          <li class="doubt-item">Maximizando sua Pesquisa Jurídica: Uso Eficaz de Ferramentas</li>
+          <li class="doubt-item">Recurso Especial perante o STJ: Critérios e Requisitos</li>
+          <li class="doubt-item">Irregularidades Processuais: Identificação e Correção</li>
+          <li class="doubt-item">Elaboração de Habeas Corpus: Pontos Chave</li>
+          <li class="doubt-item">Peça Inicial em Responsabilidade Civil: Abordagem</li>
+          <li class="doubt-item">Ação Rescisória: Critérios de Admissibilidade</li>
+          <li class="doubt-item">Interpretando o Novo CPC: Aplicação Prática</li>
         </div>
       </section>
     <footer class="sidebar-footer">
@@ -40,9 +40,10 @@
     </footer>
   </aside>
 
-  <!-- Conteúdo Principal -->
+  <!-- Conteúdo Principal com Área de Chat -->
   <main class="main-content">
-    <div class="help-center">
+    <!-- Seção inicial de perguntas e ícones (será ocultada ao enviar mensagem) -->
+    <div class="help-center" id="initial-content">
       <div class="content-layout">
         <!-- Coluna Esquerda com Caixas de Perguntas -->
         <div class="question-column">
@@ -64,32 +65,85 @@
           <div class="question-box">Quais são as principais diferenças entre um recurso de apelação e um recurso extraordinário?</div>
         </div>
       </div>
-      <div class="messageBox">
-        <div class="fileUploadWrapper">
-          <label for="file">
-            <svg viewBox="0 0 337 337" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="168.5" cy="168.5" r="158.5" fill="none" stroke="#6c6c6c" stroke-width="20"></circle>
-              <path d="M167.759 79V259" stroke="#6c6c6c" stroke-width="25" stroke-linecap="round"></path>
-              <path d="M79 167.138H259" stroke="#6c6c6c" stroke-width="25" stroke-linecap="round"></path>
-            </svg>
-            <span class="tooltip">Add an image</span>
-          </label>
-          <input name="file" id="file" type="file" />
-        </div>
-        <input id="messageInput" type="text" placeholder="Message..." required="" />
-        <button id="sendButton">
-          <svg viewBox="0 0 664 663" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888" fill="none"></path>
-            <path d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888" stroke="#6c6c6c" stroke-width="33.67" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-        </button>
+
+   
+    </div>
+
+    
+
+    <!-- Área de Chat (exibida após o envio da primeira mensagem) -->
+    <div id="chat-container">
+      <div id="chat-messages">
+        <!-- As mensagens do chat aparecerão aqui -->
       </div>
     </div>
 
-
-
-
-    
+    <div id="chat-input">
+      <div class="fileUploadWrapper">
+        <label for="file">
+          <svg viewBox="0 0 337 337" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="168.5" cy="168.5" r="158.5" fill="none" stroke="#6c6c6c" stroke-width="20"></circle>
+            <path d="M167.759 79V259" stroke="#6c6c6c" stroke-width="25" stroke-linecap="round"></path>
+            <path d="M79 167.138H259" stroke="#6c6c6c" stroke-width="25" stroke-linecap="round"></path>
+          </svg>
+          <span class="tooltip">Add an image</span>
+        </label>
+        <input name="file" id="file" type="file" />
+      </div>
+      <input id="messageInput" type="text" placeholder="Digite sua mensagem..." required />
+      <button id="sendButton">
+        <svg viewBox="0 0 664 663" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M646.293 331.888L17.7538 17.6187L155.245 331.888" fill="none"></path>
+          <path d="M646.293 331.888L17.753 646.157L155.245 331.888" stroke="#6c6c6c" stroke-width="33.67" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
   </main>
+
+  <script>
+    document.getElementById("sendButton").addEventListener("click", sendMessage);
+
+    function sendMessage() {
+      const messageInput = document.getElementById("messageInput");
+      const chatMessages = document.getElementById("chat-messages");
+      const initialContent = document.getElementById("initial-content");
+      const chatContainer = document.getElementById("chat-container");
+
+      // Verifica se o input não está vazio
+      if (messageInput.value.trim() === "") return;
+
+      // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
+      if (initialContent.style.display !== "none") {
+        initialContent.style.display = "none"; // Oculta conteúdo inicial
+        chatContainer.style.display = "flex"; // Exibe área de chat
+      }
+
+      // Adiciona a mensagem do usuário ao chat
+      const userMessage = document.createElement("div");
+      userMessage.classList.add("message", "user");
+      userMessage.innerHTML = `
+        <img src="https://via.placeholder.com/40" alt="Usuário" class="profile-pic">
+        <div class="message-bubble">${messageInput.value}</div>
+      `;
+      chatMessages.appendChild(userMessage);
+
+      // Limpa o campo de input
+      messageInput.value = "";
+
+      // Adiciona uma resposta simulada da IA
+      setTimeout(() => {
+        const aiMessage = document.createElement("div");
+        aiMessage.classList.add("message", "ai");
+        aiMessage.innerHTML = `
+          <img src="https://via.placeholder.com/40" alt="Chat AI" class="profile-pic">
+          <div class="message-bubble">Esta é uma resposta simulada da IA.</div>
+        `;
+        chatMessages.appendChild(aiMessage);
+
+        // Faz o scroll para a última mensagem
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 1000);
+    }
+  </script>
 </body>
 </html>
