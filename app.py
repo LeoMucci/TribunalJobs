@@ -65,11 +65,13 @@ class Advogados(db.Model):
     oab = db.Column(db.String(20))
     email = db.Column(db.String(255), nullable=False, unique=True)
     senha = db.Column(db.String(255), nullable=False)
+    imagem = db.Column(db.String(255))  # Campo para armazenar o caminho da imagem
     IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'))
     IdEmpresa = db.Column(db.String(14), db.ForeignKey('Empresa.cnpj'))
 
     adm = db.relationship('ADM', backref='advogados')
     empresa = db.relationship('Empresa', backref='advogados')
+
 
 
 @app.route('/')
@@ -211,6 +213,16 @@ def cadastro_advogado():
         oab = request.form['oab']
         email = request.form['email']
         senha = request.form['senha']
+        
+        # Processar a imagem do advogado
+        imagem = request.files.get('file')
+        imagem_path = None
+        if imagem and allowed_file(imagem.filename):
+            filename = secure_filename(imagem.filename)
+            unique_filename = str(uuid.uuid4()) + os.path.splitext(filename)[1]
+            imagem_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+            imagem.save(imagem_path)
+            imagem_path = f'static/uploads/{unique_filename}'  # Caminho relativo para salvar no banco de dados
 
         # Verificar se o email ou CPF já existe na tabela Advogados ou Login
         if Advogados.query.filter((Advogados.email == email) | (Advogados.cpf == cpf)).first() or Login.query.filter_by(email=email).first():
@@ -218,8 +230,8 @@ def cadastro_advogado():
             msg_type = "error"
         else:
             try:
-                # Cadastrar novo advogado
-                novo_advogado = Advogados(nome=nome, cpf=cpf, fone=fone, oab=oab, email=email, senha=senha, IdADM=IdADM, IdEmpresa=IdEmpresa)
+                # Cadastrar novo advogado com a imagem
+                novo_advogado = Advogados(nome=nome, cpf=cpf, fone=fone, oab=oab, email=email, senha=senha, IdADM=IdADM, IdEmpresa=IdEmpresa, imagem=imagem_path)
                 
                 # Cadastrar email e senha na tabela Login
                 novo_login = Login(email=email, senha=senha)
