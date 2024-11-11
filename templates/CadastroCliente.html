@@ -123,9 +123,11 @@
               </div>
       
               <div class="form-field">
-                  <label for="IdAdv">ID Advogado</label>
-                  <input type="hidden" id="IdAdv" name="IdAdv" class="form-input" placeholder="ID do Advogado" required>
-              </div>
+                <label for="IdAdv">CPF Advogado</label>
+                <input type="text" id="IdAdv" name="IdAdv" class="form-input" placeholder="CPF Advogado"
+                       value="{{ cpfAdv }}" {% if not cpf_editable %}readonly{% endif %}>
+            </div>          
+                      
       
               <div class="form-field">
                   <label for="fone">Telefone</label>
