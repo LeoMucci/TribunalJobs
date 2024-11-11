@@ -103,47 +103,72 @@
   <script>
     document.getElementById("sendButton").addEventListener("click", sendMessage);
 
-    function sendMessage() {
-      const messageInput = document.getElementById("messageInput");
-      const chatMessages = document.getElementById("chat-messages");
-      const initialContent = document.getElementById("initial-content");
-      const chatContainer = document.getElementById("chat-container");
+    async function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const chatMessages = document.getElementById("chat-messages");
+        const initialContent = document.getElementById("initial-content");
+        const chatContainer = document.getElementById("chat-container");
 
-      // Verifica se o input não está vazio
-      if (messageInput.value.trim() === "") return;
+        // Verifica se o input não está vazio
+        if (messageInput.value.trim() === "") return;
 
-      // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
-      if (initialContent.style.display !== "none") {
-        initialContent.style.display = "none"; // Oculta conteúdo inicial
-        chatContainer.style.display = "flex"; // Exibe área de chat
-      }
+        // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
+        if (initialContent.style.display !== "none") {
+            initialContent.style.display = "none";
+            chatContainer.style.display = "flex";
+        }
 
-      // Adiciona a mensagem do usuário ao chat
-      const userMessage = document.createElement("div");
-      userMessage.classList.add("message", "user");
-      userMessage.innerHTML = `
-        <img src="https://via.placeholder.com/40" alt="Usuário" class="profile-pic">
-        <div class="message-bubble">${messageInput.value}</div>
-      `;
-      chatMessages.appendChild(userMessage);
-
-      // Limpa o campo de input
-      messageInput.value = "";
-
-      // Adiciona uma resposta simulada da IA
-      setTimeout(() => {
-        const aiMessage = document.createElement("div");
-        aiMessage.classList.add("message", "ai");
-        aiMessage.innerHTML = `
-          <img src="https://via.placeholder.com/40" alt="Chat AI" class="profile-pic">
-          <div class="message-bubble">Esta é uma resposta simulada da IA.</div>
+        // Adiciona a mensagem do usuário ao chat
+        const userMessage = document.createElement("div");
+        userMessage.classList.add("message", "user");
+        userMessage.innerHTML = `
+            <img src="https://via.placeholder.com/40" alt="Usuário" class="profile-pic">
+            <div class="message-bubble">${messageInput.value}</div>
         `;
-        chatMessages.appendChild(aiMessage);
+        chatMessages.appendChild(userMessage);
 
-        // Faz o scroll para a última mensagem
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }, 1000);
+        // Captura a mensagem do usuário e limpa o campo de input
+        const userText = messageInput.value;
+        messageInput.value = "";
+
+        // Faz a chamada para a API Flask para obter a resposta da IA
+        try {
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userText })
+            });
+
+            const data = await response.json();
+
+            // Verifica se ocorreu um erro
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            // Adiciona a resposta da IA ao chat
+            const aiMessage = document.createElement("div");
+            aiMessage.classList.add("message", "ai");
+            aiMessage.innerHTML = `
+                <img src="https://via.placeholder.com/40" alt="Chat AI" class="profile-pic">
+                <div class="message-bubble">${data.response}</div>
+            `;
+            chatMessages.appendChild(aiMessage);
+
+            // Faz o scroll para a última mensagem
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        } catch (error) {
+            console.error("Erro ao buscar a resposta da IA:", error);
+            const errorMessage = document.createElement("div");
+            errorMessage.classList.add("message", "error");
+            errorMessage.innerHTML = `
+                <div class="message-bubble">Desculpe, ocorreu um erro ao tentar obter uma resposta.</div>
+            `;
+            chatMessages.appendChild(errorMessage);
+        }
     }
-  </script>
+</script>
 </body>
 </html>
