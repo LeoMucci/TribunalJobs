@@ -368,7 +368,9 @@ def TJHome():
 
     return render_template('TJHome.html', clientes=clientes)
 
-
+@app.route('/TTESTE')
+def TJTESTE():
+    return render_template('TJTESTE.html')
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
