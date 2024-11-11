@@ -72,7 +72,17 @@ class Advogados(db.Model):
     adm = db.relationship('ADM', backref='advogados')
     empresa = db.relationship('Empresa', backref='advogados')
 
-
+class Cliente(db.Model):
+    __tablename__ = 'cliente'
+    IdCliente = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(255), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False, unique=True)
+    fone = db.Column(db.String(20))
+    email = db.Column(db.String(255), nullable=False)
+    dtNascimento = db.Column(db.Date, nullable=False)
+    causa = db.Column(db.Text)
+    IdAdv = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'))
+    imagem = db.Column(db.String(255))
 
 @app.route('/')
 def index():
@@ -255,6 +265,70 @@ def cadastro_advogado():
                 msg = str(e)
                 msg_type = "error"
     return render_template('CadastroAdvogado.html', msg=msg, msg_type=msg_type, IdADM=IdADM, IdEmpresa=IdEmpresa)
+
+@app.route('/CadastroCliente', methods=['GET', 'POST'])
+def CadastroCliente():
+    msg = ''
+    msg_type = ''
+    if request.method == 'POST' and all(key in request.form for key in ['nome', 'cpf', 'fone', 'email', 'dtNascimento', 'causa', 'IdAdv']):
+        nome = request.form['nome']
+        cpf = request.form['cpf']
+        fone = request.form['fone']
+        email = request.form['email']
+        dtNascimento = request.form['dtNascimento']
+        causa = request.form['causa']
+        IdAdv = request.form['IdAdv']
+
+        # Verificar se o ID do advogado informado existe
+        advogado = Advogados.query.filter_by(IdAdv=IdAdv).first()
+        if not advogado:
+            msg = 'ID do Advogado não encontrado. Verifique e tente novamente.'
+            msg_type = 'error'
+        else:
+            # Processar a imagem do cliente
+            imagem = request.files.get('file')
+            imagem_path = None
+            if imagem and allowed_file(imagem.filename):
+                filename = secure_filename(imagem.filename)
+                unique_filename = str(uuid.uuid4()) + os.path.splitext(filename)[1]
+                imagem_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+                imagem.save(imagem_path)
+                imagem_path = f'static/uploads/{unique_filename}'
+
+            # Verificar se o CPF já existe
+            if Cliente.query.filter_by(cpf=cpf).first():
+                msg = 'CPF já registrado!'
+                msg_type = 'error'
+            else:
+                try:
+                    novo_cliente = Cliente(
+                        nome=nome,
+                        cpf=cpf,
+                        fone=fone,
+                        email=email,
+                        dtNascimento=dtNascimento,
+                        causa=causa,
+                        IdAdv=IdAdv,
+                        imagem=imagem_path
+                    )
+                    db.session.add(novo_cliente)
+                    db.session.commit()
+                    msg = 'Cliente cadastrado com sucesso!'
+                    msg_type = 'success'
+                except IntegrityError:
+                    db.session.rollback()
+                    msg = 'Erro ao registrar o cliente. Verifique os dados e tente novamente.'
+                    msg_type = 'error'
+                except DataError:
+                    db.session.rollback()
+                    msg = 'Erro nos dados fornecidos. Verifique os campos e tente novamente.'
+                    msg_type = 'error'
+                except SQLAlchemyError as e:
+                    db.session.rollback()
+                    msg = str(e)
+                    msg_type = 'error'
+
+    return render_template('CadastroCliente.html', msg=msg, msg_type=msg_type)
 
 if __name__ == '__main__':
     with app.app_context():
