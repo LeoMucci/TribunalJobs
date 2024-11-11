@@ -81,7 +81,8 @@ class Cliente(db.Model):
     email = db.Column(db.String(255), nullable=False)
     dtNascimento = db.Column(db.Date, nullable=False)
     causa = db.Column(db.Text)
-    IdAdv = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'))
+    IdAdvogado = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'), nullable=True)  # FK para Advogado
+    IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)  # FK para ADM
     imagem = db.Column(db.String(255))
 
 @app.route('/')
@@ -270,65 +271,103 @@ def cadastro_advogado():
 def CadastroCliente():
     msg = ''
     msg_type = ''
-    if request.method == 'POST' and all(key in request.form for key in ['nome', 'cpf', 'fone', 'email', 'dtNascimento', 'causa', 'IdAdv']):
+    email_usuario = session.get('email')
+    IdAdvogado = None
+    IdADM = None
+    cpf_editable = False  # Inicializar como False
+
+    # Verificar se o usuário logado é um Advogado ou ADM e definir a FK correspondente
+    if email_usuario:
+        advogado = Advogados.query.filter_by(email=email_usuario).first()
+        if advogado:
+            IdAdvogado = advogado.IdAdv
+            cpfAdv = advogado.cpf  # CPF do advogado logado
+        else:
+            adm = ADM.query.filter_by(email=email_usuario).first()
+            if adm:
+                IdADM = adm.IdADM
+                cpfAdv = adm.cpfADM  # CPF do ADM logado
+                cpf_editable = True  # Permitir edição do CPF para ADM
+
+    if request.method == 'POST' and all(key in request.form for key in ['nome', 'cpf', 'fone', 'email', 'dtNascimento', 'causa']):
         nome = request.form['nome']
         cpf = request.form['cpf']
         fone = request.form['fone']
         email = request.form['email']
         dtNascimento = request.form['dtNascimento']
         causa = request.form['causa']
-        IdAdv = request.form['IdAdv']
 
-        # Verificar se o ID do advogado informado existe
-        advogado = Advogados.query.filter_by(IdAdv=IdAdv).first()
-        if not advogado:
-            msg = 'ID do Advogado não encontrado. Verifique e tente novamente.'
+        # Processar a imagem do cliente
+        imagem = request.files.get('file')
+        imagem_path = None
+        if imagem and allowed_file(imagem.filename):
+            filename = secure_filename(imagem.filename)
+            unique_filename = str(uuid.uuid4()) + os.path.splitext(filename)[1]
+            imagem_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+            imagem.save(imagem_path)
+            imagem_path = f'static/uploads/{unique_filename}'
+
+        # Verificar se o CPF já existe
+        if Cliente.query.filter_by(cpf=cpf).first():
+            msg = 'CPF já registrado!'
             msg_type = 'error'
         else:
-            # Processar a imagem do cliente
-            imagem = request.files.get('file')
-            imagem_path = None
-            if imagem and allowed_file(imagem.filename):
-                filename = secure_filename(imagem.filename)
-                unique_filename = str(uuid.uuid4()) + os.path.splitext(filename)[1]
-                imagem_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-                imagem.save(imagem_path)
-                imagem_path = f'static/uploads/{unique_filename}'
-
-            # Verificar se o CPF já existe
-            if Cliente.query.filter_by(cpf=cpf).first():
-                msg = 'CPF já registrado!'
+            try:
+                # Criar o novo cliente com o ID do advogado ou ADM
+                novo_cliente = Cliente(
+                    nome=nome,
+                    cpf=cpf,
+                    fone=fone,
+                    email=email,
+                    dtNascimento=dtNascimento,
+                    causa=causa,
+                    IdAdvogado=IdAdvogado if IdAdvogado else None,  # FK para Advogado, ou None se não for aplicável
+                    IdADM=IdADM if IdADM else None,                   # FK para ADM, ou None se não for aplicável
+                    imagem=imagem_path
+                )
+                db.session.add(novo_cliente)
+                db.session.commit()
+                msg = 'Cliente cadastrado com sucesso!'
+                msg_type = 'success'
+            except IntegrityError:
+                db.session.rollback()
+                msg = 'Erro ao registrar o cliente. Verifique os dados e tente novamente.'
                 msg_type = 'error'
-            else:
-                try:
-                    novo_cliente = Cliente(
-                        nome=nome,
-                        cpf=cpf,
-                        fone=fone,
-                        email=email,
-                        dtNascimento=dtNascimento,
-                        causa=causa,
-                        IdAdv=IdAdv,
-                        imagem=imagem_path
-                    )
-                    db.session.add(novo_cliente)
-                    db.session.commit()
-                    msg = 'Cliente cadastrado com sucesso!'
-                    msg_type = 'success'
-                except IntegrityError:
-                    db.session.rollback()
-                    msg = 'Erro ao registrar o cliente. Verifique os dados e tente novamente.'
-                    msg_type = 'error'
-                except DataError:
-                    db.session.rollback()
-                    msg = 'Erro nos dados fornecidos. Verifique os campos e tente novamente.'
-                    msg_type = 'error'
-                except SQLAlchemyError as e:
-                    db.session.rollback()
-                    msg = str(e)
-                    msg_type = 'error'
+            except DataError:
+                db.session.rollback()
+                msg = 'Erro nos dados fornecidos. Verifique os campos e tente novamente.'
+                msg_type = 'error'
+            except SQLAlchemyError as e:
+                db.session.rollback()
+                msg = str(e)
+                msg_type = 'error'
 
-    return render_template('CadastroCliente.html', msg=msg, msg_type=msg_type)
+    return render_template('CadastroCliente.html', msg=msg, msg_type=msg_type, cpfAdv=cpfAdv, cpf_editable=cpf_editable)
+
+
+
+@app.route('/TJHome')
+def TJHome():
+    email_usuario = session.get('email')
+    clientes = []
+
+    if email_usuario:
+        advogado = Advogados.query.filter_by(email=email_usuario).first()
+        if advogado:
+            clientes = Cliente.query.filter_by(IdAdvogado=advogado.IdAdv).all()
+            print(f"Advogado encontrado: {advogado.nome}, total de clientes encontrados: {len(clientes)}")
+        else:
+            adm = ADM.query.filter_by(email=email_usuario).first()
+            if adm:
+                clientes = Cliente.query.filter_by(IdADM=adm.IdADM).all()
+                print(f"ADM encontrado: {adm.nome}, total de clientes encontrados: {len(clientes)}")
+            else:
+                print("Nenhum advogado ou ADM encontrado com o email:", email_usuario)
+    else:
+        print("Email do usuário não encontrado na sessão.")
+
+    return render_template('TJHome.html', clientes=clientes)
+
 
 if __name__ == '__main__':
     with app.app_context():
