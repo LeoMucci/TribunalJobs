@@ -555,6 +555,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  width:10px;
 }
 
 /* Centralizar o conteúdo inicial */
