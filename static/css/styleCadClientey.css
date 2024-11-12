@@ -39,6 +39,13 @@ body {
   border-radius: 50%;
 }
 
+.profile-imagee {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
 .profile-name {
   margin: 18px 0 0;
   font-weight: 600;
@@ -714,4 +721,118 @@ body {
   100% {
     transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
   }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.main-title {
+  font-size: 50px;
+  color: #153060;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.lawyer-registration {
+  border-radius: 6px;
+  background-color: #f1f1f1;
+  box-shadow: 0 6px 23px rgba(0, 0, 0, 0.55);
+  display: flex;
+  max-width: 900px;
+  width:900px;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 62px 54px 25px;
+}
+
+.registration-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Primeira coluna para imagem, as outras duas para campos */
+  gap: 20px;
+  align-items: center;
+}
+
+.input-div {
+  grid-column: 1 / 2; /* Ocupa a primeira coluna */
+  width: 200px;
+  height: 190px;
+  border-radius: 8px;
+  border: 2px solid #153060;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0px 0px 20px #153060, inset 0px 0px 10px #153060, 0px 0px 5px rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 13px;
+  color: #686868;
+}
+
+.button-container {
+  grid-column: 1 / 4; /* Ocupa todas as colunas para centralizar */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  border-radius: 32px;
+  background-color: #1a4165;
+  color: #fff;
+  padding: 15px 70px;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  max-width: 429px;
 }

@@ -650,3 +650,42 @@ body {
   border-radius: 20px;
   border: 1px solid #3c3c3c;
 }
+
+/* From Uiverse.io by Jedi-hongbin */ 
+button {
+ display: flex;
+ height: 3em;
+ width: 100px;
+ align-items: center;
+ justify-content: center;
+ background-color: white;
+ border-radius: 3px;
+ letter-spacing: 1px;
+ transition: all 0.2s linear;
+ border-radius: 15px;
+ cursor: pointer;
+ border: none;
+ text-decoration: none;
+ background: #c5a96e;
+ color: white;
+}
+
+button > svg {
+ margin-right: 5px;
+ margin-left: 5px;
+ font-size: 20px;
+ transition: all 0.4s ease-in;
+ text-decoration: none;
+}
+
+button:hover > svg {
+ font-size: 1.2em;
+ transform: translateX(-5px);
+ text-decoration: none;
+}
+
+button:hover {
+
+ transform: translateY(-2px);
+ text-decoration: none;
+}

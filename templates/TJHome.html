@@ -66,14 +66,13 @@
           <p>Nenhum cliente encontrado para este usuário.</p>
         {% endif %}
       </div>
-  
       <div class="action-buttons">
-        <button class="register-button">Cadastrar clientes</button>
-        <button class="help-button">
+        <a class="register-button" href="{{ url_for('CadastroCliente') }}">Cadastrar clientes</a>
+        <a class="help-button" href="{{ url_for('TJDuvidas') }}">
           <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/1844febeb1e542a015fbe36f1c4f479643bfb9558e4e8a1cf1ddee5d247a0371?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
                alt="Ícone de ajuda" class="help-icon">
           <span>TJ para dúvidas</span>
-        </button>
+        </a>
       </div>
     </div>
   </section>

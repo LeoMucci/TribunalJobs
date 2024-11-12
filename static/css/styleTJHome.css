@@ -418,3 +418,73 @@ button:hover {
  box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
  transform: translateY(-2px);
 }
+
+.action-buttons a.register-button,
+.action-buttons a.help-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-buttons a.register-button {
+  background-color: #1a4165;
+  color: white;
+}
+
+.action-buttons a.help-button {
+  background-color: #d4d4d4;
+  color: black;
+}
+
+.help-icon {
+  margin-right: 8px;
+}
+
+/* Estilos dos botões */
+.action-buttons a.register-button,
+.action-buttons a.help-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botão de cadastro de clientes */
+.action-buttons a.register-button {
+  background-color: #1a4165;
+  color: white;
+}
+
+/* Botão de ajuda */
+.action-buttons a.help-button {
+  background-color: #dfc18c;
+  color: black;
+}
+
+.help-icon {
+  margin-right: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* Animação de Hover */
+.action-buttons a.register-button:hover {
+  background-color: #153050;
+  transform: scale(1.05);
+}
+
+.action-buttons a.help-button:hover {
+  background-color: #c5a96e;
+  transform: scale(1.05);
+}
+
+.action-buttons a:hover .help-icon {
+  transform: rotate(15deg);
+}

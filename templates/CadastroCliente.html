@@ -27,6 +27,7 @@
             <h1 class="profile-name">Leonardo Mucci</h1>
             <p class="profile-role">Administrador</p>
         </section>
+        
         <ul class="nav-list">
             <li class="nav-item">
                 <a href="/Home" class="nav-link">
@@ -40,7 +41,7 @@
                     <span class="nav-text">Cadastrar advogados</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a href="/CadastroCliente" class="nav-link">
                     <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cc6f667946bdb2513a1c753f41657bd3a4ea803204f0230fa4c72ffa83ae771?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                     <span class="nav-text">Cadastrar clientes</span>
@@ -82,63 +83,60 @@
         
         <section class="lawyer-registration">
           <form class="registration-form" method="POST" action="{{ url_for('CadastroCliente') }}" enctype="multipart/form-data">            <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
-            <div class="input-div" onclick="triggerUpload()">
-              <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
-              <img src="https://via.placeholder.com/100" alt="Imagem de perfil" class="profile-pic" id="profile-pic" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon">
-                <polyline points="16 16 12 12 8 16"></polyline>
-                <line y2="21" x2="12" y1="12" x1="12"></line>
-                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
-                <polyline points="16 16 12 12 8 16"></polyline>
-              </svg>
-            </div>
-            
-            <!-- Campos do Formulário -->
-            <div class="form-column">
-              <div class="form-field">
-                  <label for="name">Nome</label>
-                  <input type="text" id="name" name="nome" class="form-input" placeholder="Digite seu nome completo" required>
-              </div>
-      
-              <div class="form-field">
-                  <label for="email">E-mail</label>
-                  <input type="email" id="email" name="email" class="form-input" placeholder="Digite seu e-mail" required>
-              </div>
-      
-              <div class="form-field">
-                  <label for="dtNascimento">Data de nascimento</label>
-                  <input type="date" id="dtNascimento" name="dtNascimento" class="form-input" required>
-              </div>
+           <!-- Imagem de Upload -->
+        <div class="input-div" onclick="triggerUpload()">
+            <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
+            <img src="https://via.placeholder.com/100" alt="Imagem de perfil" class="profile-pic" id="profile-pic" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon">
+              <polyline points="16 16 12 12 8 16"></polyline>
+              <line y2="21" x2="12" y1="12" x1="12"></line>
+              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+              <polyline points="16 16 12 12 8 16"></polyline>
+            </svg>
           </div>
-      
-          <div class="form-column">
-              <div class="form-field">
-                  <label for="cpf">CPF</label>
-                  <input type="text" id="cpf" name="cpf" class="form-input" placeholder="123.456.789-10" required>
-              </div>
-      
-              <div class="form-field">
-                  <label for="causa">Descrição da causa</label>
-                  <textarea id="causa" name="causa" class="form-input" placeholder="Descrição..." required></textarea>
-              </div>
-      
-              <div class="form-field">
-                <label for="IdAdv">CPF Advogado</label>
-                <input type="text" id="IdAdv" name="IdAdv" class="form-input" placeholder="CPF Advogado"
-                       value="{{ cpfAdv }}" {% if not cpf_editable %}readonly{% endif %}>
-            </div>          
-                      
-      
-              <div class="form-field">
-                  <label for="fone">Telefone</label>
-                  <input type="tel" id="fone" name="fone" class="form-input" placeholder="3456-7890" required>
-              </div>
-          </div>   
-          <button type="submit" class="submit-button">Salvar</button>
-      </form>
           
-        
-        </section>
+          <!-- Primeira Coluna de Campos -->
+          <div class="form-column">
+            <div class="form-field">
+              <label for="name">Nome</label>
+              <input type="text" id="name" name="nome" class="form-input" placeholder="Digite seu nome completo" required>
+            </div>
+            <div class="form-field">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="Digite seu e-mail" required>
+            </div>
+            <div class="form-field">
+              <label for="dtNascimento">Data de nascimento</label>
+              <input type="date" id="dtNascimento" name="dtNascimento" class="form-input" required>
+            </div>
+          </div>
+          
+          <!-- Segunda Coluna de Campos -->
+          <div class="form-column">
+            <div class="form-field">
+              <label for="cpf">CPF</label>
+              <input type="text" id="cpf" name="cpf" class="form-input" placeholder="123.456.789-10" required>
+            </div>
+            <div class="form-field">
+              <label for="causa">Descrição da causa</label>
+              <textarea id="causa" name="causa" class="form-input" placeholder="Descrição..." required></textarea>
+            </div>
+            <div class="form-field">
+              <label for="IdAdv">CPF Advogado</label>
+              <input type="text" id="IdAdv" name="IdAdv" class="form-input" placeholder="CPF Advogado" value="{{ cpfAdv }}" {% if not cpf_editable %}readonly{% endif %}>
+            </div>
+            <div class="form-field">
+              <label for="fone">Telefone</label>
+              <input type="tel" id="fone" name="fone" class="form-input" placeholder="3456-7890" required>
+            </div>
+          </div>
+          
+          <!-- Botão de Salvar -->
+          <div class="button-container">
+            <button type="submit" class="submit-button">Salvar</button>
+          </div>
+        </form>
+      </section>
     </main>
     
     <script>

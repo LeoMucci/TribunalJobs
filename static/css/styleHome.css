@@ -299,7 +299,7 @@ right: 0;
   margin-top: -248px;
   max-width: 100%;
   position: absolute;
-  left: 100px;
+  left: 150px;
   bottom: 0;
 }
 
@@ -342,6 +342,13 @@ right: 0;
   height: 100px;
   border-radius: 50%;
   margin-bottom: 15px;
+}
+
+.sidebar-footer {
+  padding: 15px 20px;
+    display: flex;
+    align-items: center;
+
 }
 
 .profile-name {
@@ -422,6 +429,7 @@ right: 0;
   top: 0;
   right: 0;
   padding: 90px;
+  text-decoration: none;
 }
 
 .card {
@@ -434,11 +442,13 @@ right: 0;
   background-color: white;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+
 }
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 10px 10px 20px #000000, -10px -10px 20px #000000;
+
 }
 
 .card-image {
@@ -452,6 +462,8 @@ right: 0;
   flex-grow: 1;
   font-weight: bold;
   z-index: 100;
+  text-decoration: none;
+
 }
 
 /* User Information Section */
@@ -461,6 +473,12 @@ right: 0;
   width: 300px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.action-cards a.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Faz o link ocupar toda a área do card */
 }
 
 .user-title {
@@ -628,4 +646,125 @@ right: 0;
   100% {
     height: 0.2em;
   }
+}
+
+p.name{
+  margin: 1px;
+}
+
+p.artist{
+  margin: 1px;
+}
+
+
+.carde {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 320px;
+  border-radius: 24px;
+  line-height: 1.6;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+  top: 0;
+  
+}
+
+.info-card{
+
+  display: flex;
+  gap: 90px;
+  position: absolute;
+  top: 0;
+ z-index: 10000;
+  padding: 90px;
+  text-decoration: none;
+}
+
+
+.contentt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 36px;
+  border-radius: 22px;
+  color: #ffffff;
+  overflow: hidden;
+  background: #1A4165;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contentt::before {
+  position: absolute;
+  content: "";
+  top: -4%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translate(-50%);
+  background: #ced8ff;
+  z-index: -1;
+  transform-origin: bottom;
+
+  border-radius: inherit;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contentt::after {
+  position: absolute;
+  content: "";
+  top: -8%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translate(-50%);
+  background: #e7ecff;
+  z-index: -2;
+  transform-origin: bottom;
+  border-radius: inherit;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contentt svg {
+  width: 48px;
+  height: 48px;
+}
+
+.contentt .para {
+  z-index: 1;
+  opacity: 1;
+  font-size: 18px;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contentt .link {
+  z-index: 1;
+  color: #fea000;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contentt .link:hover {
+  text-decoration: underline;
+}
+
+.carde:hover {
+  transform: translate(0px, -16px);
+}
+
+.carde:hover .contentt::before {
+  rotate: -8deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carde:hover .contentt::after {
+  rotate: 8deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
