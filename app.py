@@ -394,8 +394,32 @@ def TJDuvidas():
     if 'loggedin' in session:
         user_id = session['id']
         conversas = Conversas.query.filter_by(usuario_id=user_id).order_by(Conversas.data_hora.desc()).limit(10).all()
-        return render_template('TJDuvidas.html', conversas=conversas)
+
+        # Buscar as informações do usuário logado
+        adm = ADM.query.filter_by(IdADM=user_id).first()
+        if adm:
+            role = "Administrador"
+            user_info = {
+                "name": adm.nome,
+                "role": role,
+                "image_url": adm.imagem or "https://via.placeholder.com/40"
+            }
+        else:
+            advogado = Advogados.query.filter_by(IdAdv=user_id).first()
+            if advogado:
+                role = "Advogado"
+                user_info = {
+                    "name": advogado.nome,
+                    "role": role,
+                    "image_url": advogado.imagem or "https://via.placeholder.com/40"
+                }
+            else:
+                return "Erro: Usuário não encontrado."
+
+        return render_template('TJDuvidas.html', conversas=conversas, user=user_info)
+
     return redirect(url_for('login'))
+
 
 @app.route('/api/chat', methods=['POST'])
 def chat_api():
