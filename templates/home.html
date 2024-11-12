@@ -120,9 +120,9 @@
         <div class="currentplaying">
             <p class="heading">Clientes</p>
         </div>
-        <div class="loader">
-            {% if clientes %}
+        {% if clientes %}
                 {% for cliente in clientes %}
+        <div class="loader">
                     <div class="song">
                         <!-- NOME DO CLIENTE -->
                         <p class="name">{{ cliente.nome }}</p>
@@ -131,15 +131,14 @@
                     </div>
                     <div class="albumcover">
                         <!-- IMAGEM DO CLIENTE OU PLACEHOLDER -->
-                        <img src="{{ cliente.imagem or 'https://via.placeholder.com/40' }}" alt="Foto do Cliente">
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>Nenhum cliente encontrado.</p>
-            {% endif %}
+                        <img src="{{ cliente.imagem or 'https://via.placeholder.com/40' }}" class="albumcover" alt="Foto do Cliente">
+                    </div>   
         </div>
+            {% endfor %}
+            {% else %}
+          <p>Nenhum cliente encontrado.</p>
+        {% endif %}
     </div>
-
     </main>
 </body>
 </html>
