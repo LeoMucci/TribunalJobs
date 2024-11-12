@@ -388,6 +388,9 @@ def TJDuvidas():
 
 @app.route('/api/chat', methods=['POST'])
 def chat_api():
+    if not openai.api_key:
+        return jsonify({"error": "API key não configurada. Verifique o arquivo .env"}), 500
+
     data = request.get_json()
     user_message = data.get('message')
 
@@ -395,8 +398,8 @@ def chat_api():
         return jsonify({"error": "Mensagem vazia"}), 400
 
     try:
-        response = openai.ChatCompletion.create(  # Certifique-se de que a função esteja correta conforme a nova documentação
-            model="gpt-3.5-turbo",  # Use o modelo correto disponível na sua conta (ex.: gpt-4-turbo, se tiver acesso)
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "Você é um assistente útil para dúvidas jurídicas."},
                 {"role": "user", "content": user_message}
@@ -407,7 +410,6 @@ def chat_api():
     except Exception as e:
         print(f"Erro ao chamar a API do OpenAI: {e}")
         return jsonify({"error": "Desculpe, ocorreu um erro ao tentar obter uma resposta."}), 500
-
 
 if __name__ == '__main__':
     with app.app_context():
