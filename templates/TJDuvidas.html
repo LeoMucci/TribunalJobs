@@ -19,16 +19,16 @@
       <section class="previous-doubts">
         <h3>Dúvidas anteriores</h3>
         <div class="doubts-list">
-          <li class="doubt-item">Redação de Contestação: Melhores Práticas e Dicas</li>
-          <li class="doubt-item">Maximizando sua Pesquisa Jurídica: Uso Eficaz de Ferramentas</li>
-          <li class="doubt-item">Recurso Especial perante o STJ: Critérios e Requisitos</li>
-          <li class="doubt-item">Irregularidades Processuais: Identificação e Correção</li>
-          <li class="doubt-item">Elaboração de Habeas Corpus: Pontos Chave</li>
-          <li class="doubt-item">Peça Inicial em Responsabilidade Civil: Abordagem</li>
-          <li class="doubt-item">Ação Rescisória: Critérios de Admissibilidade</li>
-          <li class="doubt-item">Interpretando o Novo CPC: Aplicação Prática</li>
+          {% if conversas %}
+            {% for conversa in conversas %}
+              <li class="doubt-item">{{ conversa.mensagem }} - {{ conversa.data_hora.strftime('%d/%m/%Y %H:%M') }}</li>
+            {% endfor %}
+          {% else %}
+            <li class="doubt-item">Nenhuma dúvida anterior encontrada.</li>
+          {% endif %}
         </div>
       </section>
+      
     <footer class="sidebar-footer">
       <div class="profile-info">
         <img src="https://via.placeholder.com/40" alt="Foto de perfil de Carlos Veríssimo" class="profile-pic">
@@ -65,11 +65,7 @@
           <div class="question-box">Quais são as principais diferenças entre um recurso de apelação e um recurso extraordinário?</div>
         </div>
       </div>
-
-   
     </div>
-
-    
 
     <!-- Área de Chat (exibida após o envio da primeira mensagem) -->
     <div id="chat-container">
@@ -102,73 +98,100 @@
 
   <script>
     document.getElementById("sendButton").addEventListener("click", sendMessage);
-
+    
+    // Função para enviar mensagem
     async function sendMessage() {
-        const messageInput = document.getElementById("messageInput");
-        const chatMessages = document.getElementById("chat-messages");
-        const initialContent = document.getElementById("initial-content");
-        const chatContainer = document.getElementById("chat-container");
+      const messageInput = document.getElementById("messageInput");
+      const chatMessages = document.getElementById("chat-messages");
+      const initialContent = document.getElementById("initial-content");
+      const chatContainer = document.getElementById("chat-container");
 
-        // Verifica se o input não está vazio
-        if (messageInput.value.trim() === "") return;
+      if (messageInput.value.trim() === "") return;
 
-        // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
-        if (initialContent.style.display !== "none") {
-            initialContent.style.display = "none";
-            chatContainer.style.display = "flex";
+      // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
+      if (initialContent.style.display !== "none") {
+        initialContent.style.display = "none";
+        chatContainer.style.display = "flex";
+      }
+
+      const userText = messageInput.value;
+      messageInput.value = "";
+
+      // Adiciona a mensagem do usuário ao chat
+      const userMessage = document.createElement("div");
+      userMessage.classList.add("message", "user");
+      userMessage.innerHTML = `<div class="message-bubble">${userText}</div>`;
+      chatMessages.appendChild(userMessage);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userText })
+        });
+        const data = await response.json();
+
+        // Verifica se ocorreu um erro
+        if (data.error) {
+          throw new Error(data.error);
         }
 
-        // Adiciona a mensagem do usuário ao chat
-        const userMessage = document.createElement("div");
-        userMessage.classList.add("message", "user");
-        userMessage.innerHTML = `
-            <img src="https://via.placeholder.com/40" alt="Usuário" class="profile-pic">
-            <div class="message-bubble">${messageInput.value}</div>
-        `;
-        chatMessages.appendChild(userMessage);
+        // Adiciona a resposta da IA ao chat
+        const aiMessage = document.createElement("div");
+        aiMessage.classList.add("message", "ai");
+        aiMessage.innerHTML = `<div class="message-bubble">${data.response}</div>`;
+        chatMessages.appendChild(aiMessage);
 
-        // Captura a mensagem do usuário e limpa o campo de input
-        const userText = messageInput.value;
-        messageInput.value = "";
+        // Faz o scroll para a última mensagem
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      } catch (error) {
+        console.error("Erro ao buscar a resposta da IA:", error);
+        const errorMessage = document.createElement("div");
+        errorMessage.classList.add("message", "error");
+        errorMessage.innerHTML = `<div class="message-bubble">Desculpe, ocorreu um erro ao tentar obter uma resposta.</div>`;
+        chatMessages.appendChild(errorMessage);
+      }
+    }
 
-        // Faz a chamada para a API Flask para obter a resposta da IA
-        try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message: userText })
-            });
+    // Carregar conversas anteriores ao carregar a página
+    document.addEventListener("DOMContentLoaded", async function() {
+    const chatMessages = document.getElementById("chat-messages");
+    const doubtsList = document.querySelector(".doubts-list");
 
-            const data = await response.json();
+    try {
+        // Carregar as mensagens anteriores
+        const response = await fetch("/conversas");
+        const data = await response.json();
 
-            // Verifica se ocorreu um erro
-            if (data.error) {
-                throw new Error(data.error);
-            }
+        // Exibir as conversas na área de chat e na lista de dúvidas anteriores
+        data.forEach(conversa => {
+            // Adicionar a conversa na área de chat (se necessário)
+            const userMessage = document.createElement("div");
+            userMessage.classList.add("message", "user");
+            userMessage.innerHTML = `
+                <div class="message-bubble">${conversa.mensagem}</div>
+                <div class="message-time">${conversa.data_hora}</div>
+            `;
+            chatMessages.appendChild(userMessage);
 
-            // Adiciona a resposta da IA ao chat
             const aiMessage = document.createElement("div");
             aiMessage.classList.add("message", "ai");
             aiMessage.innerHTML = `
-                <img src="https://via.placeholder.com/40" alt="Chat AI" class="profile-pic">
-                <div class="message-bubble">${data.response}</div>
+                <div class="message-bubble">${conversa.resposta}</div>
+                <div class="message-time">${conversa.data_hora}</div>
             `;
             chatMessages.appendChild(aiMessage);
 
-            // Faz o scroll para a última mensagem
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        } catch (error) {
-            console.error("Erro ao buscar a resposta da IA:", error);
-            const errorMessage = document.createElement("div");
-            errorMessage.classList.add("message", "error");
-            errorMessage.innerHTML = `
-                <div class="message-bubble">Desculpe, ocorreu um erro ao tentar obter uma resposta.</div>
-            `;
-            chatMessages.appendChild(errorMessage);
-        }
+            // Adicionar a conversa na lista de dúvidas anteriores
+            const doubtItem = document.createElement("li");
+            doubtItem.classList.add("doubt-item");
+            doubtItem.textContent = `${conversa.mensagem} - ${conversa.data_hora}`;
+            doubtsList.appendChild(doubtItem);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar conversas anteriores:", error);
     }
-</script>
+});
+  </script>
 </body>
 </html>

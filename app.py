@@ -87,6 +87,13 @@ class Cliente(db.Model):
     IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)  # FK para ADM
     imagem = db.Column(db.String(255))
 
+class Conversas(db.Model):
+    __tablename__ = 'Conversas'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('Login.IdUser'), nullable=True)
+    mensagem = db.Column(db.Text, nullable=False)
+    resposta = db.Column(db.Text, nullable=False)
+    data_hora = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 @app.route('/')
 def index():
@@ -384,15 +391,17 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/TJDuvidas')
 def TJDuvidas():
-    return render_template('TJDuvidas.html')
+    if 'loggedin' in session:
+        user_id = session['id']
+        conversas = Conversas.query.filter_by(usuario_id=user_id).order_by(Conversas.data_hora.desc()).limit(10).all()
+        return render_template('TJDuvidas.html', conversas=conversas)
+    return redirect(url_for('login'))
 
 @app.route('/api/chat', methods=['POST'])
 def chat_api():
-    if not openai.api_key:
-        return jsonify({"error": "API key não configurada. Verifique o arquivo .env"}), 500
-
     data = request.get_json()
     user_message = data.get('message')
+    user_id = session.get('id')  # Pega o ID do usuário logado
 
     if not user_message:
         return jsonify({"error": "Mensagem vazia"}), 400
@@ -406,10 +415,17 @@ def chat_api():
             ]
         )
         ai_response = response['choices'][0]['message']['content']
+
+        # Salvar a conversa no banco de dados
+        nova_conversa = Conversas(usuario_id=user_id, mensagem=user_message, resposta=ai_response)
+        db.session.add(nova_conversa)
+        db.session.commit()
+
         return jsonify({"response": ai_response})
     except Exception as e:
         print(f"Erro ao chamar a API do OpenAI: {e}")
         return jsonify({"error": "Desculpe, ocorreu um erro ao tentar obter uma resposta."}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():
