@@ -16,28 +16,30 @@
         <h2>Nova dúvida</h2>
         <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a49e93cb35406b7d1300e3e1564cbcb88deb1ffe25fec24ed1647be82be7b544?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Adicionar dúvida" class="icon" />
       </header>
-      <section class="previous-doubts">
-        <h3>Dúvidas anteriores</h3>
-        <div class="doubts-list">
-          {% if conversas %}
-            {% for conversa in conversas %}
-              <li class="doubt-item">{{ conversa.mensagem }} - {{ conversa.data_hora.strftime('%d/%m/%Y %H:%M') }}</li>
-            {% endfor %}
-          {% else %}
-            <li class="doubt-item">Nenhuma dúvida anterior encontrada.</li>
-          {% endif %}
-        </div>
-      </section>
       
-    <footer class="sidebar-footer">
-      <div class="profile-info">
-        <img src="https://via.placeholder.com/40" alt="Foto de perfil de Carlos Veríssimo" class="profile-pic">
-        <div class="profile-text">
-          <p class="profile-name">Carlos Veríssimo</p>
-          <p class="profile-role">Administrador</p>
-        </div>
-      </div>
-    </footer>
+        <section class="previous-doubts">
+          <h3>Dúvidas anteriores</h3>
+          <div class="doubts-list">
+            <li class="doubt-item">Redação de Contestação: Melhores Práticas e Dicas</li>
+            <li class="doubt-item">Maximizando sua Pesquisa Jurídica: Uso Eficaz de Ferramentas</li>
+            <li class="doubt-item">Recurso Especial perante o STJ: Critérios e Requisitos</li>
+            <li class="doubt-item">Irregularidades Processuais: Identificação e Correção</li>
+            <li class="doubt-item">Elaboração de Habeas Corpus: Pontos Chave</li>
+            <li class="doubt-item">Peça Inicial em Responsabilidade Civil: Abordagem</li>
+            <li class="doubt-item">Ação Rescisória: Critérios de Admissibilidade</li>
+            <li class="doubt-item">Interpretando o Novo CPC: Aplicação Prática</li>
+          </div>
+        </section>
+        
+        <footer class="sidebar-footer">
+          <div class="profile-info">
+            <img src="{{ user['image_url'] }}" alt="Foto de perfil de {{ user['name'] }}" class="profile-pic">
+            <div class="profile-text">
+              <p class="profile-name">{{ user['name'] }}</p>
+              <p class="profile-role">Administrador</p>
+            </div>
+          </div>
+        </footer>
   </aside>
 
   <!-- Conteúdo Principal com Área de Chat -->
