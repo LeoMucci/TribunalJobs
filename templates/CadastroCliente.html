@@ -23,9 +23,9 @@
     </div>
     <nav class="sidebar">
         <section class="profile-section">
-            <img src="{{ url_for('static', filename='uploads/Leo.png') }}" alt="Profile picture of Carlos Veríssimo" class="profile-imagee">
-            <h1 class="profile-name">Leonardo Mucci</h1>
-            <p class="profile-role">Administrador</p>
+          <img src="{{ session['user_info']['image_url'] }}" alt="Profile picture" class="profile-imagee">
+          <h1 class="profile-name">{{ session['user_info']['name'] }}</h1>
+          <p class="profile-role">{{ session['user_info']['role'] }}</p>  
         </section>
         
         <ul class="nav-list">
