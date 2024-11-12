@@ -116,37 +116,28 @@
       </div>
       
 
-    <div class="main">
-      <div class="currentplaying">
-        <p class="heading">Clientes</p>
-      </div>
-      <div class="loader"> 
-        <div class="song"> 
-
-          <!-- NOME DO CLIENTE -->
-          <p class="name">Time in a Bottle</p> 
-
-          <p class="artist">Jim Corce</p>
+      <div class="main">
+        <div class="currentplaying">
+            <p class="heading">Clientes</p>
         </div>
-        <div class="albumcover"></div>
-    
-      </div>
-      <div class="loader">
-        <div class="song">
-          <p class="name">My Way</p>
-          <p class="artist">Frank Sinatra</p>
+        <div class="loader">
+            {% if clientes %}
+                {% for cliente in clientes %}
+                    <div class="song">
+                        <!-- NOME DO CLIENTE -->
+                        <p class="name">{{ cliente.nome }}</p>
+                        <!-- CAUSA DO CLIENTE -->
+                        <p class="causa">{{ cliente.causa }}</p>
+                    </div>
+                    <div class="albumcover">
+                        <!-- IMAGEM DO CLIENTE OU PLACEHOLDER -->
+                        <img src="{{ cliente.imagem or 'https://via.placeholder.com/40' }}" alt="Foto do Cliente">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Nenhum cliente encontrado.</p>
+            {% endif %}
         </div>
-        <div class="albumcover"></div>
-       
-      </div>
-      <div class="loader">
-        <div class="song">
-          <p class="name">Lemon Tree</p>
-          <p class="artist">Fools Garden</p>
-        </div>
-        <div class="albumcover"></div>
-       
-      </div>
     </div>
 
     </main>

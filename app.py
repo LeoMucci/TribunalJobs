@@ -119,6 +119,25 @@ def login():
             msg = str(e)
     return render_template('login.html', msg=msg)
 
+@app.before_request
+def load_user_data():
+    if 'loggedin' in session:
+        email = session.get('email')
+        adm = ADM.query.filter_by(email=email).first()
+        advogado = Advogados.query.filter_by(email=email).first()
+        if adm:
+            session['user_info'] = {
+                "name": adm.nome,
+                "role": "Administrador",
+                "image_url": adm.imagem or "https://via.placeholder.com/40"
+            }
+        elif advogado:
+            session['user_info'] = {
+                "name": advogado.nome,
+                "role": "Advogado",
+                "image_url": advogado.imagem or "https://via.placeholder.com/40"
+            }
+
 @app.route('/logout')
 def logout():
     session.pop('loggedin', None)
@@ -130,14 +149,19 @@ def logout():
 def Home():
     if 'loggedin' in session:
         adm = ADM.query.filter_by(email=session['email']).first()
+        advogado = Advogados.query.filter_by(email=session['email']).first()
+        clientes = []
+
+        # Obter os clientes associados ao administrador ou advogado logado
         if adm:
             role = "Administrador"
-            return render_template('home.html', user=adm, role=role)
-
-        advogado = Advogados.query.filter_by(email=session['email']).first()
-        if advogado:
+            clientes = Cliente.query.filter_by(IdADM=adm.IdADM).all()
+            return render_template('home.html', user=adm, role=role, clientes=clientes)
+        
+        elif advogado:
             role = "Advogado"
-            return render_template('home.html', user=advogado, role=role)
+            clientes = Cliente.query.filter_by(IdAdvogado=advogado.IdAdv).all()
+            return render_template('home.html', user=advogado, role=role, clientes=clientes)
 
         return "Erro: Usuário não encontrado."
     return redirect(url_for('login'))
