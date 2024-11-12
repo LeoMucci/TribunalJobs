@@ -458,7 +458,7 @@ def chat_api():
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "Você é um assistente útil para dúvidas jurídicas."},
+                {"role": "system", "content": "Você é um assistente útque só pode tirar dúvidas jurídicas."},
                 {"role": "user", "content": user_message}
             ]
         )
