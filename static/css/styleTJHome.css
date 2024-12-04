@@ -358,7 +358,11 @@ body {
 .patient-card:hover {
   transform: scale(1.05); /* Aumenta o cartão quando hover */
   box-shadow: 20px 20px 40px #bebebe, -20px -20px 40px #ffffff;
+  height: 190px;
+  align-items:flex-start;
 }
+
+
 
 .texturaB {
   position: fixed;

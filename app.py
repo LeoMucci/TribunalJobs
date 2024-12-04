@@ -573,6 +573,11 @@ def EsqueciSenhaNovaSenha():
 def EsqueciSenhaConcluido():
     return render_template('EsqueciSenhaConcluido.html')
 
+@app.route('/TJDuvidasClientes')
+def TJDuvidasClientes():
+    return render_template('TJDuvidasClientes.html')
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

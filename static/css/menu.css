@@ -136,7 +136,7 @@
 
   .stat-value {
     color: #d5b98e;
-    font: 700 53px Noto Sans, sans-serif;
+    font: 700 70px Noto Sans, sans-serif;
   }
 
   @media (max-width: 991px) {
@@ -153,5 +153,5 @@
   .stat-description {
     color: #f5f4f4;
     margin-top: 24px;
-    font: 400 15px Noto Sans, sans-serif;
+    font: 400 16px Noto Sans, sans-serif;
   }
