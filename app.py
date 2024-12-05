@@ -578,6 +578,15 @@ def TJDuvidasClientes():
     return render_template('TJDuvidasClientes.html')
 
 
+@app.route('/EditarCliente')
+def EditarCliente():
+    return render_template('EditarCliente.html')
+
+@app.route('/GerenciaAdv')
+def GerenciaAdv():
+    return render_template('GerenciaAdv.html')
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
