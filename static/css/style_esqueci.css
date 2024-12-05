@@ -157,3 +157,15 @@ button:hover {
     width: 100%;
   }
 }
+
+.input:focus {
+  border-bottom-color: rgba(129, 140, 248);
+}
+
+.input.valid {
+  border-bottom-color: #28a745; /* Verde para válido */
+}
+
+.input.invalid {
+  border-bottom-color: #dc3545; /* Vermelho para inválido */
+}

@@ -85,8 +85,23 @@ form p {
   outline: none;
   background-color: #f8fafc;
   color: #0d0c22;
-  transition: .5s ease;
-  border-bottom-color: rgba(129, 140, 248);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+  border-bottom-color: rgba(129, 140, 248, 1); /* Azul inicial */
+}
+
+.input.valid {
+  border-bottom-color: green; /* Borda verde quando válido */
+  
+}
+
+.input.invalid {
+  border-bottom-color: red; /* Borda vermelha quando inválido */
+  
+}
+
+.input.valid:hover {
+  border-color: green;
+  box-shadow: 0 0 4px rgba(0, 128, 0, 0.5); /* Sombras verdes ao passar o mouse */
 }
 
 .input::placeholder {
@@ -123,13 +138,13 @@ form button {
   font-size: 1.1em;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #1A4165;
   color: white;
   cursor: pointer;
 }
 
 form button:hover {
-  background-color: #0056b3;
+  background-color: #043869;
 }
 
 .right-section img {
@@ -249,4 +264,23 @@ form button:hover {
   width: auto; /* Ajuste o tamanho conforme necessário */
   height: auto; /* Mantém a proporção da imagem */
   z-index: 1000; /* Ajuste o z-index conforme necessário */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none; /* Esconde por padrão */
+}
+
+.input.invalid {
+  border-color: red;
+}
+
+.logo {
+  width: 80px;
+  position:absolute;
+  padding: 20px;
+  top: 0;
+  left: 0;
 }

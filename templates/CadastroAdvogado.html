@@ -34,10 +34,19 @@
                 <span class="nav-text">Cadastrar clientes</span>
             </a>
         </li>
+        <li class="nav-item ">
+          <a href="/GerenciaAdv" class="nav-link">
+              <img loading="lazy" style="  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 24px;" src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/11df733341c359f742bac4648f1ad0d7ee546521e8b5222a1749a7bc085f46bf?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
+              <span class="nav-text">Gerenciar Advogados</span>
+          </a>
+      </li>
         <li class="nav-item">
             <a href="/TJHome" class="nav-link">
                 <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/427518cf73675b8be74ce61d6e429be5ed44d054aaa5e124681e454754e014f1?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
-                <span class="nav-text">Converse com TJ</span>
+                <span class="nav-text">Gerenciar Clientes</span>
             </a>
         </li>
         <li class="nav-item">
@@ -61,9 +70,9 @@
         <h1 class="main-title">Cadastro de Advogado</h1>
 
         {% if msg %}
-          <div class="message {{ msg_type }}">
-            {{ msg }}
-          </div>
+        <script>
+            alert("{{ msg }}");
+        </script>
         {% endif %}
         
         <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
@@ -88,37 +97,59 @@
             <!-- Colunas dos Campos do Formulário -->
             <div class="form-column">
               <div class="form-field">
-                <label for="name">Nome</label>
-                <input type="text" id="name" name="nome" class="form-input" placeholder="Digite seu nome completo" required>
+                  <input type="text" id="name" name="nome" class="form-input" required>
+                  <label for="name" class="user-label">Nome</label>
+                  <small class="error-message" id="name-error"></small>
               </div>
               <div class="form-field">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="Digite seu e-mail" required>
+                  <input type="email" id="email" name="email" class="form-input" required>
+                  <label for="email" class="user-label">E-mail</label>
+                  <small class="error-message" id="email-error"></small>
               </div>
               <div class="form-field">
-                <label for="password">Senha</label>
-                <input type="password" id="password" name="senha" class="form-input" placeholder="No mínimo 8 dígitos" required>
+                  <input type="password" id="password" name="senha" class="form-input" required>
+                  <label for="password" class="user-label">Senha</label>
+                  <small class="error-message" id="password-error"></small>
               </div>
-            </div>
-            
-            <div class="form-column">
+          </div>
+          
+          <div class="form-column">
               <div class="form-field">
-                <label for="cpf">CPF</label>
-                <input type="text" id="cpf" name="cpf" class="form-input" placeholder="123.456.789-10" required>
-              </div>
-              <div class="form-field">
-                <label for="oab">OAB</label>
-                <input type="text" id="oab" name="oab" class="form-input" placeholder="OAB-12345" required>
+                  <input type="text" id="cpf" name="cpf" class="form-input" required>
+                  <label for="cpf" class="user-label">CPF</label>
+                  <small class="error-message" id="cpf-error"></small>
               </div>
               <div class="form-field">
-                <label for="phone">Telefone</label>
-                <input type="tel" id="phone" name="fone" class="form-input" placeholder="3456-7890" required>
+                  <input type="text" id="oab" name="oab" class="form-input" required>
+                  <label for="oab" class="user-label">OAB</label>
+                  <small class="error-message" id="oab-error"></small>
               </div>
-            </div>
+              <div class="form-field">
+                  <input type="tel" id="phone" name="fone" class="form-input" required>
+                  <label for="phone" class="user-label">Telefone</label>
+                  <small class="error-message" id="phone-error"></small>
+              </div>
+          </div>
+          
   
             <!-- Botão de Salvar Centralizado -->
             <div class="button-container">
-              <button type="submit" class="submit-button">Salvar</button>
+
+              <button type="submit"class="animated-button">
+                <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.58L9 16.17Z"
+                  ></path>
+                </svg>
+                <span class="textt">Cadastrar</span>
+                <span class="circle"></span>
+                <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.58L9 16.17Z"
+                  ></path>
+                </svg>
+              </button>
+              
             </div>
           </form>
         </section>
@@ -156,6 +187,98 @@
             }
           }
           
+
+          // Campos de entrada
+const inputs = {
+  nome: document.getElementById('name'),
+  email: document.getElementById('email'),
+  senha: document.getElementById('password'),
+  cpf: document.getElementById('cpf'),
+  oab: document.getElementById('oab'),
+  telefone: document.getElementById('phone'),
+};
+
+// Mensagens de erro
+const errors = {
+  nome: document.getElementById('name-error'),
+  email: document.getElementById('email-error'),
+  senha: document.getElementById('password-error'),
+  cpf: document.getElementById('cpf-error'),
+  oab: document.getElementById('oab-error'),
+  telefone: document.getElementById('phone-error'),
+};
+
+// Validações específicas para cada campo
+function validateField(input, errorElement, validationFn, errorMessage) {
+  const value = input.value.trim();
+  if (!validationFn(value)) {
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+      errorElement.textContent = errorMessage;
+      errorElement.classList.add('active');
+  } else {
+      input.classList.add('valid');
+      input.classList.remove('invalid');
+      errorElement.textContent = '';
+      errorElement.classList.remove('active');
+  }
+}
+
+// Máscara e validações para CPF, Telefone e E-mail
+inputs.cpf.addEventListener('input', () => {
+  inputs.cpf.value = formatCPF(inputs.cpf.value);
+  validateField(inputs.cpf, errors.cpf, isValidCPF, 'CPF inválido!');
+});
+
+inputs.telefone.addEventListener('input', () => {
+  inputs.telefone.value = formatPhone(inputs.telefone.value);
+  validateField(inputs.telefone, errors.telefone, isValidPhone, 'Telefone inválido!');
+});
+
+inputs.email.addEventListener('input', () => {
+  validateField(inputs.email, errors.email, isValidEmail, 'E-mail inválido!');
+});
+
+// Validação simples para senha (exemplo: mínimo de 6 caracteres)
+inputs.senha.addEventListener('input', () => {
+  validateField(inputs.senha, errors.senha, (value) => value.length >= 8, 'A senha deve ter no mínimo 8 caracteres!');
+});
+
+// Validação para OAB
+inputs.oab.addEventListener('input', () => {
+  validateField(inputs.oab, errors.oab, isValidOAB, 'OAB inválida!');
+});
+
+// Formatações
+function formatCPF(value) {
+  return value.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4').substring(0, 14);
+}
+
+function formatPhone(value) {
+  return value.replace(/\D/g, '').replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3').substring(0, 15);
+}
+
+// Validações específicas
+function isValidCPF(cpf) {
+  return cpf.length === 14; // Simplificação
+}
+
+function isValidPhone(phone) {
+  return phone.length === 15; // Simplificação
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidOAB(oab) {
+  return /^[0-9]{1,6}[A-Z]{1,2}$/.test(oab); // Exemplo: 123456SP
+}
+
+
+          
+
     </script>
 </body>
 </html>

@@ -2,7 +2,7 @@ body {
   font-family: 'Noto Sans', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #4E3E3;
+
   display: flex;
   height: 100vh;
   overflow: hidden;
@@ -67,6 +67,7 @@ body {
 
 .nav-item {
   width: 100%;
+  margin: 15px 0;
 }
 
 .nav-item a {
@@ -299,6 +300,7 @@ body {
 }
 
 .form-field {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -308,16 +310,49 @@ body {
 }
 
 .form-input {
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0 6px 23px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  font-size: 13px;
-  color: #686868;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
+  border: solid 2px #646161;
+  border-radius: 1rem;
+  background: none;
+  padding: 1rem;
+  font-size: 1.3rem;
+  color: #f5f5f5;
+  transition: border 150ms cubic-bezier(0.4,0,0.2,1);
 }
+
+.user-label {
+  position: absolute;
+  left: 15px;
+  color: #000000;
+  pointer-events: none;
+  transform: translateY(1rem);
+  transition: 150ms cubic-bezier(0.4,0,0.2,1);
+  font-size: 15px;
+ }
+
+ 
+ .form-input:focus, input:valid {
+  outline: none;
+  border: 2px solid #1a4165;
+ }
+ 
+
+ .form-input.valid {
+  border-color: #4caf50; /* Verde para válido */
+}
+
+.form-input.invalid {
+  border-color: #f44336; /* Vermelho para inválido */
+}
+
+
+ .form-input:focus ~ label, input:valid ~ label {
+  transform: translateY(-50%) scale(0.8);
+  background-color: #f1f1f1;
+  padding: 0 .2em;
+  color: #1a4165;
+  font-size: 16px;
+  font-weight: bold;
+ }
 
 .password-input {
   display: flex;
@@ -812,11 +847,10 @@ body {
 
 .form-input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 13px;
-  color: #686868;
+
+  border-radius: 10px;
+  font-size: 16px;
+  color: #000000;
 }
 
 .button-container {
@@ -835,4 +869,137 @@ body {
   border: none;
   cursor: pointer;
   max-width: 429px;
+}
+
+
+.animated-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  background-color: inherit;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #153060;
+  box-shadow: 0 0 0 2px #153060;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  margin-top: 20px;
+  width: 600px;
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 24px;
+  fill: green;
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 16px;
+}
+
+.animated-button .arr-2 {
+  left: -25%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: #153060;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .textt {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  color: #153060;
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #212121;
+  border-radius: 12px;
+}
+
+.animated-button:hover .arr-1 {
+  right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 16px;
+}
+
+.animated-button:hover .textt {
+  transform: translateX(12px);
+  color: white;
+}
+
+.animated-button:hover svg {
+  fill: green;
+}
+
+.animated-button:active {
+  scale: 0.95;
+  box-shadow: 0 0 0 4px #153060;
+}
+
+.animated-button:hover .circle {
+  width: 600px;
+  height: 220px;
+  opacity: 1;
+}
+
+.top-bar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000; /* Garantir que fique acima do conteúdo */
+}
+
+/* Estilos do botão de Voltar */
+button {
+ display: flex;
+ height: 3em;
+ width: 100px;
+ align-items: center;
+ justify-content: center;
+ background-color: #eeeeee4b;
+ border-radius: 3px;
+ letter-spacing: 1px;
+ transition: all 0.2s linear;
+ cursor: pointer;
+ border: none;
+ background: #fff;
+}
+
+button > svg {
+ margin-right: 5px;
+ margin-left: 5px;
+ font-size: 20px;
+ transition: all 0.4s ease-in;
+}
+
+button:hover > svg {
+ font-size: 1.2em;
+ transform: translateX(-5px);
+}
+
+button:hover {
+ box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+ transform: translateY(-2px);
 }

@@ -27,5 +27,70 @@
             </form>
         </div>
     </div>
+
+    <script>
+
+    const cpfInput = document.getElementById('cpf');
+const cpfError = document.getElementById('cpf-error');
+
+// Máscara para CPF
+cpfInput.addEventListener('input', () => {
+    cpfInput.value = formatCPF(cpfInput.value);
+    validateCPF(cpfInput.value);
+});
+
+// Função para formatar CPF
+function formatCPF(value) {
+    value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    return value.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, (match, p1, p2, p3, p4) => {
+        if (p4) return `${p1}.${p2}.${p3}-${p4}`;
+        if (p3) return `${p1}.${p2}.${p3}`;
+        if (p2) return `${p1}.${p2}`;
+        if (p1) return `${p1}`;
+    }).substring(0, 14); // Limita a 14 caracteres
+}
+
+// Validação de CPF
+function validateCPF(cpf) {
+    const strippedCPF = cpf.replace(/\D/g, ''); // Remove a formatação
+
+    if (!isValidCPF(strippedCPF)) {
+        cpfInput.classList.remove('valid');
+        cpfInput.classList.add('invalid');
+        cpfError.textContent = 'CPF inválido!';
+        cpfError.classList.add('active');
+    } else {
+        cpfInput.classList.remove('invalid');
+        cpfInput.classList.add('valid');
+        cpfError.textContent = '';
+        cpfError.classList.remove('active');
+    }
+}
+
+// Algoritmo de validação de CPF
+function isValidCPF(cpf) {
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+    let sum = 0;
+    let remainder;
+
+    for (let i = 1; i <= 9; i++) sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    remainder = (sum * 10) % 11;
+
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    if (remainder !== parseInt(cpf.substring(9, 10))) return false;
+
+    sum = 0;
+    for (let i = 1; i <= 10; i++) sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    remainder = (sum * 10) % 11;
+
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    if (remainder !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+}
+
+
+    </script>
 </body>
 </html>

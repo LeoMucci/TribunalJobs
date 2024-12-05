@@ -32,7 +32,9 @@
                 </div>
                 <button type="submit">Continuar</button>
                 {% if msg %}
-                    <p>{{ msg }}</p>
+                <script>
+                    alert("{{ msg }}");
+                </script>
                 {% endif %}
             </form>
         </div>
