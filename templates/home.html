@@ -9,6 +9,19 @@
     <script src="https://kit.fontawesome.com/4665b3a379.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+  <div class="loader-overlay">
+    <div class="spinner">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    </div>
+</div>
+
   <!-- //é aq krl -->
     <nav class="sidebar">
       <section class="profile-section">
@@ -149,5 +162,28 @@
         {% endif %}
     </div>
     </main>
+
+    <script> 
+      
+      window.addEventListener('load', function() {
+        document.querySelector('.loader-overlay').style.display = 'none';
+    });
+    function triggerUpload() {
+        document.getElementById("upload-input").click();
+      }
+      
+      function loadFile(event) {
+        const output = document.getElementById("profile-pic");
+        const uploadIcon = document.querySelector(".icon");
+      
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.style.display = "block"; // Exibe a imagem de perfil
+        uploadIcon.style.display = "none"; // Esconde o ícone de upload
+      
+        output.onload = () => {
+          URL.revokeObjectURL(output.src); // Libera a memória do objeto URL
+        };
+      }
+    </script>
 </body>
 </html>

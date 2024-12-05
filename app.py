@@ -508,17 +508,26 @@ def EsqueciSenha():
             print(msg)  # Debug: imprimir mensagem de erro de envio de e-mail
     return render_template('EsqueciSenha.html', msg=msg)
 
+def mask_email(email):
+    local, domain = email.split('@')
+    if len(local) > 3:
+        masked_local = local[:3] + '*' * (len(local) - 3)
+    else:
+        masked_local = '*' * len(local)
+    return f"{masked_local}@{domain}"
+
 @app.route('/EsqueciSenhaVerificacao', methods=['GET', 'POST'])
 def EsqueciSenhaVerificacao():
     msg = ''
     email = session.get('email')
+    masked_email = mask_email(email)  # Mascarar o e-mail aqui
     if request.method == 'POST':
         codigo_digitado = ''.join([request.form.get(f'code{i}') for i in range(1, 5)])
         if codigo_digitado == session.get('codigo_verificacao'):
             return redirect(url_for('EsqueciSenhaNovaSenha'))
         else:
             msg = 'Código de verificação incorreto.'
-    return render_template('EsqueciSenhaVerificacao.html', msg=msg, email=email)
+    return render_template('EsqueciSenhaVerificacao.html', msg=msg, email=masked_email)
 
 @app.route('/reenviar_codigo', methods=['POST'])
 def reenviar_codigo():

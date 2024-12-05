@@ -28,8 +28,10 @@
                 </div>
                 <button type="submit">Continuar</button>
                 {% if msg %}
-                    <p>{{ msg }}</p>
-                {% endif %}
+    <script>
+        alert("{{ msg }}");
+    </script>
+    {% endif %}
             </form>
             <p>Não recebeu o código? <a href="#" style="color: #F2451C;" id="resend-link">Reenviar</a></p>
         </div>
