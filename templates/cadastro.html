@@ -29,15 +29,32 @@
                         <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                             <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                         </svg>
-                        <input class="input" type="text" name="cnpj" placeholder="CNPJ" required pattern="\d{14}" maxlength="14" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <input
+                            class="input"
+                            type="text"
+                            id="cnpj"
+                            name="cnpj"
+                            placeholder="CNPJ"
+                            required
+                        >
+                        <small class="error-message" id="cnpj-error"></small>
                     </div>
                     <div class="group field">
                         <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
                             <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
                         </svg>
-                        <input class="input" type="text" name="cpfADM" placeholder="CPF do Adm" required pattern="\d{11}" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <input
+                            class="input"
+                            type="text"
+                            id="cpfADM"
+                            name="cpfADM"
+                            placeholder="CPF do Adm"
+                            required
+                        >
+                        <small class="error-message" id="cpf-error"></small>
                     </div>
                 </div>
+                
                 
                 <div class="group">
                     <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
@@ -69,5 +86,110 @@
           <img src="{{ url_for('static', filename='images/Imagem box.png') }}">
         </div>
     </div>
+
+  <script> 
+// Formatação e validação para CPF e CNPJ
+const cpfInput = document.getElementById('cpfADM');
+const cnpjInput = document.getElementById('cnpj');
+
+const cpfError = document.getElementById('cpf-error');
+const cnpjError = document.getElementById('cnpj-error');
+
+// Máscara para CPF
+cpfInput.addEventListener('input', () => {
+    cpfInput.value = formatCPF(cpfInput.value);
+    validateCPF(cpfInput.value);
+});
+
+// Máscara para CNPJ
+cnpjInput.addEventListener('input', () => {
+    cnpjInput.value = formatCNPJ(cnpjInput.value);
+    validateCNPJ(cnpjInput.value);
+});
+
+// Função para formatar CPF
+function formatCPF(value) {
+    value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4').substring(0, 14);
+}
+
+// Função para formatar CNPJ
+function formatCNPJ(value) {
+    value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5').substring(0, 18);
+}
+
+// Validação de CPF
+function validateCPF(cpf) {
+    const strippedCpf = cpf.replace(/\D/g, ''); // Remove a formatação
+
+    if (!isValidCPF(strippedCpf)) {
+        cpfInput.classList.add('invalid');
+        cpfError.textContent = '';
+        cpfError.style.display = 'block'; // Exibe a mensagem de erro
+    } else {
+        cpfInput.classList.remove('invalid');
+        cpfError.textContent = '';
+        cpfError.style.display = 'none'; // Esconde a mensagem de erro
+    }
+}
+
+// Validação de CNPJ
+function validateCNPJ(cnpj) {
+    const strippedCnpj = cnpj.replace(/\D/g, ''); // Remove a formatação
+
+    if (!isValidCNPJ(strippedCnpj)) {
+        cnpjInput.classList.add('invalid');
+        cnpjError.textContent = 'CNPJ inválido!';
+        cnpjError.style.display = 'block'; // Exibe a mensagem de erro
+    } else {
+        cnpjInput.classList.remove('invalid');
+        cnpjError.textContent = '';
+        cnpjError.style.display = 'none'; // Esconde a mensagem de erro
+    }
+}
+
+// Função para validar CPF
+function isValidCPF(cpf) {
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+    let sum = 0;
+    let remainder;
+    for (let i = 1; i <= 9; i++) sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    if (remainder !== parseInt(cpf.substring(9, 10))) return false;
+
+    sum = 0;
+    for (let i = 1; i <= 10; i++) sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    if (remainder !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+}
+
+// Função para validar CNPJ
+function isValidCNPJ(cnpj) {
+    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) return false;
+
+    const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    const weights2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let sum = 0;
+    let remainder;
+
+    for (let i = 0; i < 12; i++) sum += parseInt(cnpj[i]) * weights1[i];
+    remainder = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+    if (remainder !== parseInt(cnpj[12])) return false;
+
+    sum = 0;
+    for (let i = 0; i < 13; i++) sum += parseInt(cnpj[i]) * weights2[i];
+    remainder = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+    if (remainder !== parseInt(cnpj[13])) return false;
+
+    return true;
+}
+  </script>
+
 </body>
 </html>

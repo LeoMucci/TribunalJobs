@@ -250,3 +250,14 @@ form button:hover {
   height: auto; /* Mantém a proporção da imagem */
   z-index: 1000; /* Ajuste o z-index conforme necessário */
 }
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none; /* Esconde por padrão */
+}
+
+.input.invalid {
+  border-color: red;
+}
