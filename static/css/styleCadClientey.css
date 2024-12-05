@@ -822,8 +822,8 @@ body {
 .button-container {
   grid-column: 1 / 4; /* Ocupa todas as colunas para centralizar */
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  justify-content: center; /* Alinha os botões à esquerda (ou altere conforme necessário) */
+  align-items: center; /* Centraliza verticalmente os botões */
 }
 
 .submit-button {

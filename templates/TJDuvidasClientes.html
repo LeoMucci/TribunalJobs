@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro de Ajuda</title>
+  <link rel="stylesheet" href="../static/css/styleTJDuvidasClientes.css">
+</head>
+<body>
+  <!-- Barra Lateral de Dúvidas Anteriores -->
+  <aside class="sidebar-doubts">
+      <header class="header">
+        <a href="/Home"> <!-- Link para a página inicial -->
+          <button>
+            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+              <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+            </svg>
+            <span></span>
+          </button>
+        </a>
+        <h2>Chat do cliente</h2>
+        <img
+        loading="lazy"
+        src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/ef0d5941b4ea00460aef4695d2212425c0bbf5ccb3c4a62a5efd2b736e3eff52?apiKey=86836f072c124e818bc78d0c65f8ba52&"
+        class="header-icon"
+        alt=""
+      />      </header>
+
+        <!-- Botão para abrir o modal -->
+        <section class="previous-doubts">
+          <div class="input-diva">
+            <input class="inputa" name="file" type="file">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icona"><polyline points="16 16 12 12 8 16"></polyline><line y2="21" x2="12" y1="12" x1="12"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+          </input> 
+        </div>
+          <div class="upload-text" role="text">
+            Faça upload do arquivo
+            <br />
+            para gerar sua pauta!
+          </div>
+          
+        </section>
+        
+        <footer class="sidebar-footer">
+          <div class="profile-info">
+            <img src="{{ user['image_url'] }}" alt="Foto de perfil de {{ user['name'] }}" class="profile-pic">
+            <div class="profile-text">
+              <p class="profile-name">{{ user['name'] }}</p>
+              <p class="profile-role">Administrador</p>
+            </div>
+          </div>
+        </footer>
+  </aside>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal-overlay">
+    <div class="upload-modal">
+      <!-- Header -->
+      <div class="modal-header">
+        <h2 class="header-title">Faça o upload de seu arquivo base.</h2>
+        <p class="header-description">TJ irá formular sua peça jurídica com base nessas informações.</p>
+        <button class="close-button" aria-label="Fechar modal">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" alt="Fechar" class="close-icon">
+        </button>
+      </div>
+
+      <!-- Dropzone -->
+      <div class="upload-dropzone" id="dropzone">
+        <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/c2388a2b379868a695ad015c8857bbbc7cdd53be94077767b8e8d844206c06a7?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Upload">
+        <div class="upload-instructions">
+          <span>Clique para selecionar</span> ou arraste e solte
+        </div>
+        <p class="upload-hint">seu arquivo em PDF.</p>
+      </div>
+
+      <!-- File List -->
+      <div class="file-list" id="fileList"></div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="cancel-button">Cancelar</button>
+        <button class="confirm-button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="file-viewer-modal" class="modal-overlay">
+    <div class="file-viewer">
+      <button id="close-viewer" class="close-button">Fechar</button>
+      <div id="file-content"></div>
+    </div>
+  </div>
+
+  <!-- Conteúdo Principal com Área de Chat -->
+  <main class="main-content">
+    <!-- Seção inicial de perguntas e ícones (será ocultada ao enviar mensagem) -->
+    <div class="help-center" id="initial-content">
+      
+    </div>
+
+    <!-- Área de Chat (exibida após o envio da primeira mensagem) -->
+    <div id="chat-container">
+      <div id="chat-messages">
+        <!-- As mensagens do chat aparecerão aqui -->
+      </div>
+    </div>
+
+    <div id="chat-input">
+      <div class="fileUploadWrapper">
+        <input name="file" id="file" type="file" />
+      </div>
+      <input id="messageInput" type="text" placeholder="Digite sua mensagem..." required />
+      <button id="sendButton">
+        <svg viewBox="0 0 664 663" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M646.293 331.888L17.7538 17.6187L155.245 331.888" fill="none"></path>
+          <path d="M646.293 331.888L17.753 646.157L155.245 331.888" stroke="#6c6c6c" stroke-width="33.67" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+
+    <aside class="sidebar-client-info">
+      <!-- Informações do cliente no estilo card -->
+      <div class="imge">
+        <div class="Usericon"></div>
+        <div>
+          <p class="UserName">Leonardo Capra Mucci</p>
+          <p class="Id">Danos Morais</p>
+          <p class="Id">Danos Morais</p>
+        </div>
+      </div>
+      <div class="Description">
+        Rodrigo Veloso é um cliente ativo desde 2022, envolvido em casos de danos morais. Última atualização realizada no sistema em 01/12/2024.
+        Rodrigo Veloso é um cliente ativo desde 2022, envolvido em casos de danos morais. Última atualização realizada no sistema em 01/12/2024.
+        Rodrigo Veloso é um cliente ativo desde 2022, envolvido em casos de danos morais. Última atualização realizada no sistema em 01/12/2024.
+
+      </div>
+
+      <div class="Description-file">
+        <div class="file-explorer">
+          <div class="explorer-header">
+
+            <button class="Documents-btn" id="add-folder-btn">
+              <span class="folderContainer">
+                <svg
+                  class="fileBack"
+                  width="146"
+                  height="113"
+                  viewBox="0 0 146 113"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 4C0 1.79086 1.79086 0 4 0H50.3802C51.8285 0 53.2056 0.627965 54.1553 1.72142L64.3303 13.4371C65.2799 14.5306 66.657 15.1585 68.1053 15.1585H141.509C143.718 15.1585 145.509 16.9494 145.509 19.1585V109C145.509 111.209 143.718 113 141.509 113H3.99999C1.79085 113 0 111.209 0 109V4Z"
+                    fill="url(#paint0_linear_117_4)"
+                  ></path>
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_117_4"
+                      x1="0"
+                      y1="0"
+                      x2="72.93"
+                      y2="95.4804"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#8F88C2"></stop>
+                      <stop offset="1" stop-color="#5C52A2"></stop>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <svg
+                  class="filePage"
+                  width="88"
+                  height="99"
+                  viewBox="0 0 88 99"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect width="88" height="99" fill="url(#paint0_linear_117_6)"></rect>
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_117_6"
+                      x1="0"
+                      y1="0"
+                      x2="81"
+                      y2="160.5"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="white"></stop>
+                      <stop offset="1" stop-color="#686868"></stop>
+                    </linearGradient>
+                  </defs>
+                </svg>
+            
+                <svg
+                  class="fileFront"
+                  width="160"
+                  height="79"
+                  viewBox="0 0 160 79"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.29306 12.2478C0.133905 9.38186 2.41499 6.97059 5.28537 6.97059H30.419H58.1902C59.5751 6.97059 60.9288 6.55982 62.0802 5.79025L68.977 1.18034C70.1283 0.410771 71.482 0 72.8669 0H77H155.462C157.87 0 159.733 2.1129 159.43 4.50232L150.443 75.5023C150.19 77.5013 148.489 79 146.474 79H7.78403C5.66106 79 3.9079 77.3415 3.79019 75.2218L0.29306 12.2478Z"
+                    fill="url(#paint0_linear_117_5)"
+                  ></path>
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_117_5"
+                      x1="38.7619"
+                      y1="8.71323"
+                      x2="66.9106"
+                      y2="82.8317"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#C3BBFF"></stop>
+                      <stop offset="1" stop-color="#51469A"></stop>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+              <p class="text">Criar Pasta</p>
+            </button>
+
+            <button id="add-file-btn">+ Criar Arquivo</button>
+          </div>
+          <div id="explorer-content">
+            <!-- Pasta e arquivos aparecerão aqui -->
+          </div>
+        </div>
+    </aside>
+  </main>
+
+  <script>
+    document.getElementById("sendButton").addEventListener("click", sendMessage);
+    
+    // Função para enviar mensagem
+    async function sendMessage() {
+      const messageInput = document.getElementById("messageInput");
+      const chatMessages = document.getElementById("chat-messages");
+      const initialContent = document.getElementById("initial-content");
+      const chatContainer = document.getElementById("chat-container");
+
+      if (messageInput.value.trim() === "") return;
+
+      // Oculta o conteúdo inicial e exibe o chat na primeira mensagem
+      if (initialContent.style.display !== "none") {
+        initialContent.style.display = "none";
+        chatContainer.style.display = "flex";
+      }
+
+      const userText = messageInput.value;
+      messageInput.value = "";
+
+      // Adiciona a mensagem do usuário ao chat
+      const userMessage = document.createElement("div");
+      userMessage.classList.add("message", "user");
+      userMessage.innerHTML = `<div class="message-bubble">${userText}</div>`;
+      chatMessages.appendChild(userMessage);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userText })
+        });
+        const data = await response.json();
+
+        // Verifica se ocorreu um erro
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        // Adiciona a resposta da IA ao chat
+        const aiMessage = document.createElement("div");
+        aiMessage.classList.add("message", "ai");
+        aiMessage.innerHTML = `<div class="message-bubble">${data.response}</div>`;
+        chatMessages.appendChild(aiMessage);
+
+        // Faz o scroll para a última mensagem
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      } catch (error) {
+        console.error("Erro ao buscar a resposta da IA:", error);
+        const errorMessage = document.createElement("div");
+        errorMessage.classList.add("message", "error");
+        errorMessage.innerHTML = `<div class="message-bubble">Desculpe, ocorreu um erro ao tentar obter uma resposta.</div>`;
+        chatMessages.appendChild(errorMessage);
+      }
+    }
+
+    // Carregar conversas anteriores ao carregar a página
+    document.addEventListener("DOMContentLoaded", async function() {
+    const chatMessages = document.getElementById("chat-messages");
+    const doubtsList = document.querySelector(".doubts-list");
+
+    try {
+        // Carregar as mensagens anteriores
+        const response = await fetch("/conversas");
+        const data = await response.json();
+
+        // Exibir as conversas na área de chat e na lista de dúvidas anteriores
+        data.forEach(conversa => {
+            // Adicionar a conversa na área de chat (se necessário)
+            const userMessage = document.createElement("div");
+            userMessage.classList.add("message", "user");
+            userMessage.innerHTML = `
+                <div class="message-bubble">${conversa.mensagem}</div>
+                <div class="message-time">${conversa.data_hora}</div>
+            `;
+            chatMessages.appendChild(userMessage);
+
+            const aiMessage = document.createElement("div");
+            aiMessage.classList.add("message", "ai");
+            aiMessage.innerHTML = `
+                <div class="message-bubble">${conversa.resposta}</div>
+                <div class="message-time">${conversa.data_hora}</div>
+            `;
+            chatMessages.appendChild(aiMessage);
+
+            // Adicionar a conversa na lista de dúvidas anteriores
+            const doubtItem = document.createElement("li");
+            doubtItem.classList.add("doubt-item");
+            doubtItem.textContent = `${conversa.mensagem} - ${conversa.data_hora}`;
+            doubtsList.appendChild(doubtItem);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar conversas anteriores:", error);
+    }
+});
+const explorerContent = document.getElementById('explorer-content');
+const addFolderBtn = document.getElementById('add-folder-btn');
+const addFileBtn = document.getElementById('add-file-btn');
+
+// Estrutura inicial de pastas e arquivos
+const fileSystem = {
+  items: [
+    { type: 'folder', name: 'Documentos', children: [] },
+    { type: 'folder', name: 'Imagens', children: [] },
+    { type: 'file', name: 'Relatório.pdf' },
+    { type: 'file', name: 'Tarefas.txt' },
+  ],
+};
+
+let draggedItem = null; // Item sendo arrastado
+
+// Renderizar itens no explorador
+function renderExplorer(parent = fileSystem.items, container = explorerContent) {
+  container.innerHTML = '';
+  parent.forEach((item, index) => {
+    const element = document.createElement('div');
+    element.classList.add(item.type);
+    element.draggable = item.type === 'file'; // Apenas arquivos podem ser arrastados
+    element.innerHTML = `
+      <span class="icon">${item.type === 'folder' ? '📁' : '📄'}</span>
+      ${item.name}
+    `;
+
+    // Configurar arrastar e soltar
+    if (item.type === 'file') {
+      element.addEventListener('dragstart', (e) => handleDragStart(e, item, parent, index));
+
+      // Evento de clique duplo para abrir o arquivo
+      element.addEventListener('dblclick', () => {
+        openFile(item);
+      });
+    }
+
+    if (item.type === 'folder') {
+      // Adicionar eventos para abrir e fechar
+      element.addEventListener('click', (e) => {
+        e.stopPropagation();
+        element.classList.toggle('open');
+        renderExplorer(item.children, childrenContainer);
+      });
+
+      element.addEventListener('dragover', (e) => handleDragOver(e));
+      element.addEventListener('dragleave', (e) => handleDragLeave(e));
+      element.addEventListener('drop', (e) => handleDrop(e, item));
+
+      // Contêiner para filhos da pasta
+      const childrenContainer = document.createElement('div');
+      childrenContainer.classList.add('folder-children');
+
+      // Inicialmente renderiza os filhos
+      renderExplorer(item.children, childrenContainer);
+
+      // Adiciona o contêiner dos filhos depois da pasta
+      container.appendChild(element);
+      container.appendChild(childrenContainer);
+    } else {
+      // Apenas anexa arquivos diretamente
+      container.appendChild(element);
+    }
+  });
+}
+
+// Adicionar nova pasta
+addFolderBtn.addEventListener('click', () => {
+  const folderName = prompt('Nome da pasta:');
+  if (folderName) {
+    fileSystem.items.push({ type: 'folder', name: folderName, children: [] });
+    renderExplorer();
+  }
+});
+
+// Adicionar novo arquivo
+addFileBtn.addEventListener('click', () => {
+  const fileName = prompt('Nome do arquivo:');
+  if (fileName) {
+    fileSystem.items.push({ type: 'file', name: fileName });
+    renderExplorer();
+  }
+});
+
+// Drag and Drop: Início do arrasto
+function handleDragStart(e, item, parent, index) {
+  draggedItem = { item, parent, index };
+  e.dataTransfer.effectAllowed = 'move';
+}
+
+// Drag and Drop: Sobre o alvo
+function handleDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+
+// Drag and Drop: Sair do alvo
+function handleDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+// Drag and Drop: Soltar no alvo
+function handleDrop(e, targetFolder) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+
+  if (draggedItem) {
+    draggedItem.parent.splice(draggedItem.index, 1);
+    targetFolder.children.push(draggedItem.item);
+
+    draggedItem = null;
+    renderExplorer();
+  }
+}
+
+// Render inicial
+renderExplorer();
+
+// Modal Logic
+const openModalBtn = document.querySelector('.input-diva');
+const modalOverlay = document.querySelector('.modal-overlay');
+const closeModalBtn = document.querySelector('.close-button');
+const dropzone = document.getElementById('dropzone');
+const fileList = document.getElementById('fileList');
+const confirmButton = document.querySelector('.confirm-button');
+
+// Abrir modal
+openModalBtn.addEventListener('click', () => {
+  modalOverlay.classList.add('active');
+});
+
+
+
+// Fechar modal
+closeModalBtn.addEventListener('click', () => {
+  modalOverlay.classList.remove('active');
+  fileList.innerHTML = ''; // Limpar lista de arquivos ao fechar
+});
+
+// Upload de arquivos (dropzone ou input)
+dropzone.addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.pdf';
+  input.multiple = true;
+  input.click();
+  input.addEventListener('change', () => {
+    handleFiles(input.files);
+  });
+});
+
+dropzone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+});
+
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  handleFiles(e.dataTransfer.files);
+});
+
+// Adicionar arquivos ao modal
+function handleFiles(files) {
+  for (const file of files) {
+    const fileItem = document.createElement('div');
+    fileItem.classList.add('file-item');
+    fileItem.innerHTML = `
+      <div class="file-details">
+        <span class="file-name">${file.name}</span>
+        <span class="file-size">${(file.size / 1024).toFixed(2)} KB</span>
+        <div class="progress-container">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+      <button class="remove-button" aria-label="Remover arquivo">🗑️</button>
+    `;
+
+    fileList.appendChild(fileItem);
+    simulateProgress(fileItem.querySelector('.progress-bar'));
+  }
+}
+
+// Simular progresso de upload
+function simulateProgress(progressBar) {
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += 10;
+    progressBar.style.width = `${progress}%`;
+    if (progress >= 100) {
+      clearInterval(interval);
+    }
+  }, 200);
+}
+
+// Confirmar arquivos e adicionar à pasta "Documentos"
+confirmButton.addEventListener('click', () => {
+  const files = fileList.querySelectorAll('.file-item');
+
+  // Encontra a pasta "Documentos" no fileSystem
+  const documentFolder = fileSystem.items.find(item => item.type === 'folder' && item.name === 'Documentos');
+
+  if (documentFolder) {
+    files.forEach((file) => {
+      const fileName = file.querySelector('.file-name').textContent;
+
+      // Previne duplicação ao verificar se já existe
+      const exists = documentFolder.children.some(child => child.name === fileName);
+      if (!exists) {
+        // Adiciona o arquivo ao sistema de arquivos
+        documentFolder.children.push({ type: 'file', name: fileName });
+      }
+    });
+  }
+
+  renderExplorer(); // Atualiza o explorador
+  modalOverlay.classList.remove('active');
+  fileList.innerHTML = ''; // Limpa a lista de arquivos no modal
+});
+
+// Abrir arquivo com duplo clique
+function openFile(file) {
+  if (file.type === 'file') {
+    const fileName = file.name;
+
+    // Caminho do arquivo (simulando o arquivo disponível no servidor/local)
+    const fileUrl = `/static/Files/${encodeURIComponent(fileName)}`;
+
+    // Abrir o arquivo em uma nova guia
+    window.open(fileUrl, '_blank');
+  }
+}
+
+
+
+
+
+  </script>
+</body>
+</html>

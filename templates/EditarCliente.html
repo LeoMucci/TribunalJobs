@@ -21,57 +21,11 @@
         </div>
         </div>
     </div>
-    <nav class="sidebar">
-        <section class="profile-section">
-          <img src="{{ session['user_info']['image_url'] }}" alt="Profile picture" class="profile-imagee">
-          <h1 class="profile-name">{{ session['user_info']['name'] }}</h1>
-          <p class="profile-role">{{ session['user_info']['role'] }}</p>  
-        </section>
-        
-        <ul class="nav-list">
-            <li class="nav-item">
-                <a href="/Home" class="nav-link">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/947e818bbd7d3172fdcb33b91acf0924d8972caabaf15a72f82cccb9ea840bd2?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
-                    <span class="nav-text">Home</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/CadastroAdvogado" class="nav-link">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/a029aaf80babb69667b5c7121d25929da1e115a7ea30ca07227da4f377e0da37?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
-                    <span class="nav-text">Cadastrar advogados</span>
-                </a>
-            </li>
-            <li class="nav-item active">
-                <a href="/CadastroCliente" class="nav-link">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cc6f667946bdb2513a1c753f41657bd3a4ea803204f0230fa4c72ffa83ae771?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
-                    <span class="nav-text">Cadastrar clientes</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/TJHome" class="nav-link">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/427518cf73675b8be74ce61d6e429be5ed44d054aaa5e124681e454754e014f1?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
-                    <span class="nav-text">Converse com TJ</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/TJDuvidas" class="nav-link">
-                    <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/0884257241e3b1574843327c16f5e9f08fa07f44942f09efdbcacd72202ad44e?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
-                    <span class="nav-text">TJ para dúvidas</span>
-                </a>
-            </li>
-        </ul>
-        <a href="{{ url_for('logout') }}" class="Btn">
-            <div class="sign">
-                <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
-            </div>
-            <div class="text">Logout</div>
-        </a>
-    </nav>
 
     <!-- Área Principal com o Formulário Centralizado -->
     
     <main class="main-content">
-        <h1 class="main-title">Cadastro de Cliente</h1>
+        <h1 class="main-title">Editar Cliente</h1>
         {% if msg %}
           <div class="message {{ msg_type }}">
         {{ msg }}
@@ -151,7 +105,7 @@
           
           <!-- Botão de Salvar -->
           <div class="button-container">
-            <button type="submit" class="submit-button">Cadastrar</button>
+            <button type="submit" class="submit-button">Salvar Informações</button>
           </div>
         </form>
       </section>

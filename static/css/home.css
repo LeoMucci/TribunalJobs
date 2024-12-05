@@ -260,7 +260,6 @@
   .hero-title-bg {
     position: absolute;
     inset: 0;
-    height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
@@ -270,8 +269,55 @@
     color: #d5a356;
     z-index: 0;
     margin-top: -49px;
-    font: italic 700 46px PT Serif, sans-serif;
+    font: 700 52px PT Serif, sans-serif;
   }
+
+
+  /* From Uiverse.io by Gaurav-WebDev */ 
+.button {
+  height: 50px;
+  width: 200px;
+  position: relative;
+  background-color: transparent;
+  cursor: pointer;
+  border: 2px solid #1a4273;
+  overflow: hidden;
+  border-radius: 30px;
+  color: #000000;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-txt {
+  z-index: 1;
+  font-weight: 800;
+  letter-spacing: 4px;
+}
+
+.type1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all 0.5s ease-in-out;
+  background-color: #1a4273;
+  border-radius: 30px;
+  visibility: hidden;
+  height: 10px;
+  width: 10px;
+  z-index: -1;
+}
+
+.button:hover {
+  box-shadow: 1px 1px 200px #1a4273;
+  color: #fff;
+  border: none;
+}
+
+.type1:hover::after {
+  visibility: visible;
+  transform: scale(100) translateX(2px);
+}
+
 
   @media (max-width: 991px) {
     .hero-subtitle {
@@ -284,7 +330,7 @@
     color: #000;
     z-index: 0;
     margin-top: 57px;
-    font: 400 15px Noto Sans, sans-serif;
+    font: 400 21px Noto Sans, sans-serif;
   }
 
   @media (max-width: 991px) {
@@ -292,6 +338,12 @@
       max-width: 100%;
       margin-top: 40px;
     }
+  }
+
+  .TextoIni {
+
+    font-family: 'PT Serif', serif;
+    font-weight: 700;
   }
 
   .hero-cta {
