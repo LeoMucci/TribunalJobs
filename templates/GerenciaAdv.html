@@ -28,12 +28,22 @@
                 <span class="nav-text">Cadastrar advogados</span>
             </a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
             <a href="/CadastroCliente" class="nav-link">
                 <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7cc6f667946bdb2513a1c753f41657bd3a4ea803204f0230fa4c72ffa83ae771?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
                 <span class="nav-text">Cadastrar clientes</span>
             </a>
         </li>
+
+        <li class="nav-item active">
+          <a href="/CadastroCliente" class="nav-link">
+              <img loading="lazy" style="  aspect-ratio: 1;
+  object-fit: contain;
+  object-position: center;
+  width: 24px;" src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/11df733341c359f742bac4648f1ad0d7ee546521e8b5222a1749a7bc085f46bf?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
+              <span class="nav-text">Gerenciar Advogados</span>
+          </a>
+      </li>
         <li class="nav-item">
             <a href="/TJHome" class="nav-link">
                 <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/427518cf73675b8be74ce61d6e429be5ed44d054aaa5e124681e454754e014f1?apiKey=86836f072c124e818bc78d0c65f8ba52&" class="nav-icon" alt="">
@@ -55,22 +65,13 @@
     </a>
 </nav>
           
-  <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
-  <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
-
-  <div class="top-bar">
-    <a href="/Home"> <!-- Link para a página inicial -->
-      <button>
-        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
-          <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
-        </svg>
-        <span>Voltar</span>
-      </button>
-    </a>
-  </div>
+  <main class="main-content">
+    <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
+    <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
   
   <section class="patient-search">
     <div class="content-wrapper">
+      
 
       <!-- Campo de busca no topo e centralizado -->
       <form class="form">
@@ -130,15 +131,12 @@
     </div>
     
       <div class="action-buttons">
-        <a class="register-button" href="{{ url_for('CadastroCliente') }}">Cadastrar clientes</a>
-        <a class="help-button" href="{{ url_for('TJDuvidas') }}">
-          <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/1844febeb1e542a015fbe36f1c4f479643bfb9558e4e8a1cf1ddee5d247a0371?apiKey=86836f072c124e818bc78d0c65f8ba52&" 
-               alt="Ícone de ajuda" class="help-icon">
-          <span>TJ para dúvidas</span>
-        </a>
+        <a class="register-button" href="{{ url_for('cadastro_advogado') }}">Cadastrar Advogado</a>
+
       </div>
     </div>
   </section>
+</main>
   <script>
     function clearSearch() {
         document.getElementById('search').value = ''; // Limpa o campo de busca

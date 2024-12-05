@@ -295,7 +295,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
-  padding-top: 20px; /* Adiciona um espaço no topo */
+
 }
 
 /* Estilos da seção de busca */
@@ -366,7 +366,7 @@ body {
 .texturaB {
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 283px;
   width: auto; /* Ajuste o tamanho conforme necessário */
   height: auto; /* Mantém a proporção da imagem */
   z-index: 1000; /* Ajuste o z-index conforme necessário */
