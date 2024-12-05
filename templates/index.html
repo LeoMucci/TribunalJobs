@@ -33,9 +33,12 @@
           <a href="#Equipe">Equipe</a>
         </li>
       </ul>
-      <button class="button type1">
+      <button class="button type1" onclick="window.location.href='/login';">
         <span class="btn-txt">Entre</span>
-      </button>
+    </button>
+    
+
+
       <button id="mobile_btn">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -331,5 +334,15 @@
   </footer>
   <script src="{{ url_for('static', filename='js/script_landing.js') }}"></script>
 </body>
+
+<script>
+
+
+  document.getElementById('redirectButton').addEventListener('click', () => {
+    window.location.href = '/login';
+});
+
+</script>
+
 
 </html>
