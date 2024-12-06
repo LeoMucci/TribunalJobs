@@ -593,9 +593,37 @@ def TJDuvidasClientes():
     return render_template('TJDuvidasClientes.html')
 
 
-@app.route('/EditarCliente')
-def EditarCliente():
-    return render_template('EditarCliente.html')
+@app.route('/EditarCliente/<int:id>', methods=['GET', 'POST'])
+def EditarCliente(id):
+    cliente = Cliente.query.get_or_404(id)  # Busca o cliente pelo ID ou retorna 404 se não encontrar
+    msg = ''
+    
+    if request.method == 'POST':
+        # Atualiza os dados do cliente com base no formulário
+        cliente.nome = request.form['nome']
+        cliente.cpf = request.form['cpf']
+        cliente.email = request.form['email']
+        cliente.fone = request.form['fone']
+        cliente.dtNascimento = request.form['dtNascimento']
+        cliente.causa = request.form['causa']
+        cliente.IdAdvogado = request.form.get('IdAdv', None)  # Certifique-se de capturar o valor
+
+        # Salva as alterações no banco de dados
+        try:
+            db.session.commit()
+            msg = 'Cliente atualizado com sucesso!'
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            msg = f'Erro ao atualizar cliente: {str(e)}'
+    
+    # Renderiza o template com todos os dados do cliente
+    return render_template('EditarCliente.html', cliente=cliente, msg=msg)
+
+
+
+
+
+
 
 @app.route('/GerenciaAdv', methods=['GET', 'POST'])
 def GerenciaAdv():

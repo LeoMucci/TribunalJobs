@@ -48,7 +48,7 @@
         <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
         
         <section class="lawyer-registration">
-          <form class="registration-form" method="POST" action="{{ url_for('CadastroCliente') }}" enctype="multipart/form-data">            <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
+          <form class="registration-form" method="POST" action="{{ url_for('EditarCliente', id=cliente.IdCliente) }}" enctype="multipart/form-data">            <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
            <!-- Imagem de Upload -->
         <div class="input-div" onclick="triggerUpload()">
             <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
@@ -64,25 +64,25 @@
           <!-- Primeira Coluna de Campos -->
           <div class="form-column">
             <div class="form-field">
-                <input type="text" id="name" name="nome" class="form-input" required>
+              <input type="text" id="name" name="nome" class="form-input" value="{{ cliente.nome }}" required>
                 <label for="name" class="user-label">Nome</label>
                 <small class="error-message" id="name-error"></small>
             </div>
         
             <div class="form-field">
-                <input type="email" id="email" name="email" class="form-input" required>
+              <input type="email" id="email" name="email" class="form-input" value="{{ cliente.email }}" required>
                 <label for="email" class="user-label">E-mail</label>
                 <small class="error-message" id="email-error"></small>
             </div>
         
             <div class="form-field">
-                <input type="date" id="dtNascimento" name="dtNascimento" class="form-input" required>
+              <input type="date" id="dtNascimento" name="dtNascimento" class="form-input" value="{{ cliente.dtNascimento }}" required>
                 <label for="dtNascimento" class="user-label">Data de nascimento</label>
                 <small class="error-message" id="dtNascimento-error"></small>
             </div>
         
             <div class="form-field">
-                <input id="causa" name="causa" class="form-input" required>
+                <input id="causa" name="causa" class="form-input" value="{{ cliente.causa }}" required>
                 <label for="causa" class="user-label">Causa</label>
                 <small class="error-message" id="causa-error"></small>
             </div>
@@ -90,19 +90,20 @@
         
         <div class="form-column" style="margin-top:10px">
             <div class="form-field">
-                <input type="text" id="cpf" name="cpf" class="form-input" required>
+                <input type="text" id="cpf" name="cpf" class="form-input" value="{{ cliente.cpf }}"required>
                 <label for="cpf" class="user-label">CPF</label>
                 <small class="error-message" id="cpf-error"></small>
             </div>
         
             <div class="form-field">
-                <input type="text" id="IdAdv" style=" border-color: #4caf50;" name="IdAdv" class="form-input" value="{{ cpfAdv }}" {% if not cpf_editable %}readonly{% endif %} >
-                <label for="IdAdv" class="user-label">CPF Advogado</label>
-                <small class="error-message" id="IdAdv-error"></small>
-            </div>
+              <input type="text" id="IdAdv" name="IdAdv" class="form-input" value="{{ cliente.IdAdvogado if cliente.IdAdvogado else '' }}">
+              <label for="IdAdv" class="user-label">ID Advogado</label>
+              <small class="error-message" id="IdAdv-error"></small>
+          </div>
+          
         
             <div class="form-field">
-                <input type="tel" id="fone" name="fone" class="form-input" required>
+                <input type="tel" id="fone" name="fone" class="form-input" value="{{ cliente.fone }}" required>
                 <label for="fone" class="user-label">Telefone</label>
                 <small class="error-message" id="fone-error"></small>
             </div>
