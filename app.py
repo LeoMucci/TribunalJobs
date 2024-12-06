@@ -492,7 +492,7 @@ def chat_api():
         
         # Cria a lista de mensagens para enviar à API do OpenAI
         messages = [
-            {"role": "system", "content": "Você é um assistente que só pode tirar dúvidas jurídicas."}
+            {"role": "system", "content": "Você é um assistente que só pode tirar dúvidas jurídicas e não pode falar de qualquer outro tema sem ser dúvidas jurídicas."}
         ]
 
         # Adiciona as mensagens anteriores (perguntas e respostas)
