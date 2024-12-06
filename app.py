@@ -84,9 +84,11 @@ class Cliente(db.Model):
     email = db.Column(db.String(255), nullable=False)
     dtNascimento = db.Column(db.Date, nullable=False)
     causa = db.Column(db.Text)
-    IdAdvogado = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'), nullable=True)  # FK para Advogado
-    IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)  # FK para ADM
+    descricaoCausa = db.Column(db.Text)  # Novo campo
+    IdAdvogado = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'), nullable=True)
+    IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)
     imagem = db.Column(db.String(255))
+
 
 class Conversas(db.Model):
     __tablename__ = 'Conversas'
@@ -336,6 +338,7 @@ def CadastroCliente():
         email = request.form['email']
         dtNascimento = request.form['dtNascimento']
         causa = request.form['causa']
+        descricaoCausa = request.form['descricaoCausa']
 
         # Processar a imagem do cliente
         imagem = request.files.get('file')
@@ -361,6 +364,7 @@ def CadastroCliente():
                     email=email,
                     dtNascimento=dtNascimento,
                     causa=causa,
+                    descricaoCausa=descricaoCausa,
                     IdAdvogado=IdAdvogado if IdAdvogado else None,  # FK para Advogado, ou None se não for aplicável
                     IdADM=IdADM if IdADM else None,                   # FK para ADM, ou None se não for aplicável
                     imagem=imagem_path
@@ -388,6 +392,7 @@ def CadastroCliente():
 def TJHome():
     email_usuario = session.get('email')
     clientes = []
+    msg = ''  # Mensagem para exibir o resultado da operação
 
     if email_usuario:
         advogado = Advogados.query.filter_by(email=email_usuario).first()
@@ -413,8 +418,24 @@ def TJHome():
                 ).all()
             else:
                 clientes = Cliente.query.filter_by(IdADM=adm.IdADM).all()
-    
-    return render_template('TJHome.html', clientes=clientes)
+
+        # Verifica se o formulário de exclusão foi enviado
+        if request.method == 'POST' and 'excluir' in request.form:
+            cliente_id = request.form['id_cliente']  # Obtém o ID do cliente a ser excluído
+            cliente = Cliente.query.get_or_404(cliente_id)
+            try:
+                db.session.delete(cliente)  # Exclui o cliente
+                db.session.commit()  # Comita a transação
+                flash('Cliente excluído com sucesso!', 'success')  # Flash de sucesso
+            except SQLAlchemyError as e:
+                db.session.rollback()  # Caso ocorra erro, faz rollback
+                flash(f'Erro ao excluir cliente: {str(e)}', 'error')  # Flash de erro
+
+            return redirect(url_for('TJHome'))  # Redireciona para a página home
+
+    return render_template('TJHome.html', clientes=clientes, msg=msg)
+
+
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -595,34 +616,27 @@ def TJDuvidasClientes():
 
 @app.route('/EditarCliente/<int:id>', methods=['GET', 'POST'])
 def EditarCliente(id):
-    cliente = Cliente.query.get_or_404(id)  # Busca o cliente pelo ID ou retorna 404 se não encontrar
+    cliente = Cliente.query.get_or_404(id)
     msg = ''
-    
+
     if request.method == 'POST':
-        # Atualiza os dados do cliente com base no formulário
         cliente.nome = request.form['nome']
         cliente.cpf = request.form['cpf']
         cliente.email = request.form['email']
         cliente.fone = request.form['fone']
         cliente.dtNascimento = request.form['dtNascimento']
         cliente.causa = request.form['causa']
-        cliente.IdAdvogado = request.form.get('IdAdv', None)  # Certifique-se de capturar o valor
+        cliente.descricaoCausa = request.form['descricaoCausa']  # Atualizar o campo aqui
 
-        # Salva as alterações no banco de dados
         try:
             db.session.commit()
             msg = 'Cliente atualizado com sucesso!'
+            
         except SQLAlchemyError as e:
             db.session.rollback()
             msg = f'Erro ao atualizar cliente: {str(e)}'
-    
-    # Renderiza o template com todos os dados do cliente
+
     return render_template('EditarCliente.html', cliente=cliente, msg=msg)
-
-
-
-
-
 
 
 @app.route('/GerenciaAdv', methods=['GET', 'POST'])
