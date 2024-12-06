@@ -641,19 +641,91 @@ def EditarCliente(id):
 
 @app.route('/GerenciaAdv', methods=['GET', 'POST'])
 def GerenciaAdv():
-    search_query = request.args.get('search', '')  # Capturar o termo de busca, se houver
-    advogados = []
+    email_usuario = session.get('email')
+    advogados = []  # Lista que irá armazenar os advogados filtrados
+    msg = ''  # Mensagem para exibir o resultado da operação
 
-    # Caso tenha um termo de busca, filtrar pelo nome ou OAB
-    if search_query:
-        advogados = Advogados.query.filter(
-            (Advogados.nome.ilike(f'%{search_query}%')) |
-            (Advogados.oab.ilike(f'%{search_query}%'))
-        ).all()
-    else:
-        advogados = Advogados.query.all()  # Buscar todos os advogados
+    if email_usuario:
+        # Busca o advogado ou administrador relacionado ao e-mail do usuário
+        advogado = Advogados.query.filter_by(email=email_usuario).first()
+        adm = ADM.query.filter_by(email=email_usuario).first()
 
-    return render_template('GerenciaAdv.html', advogados=advogados, search_query=search_query)
+        # Se o formulário for do tipo POST e houver um ID de advogado a ser excluído
+        if request.method == 'POST' and 'excluir_id' in request.form:
+            advogado_id = request.form['excluir_id']
+            advogado_a_excluir = Advogados.query.get(advogado_id)
+            if advogado_a_excluir:
+                try:
+                    db.session.delete(advogado_a_excluir)  # Deleta o advogado
+                    db.session.commit()  # Confirma a exclusão
+                    msg = "Advogado excluído com sucesso!"  # Mensagem de sucesso
+                except Exception as e:
+                    db.session.rollback()  # Rollback em caso de erro
+                    msg = f"Ocorreu um erro ao excluir o advogado: {str(e)}"  # Mensagem de erro
+
+        # Obter o termo de busca
+        search_query = request.args.get('search', '')
+
+        # Se o termo de busca está vazio, retorna todos os advogados
+        if advogado:
+            if search_query:
+                # Filtra os advogados associados ao advogado logado, com base no nome ou OAB
+                advogados = Advogados.query.filter(
+                    Advogados.IdAdv == advogado.IdAdv,
+                    (Advogados.nome.ilike(f'%{search_query}%') | Advogados.oab.ilike(f'%{search_query}%'))
+                ).all()
+            else:
+                # Retorna todos os advogados relacionados ao advogado logado
+                advogados = Advogados.query.filter_by(IdAdv=advogado.IdAdv).all()
+        elif adm:
+            if search_query:
+                # Filtra os advogados associados ao administrador, com base no nome ou OAB
+                advogados = Advogados.query.filter(
+                    Advogados.IdADM == adm.IdADM,
+                    (Advogados.nome.ilike(f'%{search_query}%') | Advogados.oab.ilike(f'%{search_query}%'))
+                ).all()
+            else:
+                # Retorna todos os advogados relacionados ao administrador logado
+                advogados = Advogados.query.filter_by(IdADM=adm.IdADM).all()
+
+    return render_template('GerenciaAdv.html', advogados=advogados, msg=msg)
+
+
+@app.route('/editar_advogado/<int:id>', methods=['GET', 'POST'])
+def editar_advogado(id):
+    # Busca o advogado no banco de dados
+    advogado = Advogados.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        # Atualiza os campos com os dados do formulário
+        advogado.nome = request.form['nome']
+        advogado.email = request.form['email']
+        advogado.senha = request.form['senha']
+        advogado.cpf = request.form['cpf']
+        advogado.oab = request.form['oab']
+        advogado.fone = request.form['fone']
+        
+        # Se o arquivo de imagem foi enviado, atualiza o campo de imagem
+        if 'file' in request.files:
+            imagem = request.files['file']
+            if imagem:
+                # Salve a imagem no diretório desejado e obtenha o caminho
+                # Exemplo de como salvar:
+                imagem_path = 'static/images/' + imagem.filename
+                imagem.save(imagem_path)
+                advogado.imagem = imagem_path
+
+        try:
+            db.session.commit()  # Salva as alterações no banco de dados
+            flash('Advogado atualizado com sucesso!', 'success')
+            return redirect(url_for('GerenciaAdv'))  # Redireciona para a página de listagem de advogados
+        except Exception as e:
+            db.session.rollback()  # Rollback em caso de erro
+            flash(f'Ocorreu um erro ao atualizar o advogado: {str(e)}', 'error')
+    
+    # Preenche o formulário com os dados do advogado
+    return render_template('EditarAdvogado.html', advogado=advogado)
+
 
 
 if __name__ == '__main__':

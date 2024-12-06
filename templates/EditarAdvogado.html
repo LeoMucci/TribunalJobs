@@ -36,7 +36,8 @@
         <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
         
         <section class="lawyer-registration">
-          <form class="registration-form" method="POST" action="{{ url_for('cadastro_advogado') }}" enctype="multipart/form-data">
+          <form class="registration-form" method="POST" action="{{ url_for('editar_advogado', id=advogado.IdAdv) }}" enctype="multipart/form-data">
+
             <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
             <div class="input-div" onclick="triggerUpload()">
               <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
@@ -54,17 +55,17 @@
             <!-- Colunas dos Campos do Formulário -->
             <div class="form-column">
               <div class="form-field">
-                  <input type="text" id="name" name="nome" class="form-input" required>
+                  <input type="text" id="name" name="nome" class="form-input" value="{{ advogado.nome }}" required>
                   <label for="name" class="user-label">Nome</label>
                   <small class="error-message" id="name-error"></small>
               </div>
               <div class="form-field">
-                  <input type="email" id="email" name="email" class="form-input" required>
+                  <input type="email" id="email" name="email" class="form-input" value="{{ advogado.email }}" required>
                   <label for="email" class="user-label">E-mail</label>
                   <small class="error-message" id="email-error"></small>
               </div>
               <div class="form-field">
-                  <input type="password" id="password" name="senha" class="form-input" required>
+                  <input type="password" id="password" name="senha" class="form-input" value="{{ advogado.senha }}" required>
                   <label for="password" class="user-label">Senha</label>
                   <small class="error-message" id="password-error"></small>
               </div>
@@ -72,17 +73,17 @@
           
           <div class="form-column">
               <div class="form-field">
-                  <input type="text" id="cpf" name="cpf" class="form-input" required>
+                  <input type="text" id="cpf" name="cpf" class="form-input"  value="{{ advogado.cpf }}"required>
                   <label for="cpf" class="user-label">CPF</label>
                   <small class="error-message" id="cpf-error"></small>
               </div>
               <div class="form-field">
-                  <input type="text" id="oab" name="oab" class="form-input" required>
+                  <input type="text" id="oab" name="oab" class="form-input" value="{{ advogado.oab }}"required>
                   <label for="oab" class="user-label">OAB</label>
                   <small class="error-message" id="oab-error"></small>
               </div>
               <div class="form-field">
-                  <input type="tel" id="phone" name="fone" class="form-input" required>
+                  <input type="tel" id="phone" name="fone" class="form-input" value="{{ advogado.fone }}" required>
                   <label for="phone" class="user-label">Telefone</label>
                   <small class="error-message" id="phone-error"></small>
               </div>
@@ -98,7 +99,7 @@
                     d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.58L9 16.17Z"
                   ></path>
                 </svg>
-                <span class="textt">Cadastrar</span>
+                <span class="textt">Editar informações</span>
                 <span class="circle"></span>
                 <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
                   <path
