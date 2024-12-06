@@ -40,7 +40,9 @@
                 
                 <center><button type="submit">Login</button></center>
                 {% if msg %}
-                    <p>{{ msg }}</p>
+                <script>
+                    alert("{{ msg }}");
+                </script>
                 {% endif %}
             </form>
         </div>
