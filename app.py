@@ -5,6 +5,7 @@ from flask_mail import Mail, Message
 import re, os
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+from flask import flash
 import uuid
 import random
 import openai
@@ -44,7 +45,7 @@ class Empresa(db.Model):
     cnpj = db.Column(db.String(14), primary_key=True)
     nomeEmpresa = db.Column(db.String(255), nullable=False)
     contato = db.Column(db.String(255), nullable=True)
-    cpfADM = db.Column(db.String(11), nullable=False, unique=True)
+    cpfADM = db.Column(db.String(14), nullable=False, unique=True)
 
 class ADM(db.Model):
     __tablename__ = 'ADM'
@@ -55,7 +56,7 @@ class ADM(db.Model):
     email = db.Column(db.String(255), nullable=False)
     senha = db.Column(db.String(255), nullable=False)
     cnpj = db.Column(db.String(14), db.ForeignKey('Empresa.cnpj'))
-    cpfADM = db.Column(db.String(11), db.ForeignKey('Empresa.cpfADM'))
+    cpfADM = db.Column(db.String(14), db.ForeignKey('Empresa.cpfADM'))
     imagem = db.Column(db.String(255))
 
 class Advogados(db.Model):
@@ -169,22 +170,24 @@ def Home():
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     msg = ''
-    if request.method == 'POST' and all(key in request.form for key in ['nomeEmpresa', 'cnpj', 'contato', 'cpfADM']):
-        nomeEmpresa = request.form['nomeEmpresa']
-        cnpj = request.form['cnpj']
-        contato = request.form['contato']
-        cpfADM = request.form['cpfADM']
+    if request.method == 'POST':
+        nomeEmpresa = request.form.get('nomeEmpresa', '')
+        cnpj = request.form.get('cnpj', '')
+        contato = request.form.get('telefone', '')  # Capturando o campo "telefone" do formulário
+        cpfADM = request.form.get('cpfADM', '')
 
-        if not re.match(r'^\d{14}$', cnpj):
-            msg = 'CNPJ inválido. Deve conter 14 dígitos numéricos.'
-        elif not re.match(r'^\d{11}$', cpfADM):
-            msg = 'CPF do Administrador inválido. Deve conter 11 dígitos numéricos.'
+        if not re.match(r'^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$', cnpj):
+            msg = 'CNPJ inválido. Deve estar no formato XX.XXX.XXX/XXXX-XX.'
+        elif not re.match(r'^\d{3}\.\d{3}\.\d{3}-\d{2}$', cpfADM):
+            msg = 'CPF do Administrador inválido. Deve estar no formato XXX.XXX.XXX-XX.'
         else:
             try:
                 nova_empresa = Empresa(nomeEmpresa=nomeEmpresa, cnpj=cnpj, contato=contato, cpfADM=cpfADM)
                 db.session.add(nova_empresa)
                 db.session.commit()
-                return redirect(url_for('cadastroADM', cnpj=cnpj, cpfADM=cpfADM))
+
+                # Passa a mensagem de sucesso para o redirecionamento
+                return redirect(url_for('cadastroADM', cnpj=cnpj, cpfADM=cpfADM, success_msg=f"A Empresa {nomeEmpresa} foi cadastrada com sucesso! Agora, cadastre o Administrador da empresa."))
             except IntegrityError:
                 db.session.rollback()
                 msg = 'CNPJ ou CPF do Administrador já está registrado!'
@@ -226,7 +229,9 @@ def cadastroADM():
                 db.session.add(novo_adm)
                 db.session.add(novo_login)
                 db.session.commit()
-                msg = 'Administrador cadastrado com sucesso!'
+
+                # Mensagem de sucesso
+                flash(f"Administrador {nome} foi cadastrado com sucesso!")
                 return redirect(url_for('login'))
             except IntegrityError:
                 db.session.rollback()
@@ -238,6 +243,7 @@ def cadastroADM():
                 db.session.rollback()
                 msg = str(e)
     return render_template('cadastroADM.html', msg=msg, cnpj=cnpj, cpfADM=cpfADM)
+
 
 @app.route('/CadastroAdvogado', methods=['GET', 'POST'])
 def cadastro_advogado():

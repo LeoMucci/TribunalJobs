@@ -14,7 +14,7 @@
     <div class="container">
         <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo">
         <div class="left-section">
-            <form method="POST" action="{{ url_for('cadastro') }}">
+            <form method="POST" action="{{ url_for('cadastro') }}" onsubmit="return checkSubmission(event)">
                 <h2 class="header">Cadastre sua empresa aqui</h2>
                 <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça seu login aqui.</a></p>
                 
@@ -213,6 +213,10 @@ function isValidCNPJ(cnpj) {
 function isValidTelefone(telefone) {
     // Telefones válidos possuem 10 ou 11 dígitos após a formatação
     return telefone.length === 10 || telefone.length === 11;
+}
+function checkSubmission(event) {
+    console.log("Formulário enviado!");
+    return true; // Permitir o envio do formulário
 }
 
   </script>

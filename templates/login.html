@@ -39,11 +39,14 @@
                 <a href="../EsqueciSenha" class="forgot-password">Esqueceu sua senha?</a>
                 
                 <center><button type="submit">Login</button></center>
-                {% if msg %}
-                <script>
-                    alert("{{ msg }}");
-                </script>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  <script>
+                      alert("{{ messages[0] }}");
+                  </script>
                 {% endif %}
+              {% endwith %}
             </form>
         </div>
         <div class="right-section">

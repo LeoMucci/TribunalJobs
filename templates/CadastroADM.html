@@ -82,9 +82,12 @@
 
                     {% if msg %}
                     <script>
-                        alert("{{ msg }}");
+
+                        alert("{{ msg | safe }}");
+
                     </script>
                     {% endif %}
+                    
                 </div>
             </div>
         </form>
