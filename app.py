@@ -597,9 +597,21 @@ def TJDuvidasClientes():
 def EditarCliente():
     return render_template('EditarCliente.html')
 
-@app.route('/GerenciaAdv')
+@app.route('/GerenciaAdv', methods=['GET', 'POST'])
 def GerenciaAdv():
-    return render_template('GerenciaAdv.html')
+    search_query = request.args.get('search', '')  # Capturar o termo de busca, se houver
+    advogados = []
+
+    # Caso tenha um termo de busca, filtrar pelo nome ou OAB
+    if search_query:
+        advogados = Advogados.query.filter(
+            (Advogados.nome.ilike(f'%{search_query}%')) |
+            (Advogados.oab.ilike(f'%{search_query}%'))
+        ).all()
+    else:
+        advogados = Advogados.query.all()  # Buscar todos os advogados
+
+    return render_template('GerenciaAdv.html', advogados=advogados, search_query=search_query)
 
 
 if __name__ == '__main__':
