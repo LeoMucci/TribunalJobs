@@ -16,6 +16,8 @@
   <title>Landing page</title>
   <link rel="icon" href="/static/images/Logo.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=PT+Serif&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/scrollreveal"></script>
+
 </head>
 
 <body>
@@ -115,13 +117,13 @@
         <div class="content-wrapper">
           <div class="row">
             <div class="col">
-              <h1 class="heading">
+              <h1 class="heading" data-sr="fade-up">
                 <strong>Abandone a</strong>
                 <span class="bg-highlight">Advocacia Tradicional</span>
               </h1>
             </div>
             <div class="col">
-              <div class="description-wrapper">
+              <div class="description-wrapper" data-sr="fade-left">
                 <p class="description">
                   Descubra uma nova abordagem para a advocacia que pode transformar radicalmente sua prática jurídica.
                   Abandone os métodos tradicionais e descubra como a tecnologia pode revolucionar sua maneira de
@@ -130,7 +132,7 @@
                 </p>
                 <div class="stats-wrapper">
                   <div class="stats-row">
-                    <div class="stat-col">
+                    <div class="stat-col" data-sr="zoom-in">
                       <div class="stat-value">
                         30 <span class="stat-unit">horas</span>
                       </div>
@@ -138,7 +140,7 @@
                         É a média de tempo para um advogado fazer peças de defesa
                       </p>
                     </div>
-                    <div class="stat-col">
+                    <div class="stat-col" data-sr="zoom-in">
                       <div class="stat-value">20%</div>
                       <p class="stat-description">
                         Porcentagem média de custos adicionais para o cliente devido a esse tempo
@@ -152,6 +154,7 @@
         </div>
       </section>
     </section>
+    
 
     <section id="video">
       <figure class="image-container">
@@ -205,14 +208,13 @@
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/089d325840b736030bd9b94d347ba6fa42a7c2f6a72418954b084058ce7b5253?apiKey=34d9fddb4e5247a6aa90d70170d328ec&"
         alt="" class="heroo-background" />
       <div class="heroo-content">
-        <h1 class="heroo-title">Simplifique sua advocacia com Tribunal Jobs</h1>
-        <p class="heroo-description">
-          A plataforma alimentada por IA que revoluciona a redação de documentos legais.
-        </p>
-        <a href="#" class="heroo-cta">Experimente</a>
+        <h1 class="heroo-title" data-sr="fade-up">Simplifique sua advocacia com Tribunal Jobs</h1>
+        <p class="heroo-description" data-sr="fade-up">A plataforma alimentada por IA que revoluciona a redação de documentos legais.</p>
+        <a href="#" class="heroo-cta" data-sr="zoom-in">Experimente</a>
       </div>
     </section>
   </section>
+  
 
   <section id="Equipe">
     <section class="team-section">
@@ -337,6 +339,99 @@
 
 <script>
 
+
+  document.addEventListener("DOMContentLoaded", () => {
+  // Animações de entrada para o cabeçalho
+  ScrollReveal().reveal('#navbar', {
+    origin: 'top',
+    distance: '20px',
+    duration: 800,
+    reset: true,
+  });
+
+  // Hero Section
+  ScrollReveal().reveal('.hero-title', {
+    origin: 'top',
+    distance: '40px',
+    duration: 1000,
+    delay: 200,
+    reset: true,
+  });
+
+  ScrollReveal().reveal('.hero-subtitle, .hero-description, #cta_buttons', {
+    origin: 'bottom',
+    distance: '40px',
+    duration: 1000,
+    delay: 400,
+    interval: 200,
+    reset: true,
+  });
+
+  ScrollReveal().reveal('.hero-image-content', {
+    origin: 'right',
+    distance: '80px',
+    duration: 1200,
+    reset: true,
+  });
+
+  // Seção de Características
+  ScrollReveal().reveal('.feature-column', {
+    origin: 'bottom',
+    distance: '60px',
+    duration: 1000,
+    interval: 200,
+    reset: true,
+  });
+
+  // Seção de Equipe
+  ScrollReveal().reveal('.team-intro-heading, .team-intro-description', {
+    origin: 'left',
+    distance: '50px',
+    duration: 900,
+    reset: true,
+  });
+
+  ScrollReveal().reveal('.team-photo-left, .team-photo-center, .team-photo-right', {
+    origin: 'bottom',
+    distance: '70px',
+    duration: 1200,
+    interval: 200,
+    reset: true,
+  });
+
+  // Rodapé
+  ScrollReveal().reveal('.footer-content', {
+    origin: 'top',
+    distance: '30px',
+    duration: 1000,
+    reset: true,
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sr = ScrollReveal({
+    distance: "50px",
+    duration: 1000,
+    easing: "ease-out",
+    reset: true,
+  });
+
+  sr.reveal("[data-sr='fade-up']", { origin: "top" });
+  sr.reveal("[data-sr='fade-left']", { origin: "left" });
+  sr.reveal("[data-sr='zoom-in']", { scale: 0.9 });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const sr = ScrollReveal({
+    distance: "50px",
+    duration: 1200,
+    easing: "ease-out",
+    reset: true,
+  });
+
+  sr.reveal("[data-sr='fade-up']", { origin: "bottom", interval: 200 });
+  sr.reveal("[data-sr='zoom-in']", { scale: 0.9 });
+});
 
   document.getElementById('redirectButton').addEventListener('click', () => {
     window.location.href = '/login';

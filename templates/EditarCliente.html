@@ -39,9 +39,9 @@
     <main class="main-content">
         <h1 class="main-title">Editar Cliente</h1>
         {% if msg %}
-          <div class="message {{ msg_type }}" style="color: red;">
-        {{ msg }}
-          </div>
+        <script>
+            alert("{{ msg }}");
+        </script>
         {% endif %}
                 
         <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB" style="left: 0;">
