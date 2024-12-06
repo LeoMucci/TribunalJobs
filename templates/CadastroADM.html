@@ -81,8 +81,11 @@
 
 
                     {% if msg %}
-                        <p>{{ msg }}</p>
+                    <script>
+                        alert("{{ msg | safe }}");
+                    </script>
                     {% endif %}
+                    
                 </div>
             </div>
         </form>
