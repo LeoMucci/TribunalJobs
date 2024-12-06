@@ -1003,3 +1003,14 @@ button:hover {
  box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
  transform: translateY(-2px);
 }
+
+
+
+
+
+
+/* Estilo para evitar sobreposição */
+textarea:not(:placeholder-shown) + .user-label {
+  transform: translateY(-0.8rem);
+  font-size: 12px;
+}
