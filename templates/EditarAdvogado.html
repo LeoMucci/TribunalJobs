@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Administrador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleCadClientey.css') }}">
+    <script src="https://kit.fontawesome.com/4665b3a379.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+      
+  <div class="top-bar">
+    <a href="/Home"> <!-- Link para a página inicial -->
+      <button class="edtBTN">
+        <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+          <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
+        </svg>
+        <span>Voltar</span>
+      </button>
+    </a>
+  </div>
+
+    <!-- Área Principal com o Formulário Centralizado -->
+    <main class="main-content">
+        <h1 class="main-title">Editar Advogado</h1>
+
+        {% if msg %}
+        <script>
+            alert("{{ msg }}");
+        </script>
+        {% endif %}
+        
+        <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
+        <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
+        
+        <section class="lawyer-registration">
+          <form class="registration-form" method="POST" action="{{ url_for('cadastro_advogado') }}" enctype="multipart/form-data">
+            <!-- Componente de Upload de Imagem (Quadrado e Centralizado) -->
+            <div class="input-div" onclick="triggerUpload()">
+              <input class="input" id="upload-input" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="loadFile(event)">
+              <img src="https://via.placeholder.com/100" alt="Imagem de perfil" class="profile-pic" id="profile-pic" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor" class="icon">
+                <polyline points="16 16 12 12 8 16"></polyline>
+                <line y2="21" x2="12" y1="12" x1="12"></line>
+                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+                <polyline points="16 16 12 12 8 16"></polyline>
+              </svg>
+            </div>
+            <input type="hidden" name="IdADM" value="{{ IdADM }}">
+            <input type="hidden" name="IdEmpresa" value="{{ IdEmpresa }}">
+  
+            <!-- Colunas dos Campos do Formulário -->
+            <div class="form-column">
+              <div class="form-field">
+                  <input type="text" id="name" name="nome" class="form-input" required>
+                  <label for="name" class="user-label">Nome</label>
+                  <small class="error-message" id="name-error"></small>
+              </div>
+              <div class="form-field">
+                  <input type="email" id="email" name="email" class="form-input" required>
+                  <label for="email" class="user-label">E-mail</label>
+                  <small class="error-message" id="email-error"></small>
+              </div>
+              <div class="form-field">
+                  <input type="password" id="password" name="senha" class="form-input" required>
+                  <label for="password" class="user-label">Senha</label>
+                  <small class="error-message" id="password-error"></small>
+              </div>
+          </div>
+          
+          <div class="form-column">
+              <div class="form-field">
+                  <input type="text" id="cpf" name="cpf" class="form-input" required>
+                  <label for="cpf" class="user-label">CPF</label>
+                  <small class="error-message" id="cpf-error"></small>
+              </div>
+              <div class="form-field">
+                  <input type="text" id="oab" name="oab" class="form-input" required>
+                  <label for="oab" class="user-label">OAB</label>
+                  <small class="error-message" id="oab-error"></small>
+              </div>
+              <div class="form-field">
+                  <input type="tel" id="phone" name="fone" class="form-input" required>
+                  <label for="phone" class="user-label">Telefone</label>
+                  <small class="error-message" id="phone-error"></small>
+              </div>
+          </div>
+          
+  
+            <!-- Botão de Salvar Centralizado -->
+            <div class="button-container">
+
+              <button type="submit"class="animated-button">
+                <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.58L9 16.17Z"
+                  ></path>
+                </svg>
+                <span class="textt">Cadastrar</span>
+                <span class="circle"></span>
+                <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.58L9 16.17Z"
+                  ></path>
+                </svg>
+              </button>
+              
+            </div>
+          </form>
+        </section>
+    </main>
+    
+    <script>
+
+        function triggerUpload() {
+            document.getElementById("upload-input").click();
+          }
+          
+          function loadFile(event) {
+            const output = document.getElementById("profile-pic");
+            const uploadIcon = document.querySelector(".icon");
+          
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.style.display = "block"; // Exibe a imagem de perfil
+            uploadIcon.style.display = "none"; // Esconde o ícone de upload
+          
+            output.onload = () => {
+              URL.revokeObjectURL(output.src); // Libera a memória do objeto URL
+            };
+          }
+          
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById("password");
+            const passwordToggle = document.querySelector(".password-toggle");
+          
+            if (passwordField.type === "password") {
+              passwordField.type = "text";
+              passwordToggle.src = "https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a33e3eec52e9f3d4e6b97b40c2baccf04f5f9f0c1c1c18f3ec438d7cce29509a?apiKey=86836f072c124e818bc78d0c65f8ba52&"; // Ícone para "mostrar"
+            } else {
+              passwordField.type = "password";
+              passwordToggle.src = "https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/da00e5ac0e51b2733793730dccddd40cf2fc37a43ec98e24357ca41487d6f128?apiKey=86836f072c124e818bc78d0c65f8ba52&"; // Ícone para "esconder"
+            }
+          }
+          
+
+          // Campos de entrada
+const inputs = {
+  nome: document.getElementById('name'),
+  email: document.getElementById('email'),
+  senha: document.getElementById('password'),
+  cpf: document.getElementById('cpf'),
+  oab: document.getElementById('oab'),
+  telefone: document.getElementById('phone'),
+};
+
+// Mensagens de erro
+const errors = {
+  nome: document.getElementById('name-error'),
+  email: document.getElementById('email-error'),
+  senha: document.getElementById('password-error'),
+  cpf: document.getElementById('cpf-error'),
+  oab: document.getElementById('oab-error'),
+  telefone: document.getElementById('phone-error'),
+};
+
+// Validações específicas para cada campo
+function validateField(input, errorElement, validationFn, errorMessage) {
+  const value = input.value.trim();
+  if (!validationFn(value)) {
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+      errorElement.textContent = errorMessage;
+      errorElement.classList.add('active');
+  } else {
+      input.classList.add('valid');
+      input.classList.remove('invalid');
+      errorElement.textContent = '';
+      errorElement.classList.remove('active');
+  }
+}
+
+// Máscara e validações para CPF, Telefone e E-mail
+inputs.cpf.addEventListener('input', () => {
+  inputs.cpf.value = formatCPF(inputs.cpf.value);
+  validateField(inputs.cpf, errors.cpf, isValidCPF, 'CPF inválido!');
+});
+
+inputs.telefone.addEventListener('input', () => {
+  inputs.telefone.value = formatPhone(inputs.telefone.value);
+  validateField(inputs.telefone, errors.telefone, isValidPhone, 'Telefone inválido!');
+});
+
+inputs.email.addEventListener('input', () => {
+  validateField(inputs.email, errors.email, isValidEmail, 'E-mail inválido!');
+});
+
+// Validação simples para senha (exemplo: mínimo de 6 caracteres)
+inputs.senha.addEventListener('input', () => {
+  validateField(inputs.senha, errors.senha, (value) => value.length >= 8, 'A senha deve ter no mínimo 8 caracteres!');
+});
+
+// Validação para OAB
+inputs.oab.addEventListener('input', () => {
+  validateField(inputs.oab, errors.oab, isValidOAB, 'OAB inválida!');
+});
+
+// Formatações
+function formatCPF(value) {
+  return value.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4').substring(0, 14);
+}
+
+function formatPhone(value) {
+  return value.replace(/\D/g, '').replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3').substring(0, 15);
+}
+
+// Validações específicas
+function isValidCPF(cpf) {
+  return cpf.length === 14; // Simplificação
+}
+
+function isValidPhone(phone) {
+  return phone.length === 15; // Simplificação
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidOAB(oab) {
+  return /^[0-9]{1,6}[A-Z]{1,2}$/.test(oab); // Exemplo: 123456SP
+}
+
+
+          
+
+    </script>
+</body>
+</html>

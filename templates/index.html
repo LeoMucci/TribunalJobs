@@ -77,14 +77,11 @@
                 <p>Tribunal Jobs</p>
               </div>
               <h2 class="hero-subtitle">
-                <p>
-                  <p class="TextoIni" style="color: black;">
-                    Transformando a <br>
-                    indústria jurídica com <br>
-                  </p>
-                  
-                  <i>Inteligência artificial</i>
+                <p class="TextoIni" style="color: black;">
+                  Transformando a <br>
+                  indústria jurídica com <br>
                 </p>
+                <span id="typewriter-text"></span> <!-- Adiciona um espaço para o texto dinâmico -->
               </h2>
               <p class="hero-description">
                 A Tribunal Jobs oferece uma solução inovadora que simplifica e agiliza a redação de documentos legais.
@@ -338,7 +335,21 @@
 </body>
 
 <script>
-
+  document.addEventListener("DOMContentLoaded", () => {
+    const textElement = document.getElementById("typewriter-text");
+    const text = "Inteligência artificial"; // Texto a ser escrito
+    let index = 0;
+  
+    function typeWriter() {
+        if (index < text.length) {
+            textElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(typeWriter, 150); // Velocidade da digitação
+        }
+    }
+  
+    typeWriter(); // Inicia a animação de digitação
+  });
 
   document.addEventListener("DOMContentLoaded", () => {
   // Animações de entrada para o cabeçalho
@@ -346,7 +357,7 @@
     origin: 'top',
     distance: '20px',
     duration: 800,
-    reset: true,
+    reset: false,
   });
 
   // Hero Section
@@ -436,6 +447,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('redirectButton').addEventListener('click', () => {
     window.location.href = '/login';
 });
+
+
 
 </script>
 
