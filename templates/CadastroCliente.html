@@ -152,10 +152,11 @@
             </div>
         
             <div class="form-field">
-                <textarea id="descricaoCausa" name="descricaoCausa" class="form-input" required></textarea>
-                <label for="descricaoCausa" class="user-label">Descrição da causa</label>
-                <small class="error-message" id="descricaoCausa-error"></small>
-            </div>
+              <textarea id="descricaoCausa" name="descricaoCausa" class="form-input" required>{{ cliente.descricaoCausa if cliente else '' }}</textarea>
+              <label for="descricaoCausa" class="user-label">Descrição da causa</label>
+              <small class="error-message" id="descricaoCausa-error"></small>
+          </div>
+          
         </div>
           
           <!-- Botão de Salvar -->

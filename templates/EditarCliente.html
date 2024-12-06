@@ -93,14 +93,7 @@
                 <input type="text" id="cpf" name="cpf" class="form-input" value="{{ cliente.cpf }}"required>
                 <label for="cpf" class="user-label">CPF</label>
                 <small class="error-message" id="cpf-error"></small>
-            </div>
-        
-            <div class="form-field">
-              <input type="text" id="IdAdv" name="IdAdv" class="form-input" value="{{ cliente.IdAdvogado if cliente.IdAdvogado else '' }}">
-              <label for="IdAdv" class="user-label">ID Advogado</label>
-              <small class="error-message" id="IdAdv-error"></small>
-          </div>
-          
+            </div>                  
         
             <div class="form-field">
                 <input type="tel" id="fone" name="fone" class="form-input" value="{{ cliente.fone }}" required>
@@ -109,7 +102,7 @@
             </div>
         
             <div class="form-field">
-                <textarea id="descricaoCausa" name="descricaoCausa" class="form-input" required></textarea>
+                <textarea id="descricaoCausa" name="descricaoCausa" class="form-input" required >{{ cliente.descricaoCausa }}</textarea>
                 <label for="descricaoCausa" class="user-label">Descrição da causa</label>
                 <small class="error-message" id="descricaoCausa-error"></small>
             </div>
