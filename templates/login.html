@@ -15,43 +15,53 @@
       <img src="{{ url_for('static', filename='images/Textura inferior.png') }}" class="texturaB">
       <img src="{{ url_for('static', filename='images/Textura superior.png') }}" class="texturaC">
 
-        <div class="left-section" style="margin: 3%;">
-            <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo">
-            <div class="cor"><h1>Bem-vindo de volta!</h1></div>
-            <p>Ainda não tem uma conta? <br> <a href="../cadastro">Cadastre sua empresa aqui.</a></p>
-            <form action="{{ url_for('login') }}" method="post" style="margin-top: 10px;">
-                <label for="email">E-mail</label>
-                <div class="group">
-                    <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
-                        <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
-                    </svg>
-                    <input class="input" type="email" name="email" placeholder="Insira seu E-Mail" required>
-                </div>
+      <div class="left-section" style="margin: 3%;" data-sr="fade-right">
+        <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Logo" class="logo">
+        <div class="cor"><h1>Bem-vindo de volta!</h1></div>
+        <p>Ainda não tem uma conta? <br> <a href="../cadastro">Cadastre sua empresa aqui.</a></p>
+        <form action="{{ url_for('login') }}" method="post" style="margin-top: 10px;">
+            <label for="email">E-mail</label>
+            <div class="group">
+                <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
+                    <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+                <input class="input" type="email" name="email" placeholder="Insira seu E-Mail" required>
+            </div>
 
-                <label for="password">Senha</label>
-                <div class="group">
-                    <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
-                        <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
-                    </svg>
-                    <input class="input" type="password" name="senha" placeholder="Insira sua senha" required>
-                </div>
-                
-                <a href="../EsqueciSenha" class="forgot-password">Esqueceu sua senha?</a>
-                
-                <center><button type="submit">Login</button></center>
-
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                  <script>
-                      alert("{{ messages[0] }}");
-                  </script>
-                {% endif %}
-              {% endwith %}
-            </form>
-        </div>
-        <div class="right-section">
-            <img src="{{ url_for('static', filename='images/Imagem box.png') }}" alt="Lady Justice">
-        </div>
+            <label for="password">Senha</label>
+            <div class="group">
+                <svg stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="icon">
+                    <path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 00-2.25 2.25z" stroke-linejoin="round" stroke-linecap="round"></path>
+                </svg>
+                <input class="input" type="password" name="senha" placeholder="Insira sua senha" required>
+            </div>
+            
+            <a href="../EsqueciSenha" class="forgot-password">Esqueceu sua senha?</a>
+            
+            <center><button type="submit">Login</button></center>
+        </form>
     </div>
+    <div class="right-section" data-sr="fade-left">
+        <img src="{{ url_for('static', filename='images/Imagem box.png') }}" alt="Lady Justice">
+    </div>
+  </div>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          ScrollReveal().reveal("[data-sr='fade-right']", {
+              origin: "left",
+              distance: "50px",
+              duration: 1200,
+              easing: "ease-out",
+          });
+
+          ScrollReveal().reveal("[data-sr='fade-left']", {
+              origin: "right",
+              distance: "50px",
+              duration: 1200,
+              easing: "ease-out",
+          });
+      });
+  </script>
+</body>
 </body>
 </html>
