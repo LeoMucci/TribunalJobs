@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styleHome.css') }}">
     <script src="https://kit.fontawesome.com/4665b3a379.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="{{ url_for('static', filename='images/Logo.png') }}" type="image/png">
+
 </head>
 <body>
 
@@ -102,27 +104,27 @@
           <!-- Substitua o SVG por uma imagem de capa -->
           <img src="/static/images/capaa.png" alt="Imagem de Capa" class="card__image" />
           <div class="card__content">
-            <p class="card__title">Card Title</p>
-            <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p class="card__title">Curiosidade ‼</p>
+            <p class="card__description">no Japão, o sistema de justiça penal funciona de maneira diferente de muitos países ocidentais: cerca de 99% dos réus em casos criminais são considerados culpados.</p>
           </div>
         </div>
 
        <div class="carde">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
+        <img src="/static/images/logo.png" alt="Imagem de Capa" class="card__image" style="height: 85%;" />        
         <div class="card__content">
-          <p class="card__title">Card Title</p>
-          <p class="card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+          <p class="card__title">Nosso Sistema 🤖</p>
+          <p class="card__description">O Tribunal Jobs é um sistema que usa inteligência artificial para otimizar e auxiliar na organização e no gerenciamento das informações jurídicas, facilitando o trabalho dos profissionais do direito.</p>
         </div>
      </div>
     
       </div>
 
       <div class="action-cards">
-        <a href="{{ url_for('TJDuvidas') }}" class="card-link">
+        <a href="{{ url_for('TJHome') }}" class="card-link">
           <div class="card">
             <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/727b6b5475b7e3db6e2250ced8cd45a17180a2fa6c3cd944c070127faf5e0102?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="" class="background-image" />
             <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/a46ca879fced7e8d7be2c93bbbb381ab4e165784bb734d1d5997d25492109b31?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Legal documents icon" class="icon-image" />
-            <p class="card-text">Peças Jurídicas com TJ</p>
+            <p class="card-text">Chat Cliente com TJ</p>
           </div>
         </a>
       
