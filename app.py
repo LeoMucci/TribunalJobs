@@ -482,13 +482,28 @@ def chat_api():
         return jsonify({"error": "Mensagem vazia"}), 400
 
     try:
+        # Busca o histórico de mensagens do usuário
+        mensagens_anteriores = Conversas.query.filter_by(usuario_id=user_id).all()
+        
+        # Cria a lista de mensagens para enviar à API do OpenAI
+        messages = [
+            {"role": "system", "content": "Você é um assistente que só pode tirar dúvidas jurídicas."}
+        ]
+
+        # Adiciona as mensagens anteriores (perguntas e respostas)
+        for conversa in mensagens_anteriores:
+            messages.append({"role": "user", "content": conversa.mensagem})
+            messages.append({"role": "assistant", "content": conversa.resposta})
+
+        # Adiciona a nova mensagem do usuário
+        messages.append({"role": "user", "content": user_message})
+
+        # Faz a requisição para a API do OpenAI com o histórico de mensagens
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "Você é um assistente que só pode tirar dúvidas jurídicas."},
-                {"role": "user", "content": user_message}
-            ]
+            messages=messages
         )
+
         ai_response = response['choices'][0]['message']['content']
 
         # Salvar a conversa no banco de dados
@@ -497,9 +512,12 @@ def chat_api():
         db.session.commit()
 
         return jsonify({"response": ai_response})
+
     except Exception as e:
         print(f"Erro ao chamar a API do OpenAI: {e}")
         return jsonify({"error": "Desculpe, ocorreu um erro ao tentar obter uma resposta."}), 500
+
+    
 @app.route('/EsqueciSenha', methods=['GET', 'POST'])
 def EsqueciSenha():
     msg = ''
