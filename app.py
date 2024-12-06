@@ -744,10 +744,6 @@ def editar_advogado(id):
     # Preenche o formulário com os dados do advogado
     return render_template('EditarAdvogado.html', advogado=advogado)
 
-import os
-from flask import request, jsonify
-from werkzeug.utils import secure_filename
-
 @app.route('/TJDuvidasClientes/<int:id>', methods=['GET', 'POST'])
 def TJDuvidasClientes(id):
     if 'loggedin' in session:
@@ -783,11 +779,13 @@ def TJDuvidasClientes(id):
         # Se o método for POST, trata o upload de arquivos
         if request.method == 'POST':
             if 'file' not in request.files:
-                return jsonify({'success': False, 'message': 'No file part'})
+                flash('No file part', 'error')
+                return redirect(request.url)
             
             file = request.files['file']
             if file.filename == '':
-                return jsonify({'success': False, 'message': 'No selected file'})
+                flash('No selected file', 'error')
+                return redirect(request.url)
             
             # Verifica se o arquivo é permitido
             if file and allowed_file(file.filename):
@@ -797,23 +795,14 @@ def TJDuvidasClientes(id):
                 # Salva o arquivo na pasta 'static/uploads'
                 file.save(filepath)
 
-                # Caminho relativo para salvar no banco de dados
-                relative_path = os.path.join('static', 'uploads', filename)
-
-                # Atualiza o caminho no banco de dados (na tabela Cliente)
-                cliente.arquivos = relative_path
-                db.session.commit()
-
-                return render_template('TJDuvidasClientes.html', cliente=cliente, user=user_info, file_uploaded=True)
+                flash('Arquivo enviado com sucesso!', 'success')
+                return redirect(url_for('TJDuvidasClientes', id=id))
 
         # Passa as informações do cliente e do usuário logado para o template
         return render_template('TJDuvidasClientes.html', cliente=cliente, user=user_info)
 
     # Se não estiver autenticado, redireciona para a página de login
     return redirect(url_for('login'))
-
-
-
     
 if __name__ == '__main__':
     with app.app_context():
