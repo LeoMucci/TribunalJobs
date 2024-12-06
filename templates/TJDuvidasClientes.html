@@ -36,7 +36,7 @@
           <div class="upload-text" role="text">
             Faça upload do arquivo
             <br />
-            para gerar sua pauta!
+            para gerenciar o seus arquivos
           </div>
           
         </section>
@@ -55,18 +55,20 @@
 
 
 
-  <!-- Modal -->
-  <div class="modal-overlay">
-    <div class="upload-modal">
-      <!-- Header -->
-      <div class="modal-header">
-        <h2 class="header-title">Faça o upload de seu arquivo base.</h2>
-        <p class="header-description">TJ irá formular sua peça jurídica com base nessas informações.</p>
-        <button class="close-button" aria-label="Fechar modal">
-          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" alt="Fechar" class="close-icon">
-        </button>
-      </div>
+<!-- Modal -->
+<div class="modal-overlay">
+  <div class="upload-modal">
+    <!-- Header -->
+    <div class="modal-header">
+      <h2 class="header-title">Faça o upload de seu arquivo base.</h2>
+      <p class="header-description">TJ irá formular sua peça jurídica com base nessas informações.</p>
+      <button class="close-button" aria-label="Fechar modal" id="close-modal">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828778.png" alt="Fechar" class="close-icon">
+      </button>
+    </div>
 
+    <!-- Formulário de Upload de Arquivo -->
+    <form action="/uploads/{{ cliente.IdCliente }}" method="POST" enctype="multipart/form-data">
       <!-- Dropzone -->
       <div class="upload-dropzone" id="dropzone">
         <img src="https://cdn.builder.io/api/v1/image/assets/86836f072c124e818bc78d0c65f8ba52/c2388a2b379868a695ad015c8857bbbc7cdd53be94077767b8e8d844206c06a7?apiKey=86836f072c124e818bc78d0c65f8ba52&" alt="Upload">
@@ -76,23 +78,30 @@
         <p class="upload-hint">seu arquivo em PDF.</p>
       </div>
 
-      <!-- File List -->
-      <div class="file-list" id="fileList"></div>
+      <!-- Lista de arquivos a serem enviados -->
+      <div class="file-list" id="fileList">
+        <!-- Arquivos carregados aparecerão aqui -->
+        <input type="file" name="file" id="file" accept=".pdf">
+      </div>
 
       <!-- Footer -->
       <div class="modal-footer">
-        <button class="cancel-button">Cancelar</button>
-        <button class="confirm-button">Confirmar</button>
+        <button type="button" class="cancel-button" id="cancel-upload">Cancelar</button>
+        <button type="submit" class="confirm-button" id="confirm-upload">Confirmar</button>
       </div>
-    </div>
+    </form>
   </div>
+</div>
 
-  <div id="file-viewer-modal" class="modal-overlay">
-    <div class="file-viewer">
-      <button id="close-viewer" class="close-button">Fechar</button>
-      <div id="file-content"></div>
-    </div>
+
+
+<div id="file-viewer-modal" class="modal-overlay">
+  <div class="file-viewer">
+    <button id="close-viewer" class="close-button">Fechar</button>
+    <div id="file-content"></div>
   </div>
+</div>
+
 
   <!-- Conteúdo Principal com Área de Chat -->
   <main class="main-content">
@@ -124,17 +133,19 @@
     <aside class="sidebar-client-info">
       <!-- Informações do cliente no estilo card -->
       <div class="imge">
-        <div class="Usericon"></div>
+        <div class="Usericon">
+          <img src="{{ url_for('static', filename=cliente.imagem) if cliente.imagem else 'https://via.placeholder.com/100' }}">
+        
+        </div>
+       
         <div>
-          <p class="UserName">Leonardo Capra Mucci</p>
-          <p class="Id">Danos Morais</p>
-          <p class="Id">Danos Morais</p>
+          <p class="UserName">{{ cliente.nome }}</p>
+          <p class="Id">{{ cliente.causa }}</p>
+          <p class="Id">{{ cliente.cpf }} </p>
         </div>
       </div>
       <div class="Description">
-        Rodrigo Veloso é um cliente ativo desde 2022, envolvido em casos de danos morais. Última atualização realizada no sistema em 01/12/2024.
-        Rodrigo Veloso é um cliente ativo desde 2022, envolvido em casos de danos morais. Última atualização realizada no sistema em 01/12/2024.
-        Rodrigo Veloso é um cliente ativo desde 2022, envolvido em casos de danos morais. Última atualização realizada no sistema em 01/12/2024.
+        {{ cliente.descricaoCausa }}
 
       </div>
 
@@ -455,13 +466,13 @@ const closeModalBtn = document.querySelector('.close-button');
 const dropzone = document.getElementById('dropzone');
 const fileList = document.getElementById('fileList');
 const confirmButton = document.querySelector('.confirm-button');
+const cancelButton = document.getElementById('cancel-upload');  // Botão de cancelar
+const uploadForm = document.getElementById("upload-form");  // Formulário de upload (opcional)
 
 // Abrir modal
 openModalBtn.addEventListener('click', () => {
   modalOverlay.classList.add('active');
 });
-
-
 
 // Fechar modal
 closeModalBtn.addEventListener('click', () => {
@@ -469,12 +480,18 @@ closeModalBtn.addEventListener('click', () => {
   fileList.innerHTML = ''; // Limpar lista de arquivos ao fechar
 });
 
+// Cancelar o upload e fechar o modal
+cancelButton.addEventListener('click', () => {
+  modalOverlay.classList.remove('active');
+  fileList.innerHTML = ''; // Limpar lista de arquivos
+});
+
 // Upload de arquivos (dropzone ou input)
 dropzone.addEventListener('click', () => {
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = '.pdf';
-  input.multiple = true;
+  input.multiple = true; // Permite múltiplos arquivos
   input.click();
   input.addEventListener('change', () => {
     handleFiles(input.files);
@@ -483,14 +500,20 @@ dropzone.addEventListener('click', () => {
 
 dropzone.addEventListener('dragover', (e) => {
   e.preventDefault();
+  dropzone.classList.add('dragover');
+});
+
+dropzone.addEventListener('dragleave', () => {
+  dropzone.classList.remove('dragover');
 });
 
 dropzone.addEventListener('drop', (e) => {
   e.preventDefault();
+  dropzone.classList.remove('dragover');
   handleFiles(e.dataTransfer.files);
 });
 
-// Adicionar arquivos ao modal
+// Função para adicionar arquivos ao modal
 function handleFiles(files) {
   for (const file of files) {
     const fileItem = document.createElement('div');
@@ -508,10 +531,16 @@ function handleFiles(files) {
 
     fileList.appendChild(fileItem);
     simulateProgress(fileItem.querySelector('.progress-bar'));
+
+    // Função para remover o arquivo da lista
+    const removeButton = fileItem.querySelector('.remove-button');
+    removeButton.addEventListener('click', () => {
+      fileItem.remove();
+    });
   }
 }
 
-// Simular progresso de upload
+// Função de simulação de progresso de upload
 function simulateProgress(progressBar) {
   let progress = 0;
   const interval = setInterval(() => {
@@ -523,30 +552,57 @@ function simulateProgress(progressBar) {
   }, 200);
 }
 
-// Confirmar arquivos e adicionar à pasta "Documentos"
+// Confirmar o upload dos arquivos
+// Confirmar o upload dos arquivos
 confirmButton.addEventListener('click', () => {
   const files = fileList.querySelectorAll('.file-item');
 
-  // Encontra a pasta "Documentos" no fileSystem
-  const documentFolder = fileSystem.items.find(item => item.type === 'folder' && item.name === 'Documentos');
-
-  if (documentFolder) {
-    files.forEach((file) => {
-      const fileName = file.querySelector('.file-name').textContent;
-
-      // Previne duplicação ao verificar se já existe
-      const exists = documentFolder.children.some(child => child.name === fileName);
-      if (!exists) {
-        // Adiciona o arquivo ao sistema de arquivos
-        documentFolder.children.push({ type: 'file', name: fileName });
-      }
-    });
+  if (files.length === 0) {
+    alert("Nenhum arquivo selecionado para upload.");
+    return;
   }
 
-  renderExplorer(); // Atualiza o explorador
+  // Cria o FormData para enviar ao servidor
+  const formData = new FormData();
+  
+  // Agora, pegamos os arquivos diretamente de cada item da lista
+  files.forEach(fileItem => {
+    const fileInput = fileItem.querySelector('input[type="file"]');
+    
+    if (fileInput && fileInput.files.length > 0) {
+      const file = fileInput.files[0];  // Pega o arquivo selecionado
+      formData.append("file", file);  // Adiciona o arquivo ao FormData
+    }
+  });
+
+  // Envia os arquivos ao servidor
+  uploadFiles(formData);
+
+  // Fecha o modal
   modalOverlay.classList.remove('active');
-  fileList.innerHTML = ''; // Limpa a lista de arquivos no modal
+  fileList.innerHTML = ''; // Limpa a lista de arquivos
 });
+
+// Função para enviar os arquivos para o backend
+function uploadFiles(formData) {
+  fetch('/uploads', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("Arquivo enviado com sucesso!");
+    } else {
+      alert("Erro ao enviar o arquivo: " + data.message);
+    }
+  })
+  .catch(error => {
+    alert("Erro ao enviar o arquivo.");
+    console.error("Error:", error);
+  });
+}
+
 
 // Abrir arquivo com duplo clique
 function openFile(file) {
@@ -561,10 +617,6 @@ function openFile(file) {
   }
 }
 
-
-
-
-
-  </script>
+</script>
 </body>
 </html>

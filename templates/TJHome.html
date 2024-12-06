@@ -48,8 +48,8 @@
       <!-- Grid de pacientes com links para tornar os cartões clicáveis -->
       <div class="patient-grid">
     {% if clientes %}
-        {% for cliente in clientes %}
-        <article class="patient-card" onclick="goToDetailsPage('{{ cliente.id }}')" style="cursor: pointer;">
+        {% for cliente in clientes %}        
+        <article class="patient-card" data-id="{{ cliente.IdCliente }}" onclick="goToDetailsPage(this)" style="cursor: pointer;">
             <img src="{{ cliente.imagem if cliente.imagem else 'https://via.placeholder.com/100' }}" 
                 alt="Foto de {{ cliente.nome }}" class="patient-image">
             <div class="patient-info">
@@ -104,9 +104,13 @@
   <script>
 
     // Redirecionar para a página de detalhes
-function goToDetailsPage(clientId) {
-  window.location.href = `/detalhes_cliente/${clientId}`;
+    function goToDetailsPage(article) {
+    const clientId = article.getAttribute('data-id');  // Pega o id do cliente do atributo 'data-id'
+    console.log(`Navigating to: /TJDuvidasClientes/${clientId}`);  // Verifique o log no console
+
+    window.location.href = `/TJDuvidasClientes/${clientId}`;  // Redireciona para a página com o ID correto
 }
+
 
 // Redirecionar para a página de edição
 function goToEditPage(event, clientId) {

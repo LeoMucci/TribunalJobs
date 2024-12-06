@@ -12,6 +12,7 @@ import openai
 
 app = Flask(__name__)
 app.secret_key = 'tribunaljobs'
+UPLOAD_FOLDER = 'static/uploads'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:081314@localhost/tribunaljobs'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -29,7 +30,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'tribunaljobs@gmail.com'
 mail = Mail(app)
 db = SQLAlchemy(app)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf', 'docx', 'txt'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -88,6 +89,10 @@ class Cliente(db.Model):
     IdAdvogado = db.Column(db.Integer, db.ForeignKey('advogados.IdAdv'), nullable=True)
     IdADM = db.Column(db.Integer, db.ForeignKey('ADM.IdADM'), nullable=True)
     imagem = db.Column(db.String(255))
+
+    # Adicionando a coluna para armazenar os arquivos
+    arquivos = db.Column(db.Text, nullable=True)  # Pode ser uma lista de URLs ou caminhos de arquivos
+
 
 
 class Conversas(db.Model):
@@ -627,11 +632,6 @@ def EsqueciSenhaNovaSenha():
 def EsqueciSenhaConcluido():
     return render_template('EsqueciSenhaConcluido.html')
 
-@app.route('/TJDuvidasClientes')
-def TJDuvidasClientes():
-    return render_template('TJDuvidasClientes.html')
-
-
 @app.route('/EditarCliente/<int:id>', methods=['GET', 'POST'])
 def EditarCliente(id):
     cliente = Cliente.query.get_or_404(id)
@@ -744,8 +744,77 @@ def editar_advogado(id):
     # Preenche o formulário com os dados do advogado
     return render_template('EditarAdvogado.html', advogado=advogado)
 
+import os
+from flask import request, jsonify
+from werkzeug.utils import secure_filename
+
+@app.route('/TJDuvidasClientes/<int:id>', methods=['GET', 'POST'])
+def TJDuvidasClientes(id):
+    if 'loggedin' in session:
+        user_id = session['id']
+        
+        # Busca o cliente pelo ID
+        cliente = Cliente.query.get(id)
+
+        if not cliente:
+            return redirect(url_for('home'))  # Redireciona caso o cliente não seja encontrado
+
+        # Buscar as informações do usuário logado (ADM ou Advogado)
+        adm = ADM.query.filter_by(IdADM=user_id).first()
+        if adm:
+            role = "Administrador"
+            user_info = {
+                "name": adm.nome,
+                "role": role,
+                "image_url": adm.imagem or "https://via.placeholder.com/40"
+            }
+        else:
+            advogado = Advogados.query.filter_by(IdAdv=user_id).first()
+            if advogado:
+                role = "Advogado"
+                user_info = {
+                    "name": advogado.nome,
+                    "role": role,
+                    "image_url": advogado.imagem or "https://via.placeholder.com/40"
+                }
+            else:
+                return "Erro: Usuário não encontrado."
+
+        # Se o método for POST, trata o upload de arquivos
+        if request.method == 'POST':
+            if 'file' not in request.files:
+                return jsonify({'success': False, 'message': 'No file part'})
+            
+            file = request.files['file']
+            if file.filename == '':
+                return jsonify({'success': False, 'message': 'No selected file'})
+            
+            # Verifica se o arquivo é permitido
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                
+                # Salva o arquivo na pasta 'static/uploads'
+                file.save(filepath)
+
+                # Caminho relativo para salvar no banco de dados
+                relative_path = os.path.join('static', 'uploads', filename)
+
+                # Atualiza o caminho no banco de dados (na tabela Cliente)
+                cliente.arquivos = relative_path
+                db.session.commit()
+
+                return render_template('TJDuvidasClientes.html', cliente=cliente, user=user_info, file_uploaded=True)
+
+        # Passa as informações do cliente e do usuário logado para o template
+        return render_template('TJDuvidasClientes.html', cliente=cliente, user=user_info)
+
+    # Se não estiver autenticado, redireciona para a página de login
+    return redirect(url_for('login'))
 
 
+
+    
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
